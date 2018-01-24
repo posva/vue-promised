@@ -1,0 +1,24 @@
+{
+  "name": "vue-promise-blocks",
+  "version": "0.0.1",
+  "description": "Promises as components",
+  "main": "dist/vue-promise-blocks.cjs.js",
+  "module": "dist/vue-promise-blocks.es.js",
+  "unpkg": "dist/vue-promise-blocks.js",
+  "browser": "dist/vue-promise-blocks.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "rollit"
+  },
+  "files": ["src", "dist", "LICENSE", "README.md"],
+  "author": "Eduardo San Martin Morote <posva13@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/posva/vue-promise-blocks/issues"
+  },
+  "homepage": "https://github.com/posva/vue-promise-blocks#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/posva/vue-promise-blocks.git"
+  },
+  "license": "MIT"
+}
