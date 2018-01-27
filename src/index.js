@@ -1,5 +1,5 @@
 export default {
-  name: 'PromiseBlock',
+  name: 'Promised',
   props: {
     promise: Promise,
     promises: Array,
