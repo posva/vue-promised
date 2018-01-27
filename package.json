@@ -1,5 +1,5 @@
 {
-  "name": "vue-promise-blocks",
+  "name": "vue-promised",
   "version": "0.0.1",
   "description": "Promises as components",
   "main": "dist/vue-promise-blocks.cjs.js",
@@ -13,12 +13,12 @@
   "files": ["src", "dist", "LICENSE", "README.md"],
   "author": "Eduardo San Martin Morote <posva13@gmail.com>",
   "bugs": {
-    "url": "https://github.com/posva/vue-promise-blocks/issues"
+    "url": "https://github.com/posva/vue-promised/issues"
   },
-  "homepage": "https://github.com/posva/vue-promise-blocks#readme",
+  "homepage": "https://github.com/posva/vue-promised#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/posva/vue-promise-blocks.git"
+    "url": "git+https://github.com/posva/vue-promised.git"
   },
   "license": "MIT"
 }
