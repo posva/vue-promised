@@ -14,7 +14,7 @@ Vue.component('Promised', Promised)
 ```
 
 `promise` should be a promise. `data` will contain the result of the promise
-```vue
+```html
 <Promised :promise="promise">
     <!-- Use the default slot for loading content
          Make sure to have ONLY 1 NODE
@@ -30,7 +30,7 @@ Vue.component('Promised', Promised)
 
 Pass an array of Promises with `promises`
 
-```vue
+```html
 <Promised :promises="promises">
   <h2>Wating for first result</h2>
   <h2 slot-scope="data">
