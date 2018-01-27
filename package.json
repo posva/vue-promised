@@ -2,10 +2,10 @@
   "name": "vue-promised",
   "version": "0.0.2",
   "description": "Promises as components",
-  "main": "dist/vue-promise-blocks.cjs.js",
-  "module": "dist/vue-promise-blocks.es.js",
-  "unpkg": "dist/vue-promise-blocks.js",
-  "browser": "dist/vue-promise-blocks.js",
+  "main": "dist/vue-promised.cjs.js",
+  "module": "dist/vue-promised.es.js",
+  "unpkg": "dist/vue-promised.js",
+  "browser": "dist/vue-promised.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "rollit"
@@ -16,7 +16,10 @@
     "LICENSE",
     "README.md"
   ],
-  "author": "Eduardo San Martin Morote <posva13@gmail.com>",
+  "author": {
+    "name": "Eduardo San Martin Morote",
+    "email": "posva13@gmail.com"
+  },
   "bugs": {
     "url": "https://github.com/posva/vue-promised/issues"
   },
