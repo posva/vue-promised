@@ -3,12 +3,20 @@ vue-promised [![Build Status](https://img.shields.io/circleci/project/posva/vue-
 
 Transform your Promises into components
 
+## Installation
+
+```bash
+npm install --save vue-promised
+# or
+yarn add vue-promised
+```
+
 ## Usage
 
 Import the component to use it
 
 ```js
-import Promised from 'vue-promise-blocks'
+import Promised from 'vue-promised'
 
 Vue.component('Promised', Promised)
 ```
