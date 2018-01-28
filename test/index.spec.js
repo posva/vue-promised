@@ -1,8 +1,7 @@
 import { mount } from '@vue/test-utils'
-import Promised from '../src'
 import Helper from './utils/Helper'
 
-const tick = () => new Promise(r => setImmediate(r))
+const tick = () => new Promise(resolve => setImmediate(resolve))
 
 describe('Tweezing', () => {
   let wrapper
