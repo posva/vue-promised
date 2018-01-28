@@ -7,7 +7,10 @@
   "unpkg": "dist/vue-promised.js",
   "browser": "dist/vue-promised.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --color --ext=js,html src test example docs",
+    "unit": "jest",
+    "dev": "npm run unit -- --watchAll",
+    "test": "npm run lint && npm run unit",
     "prepublishOnly": "rollit"
   },
   "files": [
@@ -28,5 +31,35 @@
     "type": "git",
     "url": "git+https://github.com/posva/vue-promised.git"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@vue/test-utils": "^1.0.0-beta.11",
+    "babel-jest": "^22.1.0",
+    "babel-preset-env": "^1.6.1",
+    "codecov": "^3.0.0",
+    "eslint": "^4.16.0",
+    "eslint-config-posva": "^1.3.2",
+    "jest": "^22.1.4",
+    "vue": "^2.5.13",
+    "vue-jest": "^2.0.0",
+    "vue-template-compiler": "^2.5.13"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transform": {
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
+    },
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/test/*.js",
+      "<rootDir>/test/utils/Helper.vue",
+      "<rootDir>/test/.*.js",
+      "<rootDir>/test/*/*.js"
+    ]
+  }
 }
