@@ -1,4 +1,4 @@
-VuePromised [![Build Status](https://img.shields.io/circleci/project/posva/vue-promised/master.svg)](https://circleci.com/gh/posva/vue-promised) [![npm package](https://img.shields.io/npm/v/vue-promised.svg)](https://www.npmjs.com/package/vue-promised) [![coverage](https://img.shields.io/codecov/c/github/posva/vue-promised.svg)](https://codecov.io/github/posva/vue-promised) [![donate](https://img.shields.io/badge/donate-%E2%99%A5-ff69b4.svg)](https://github.com/posva/donate)
+vue-promised [![Build Status](https://img.shields.io/circleci/project/posva/vue-promised/master.svg)](https://circleci.com/gh/posva/vue-promised) [![npm package](https://img.shields.io/npm/v/vue-promised.svg)](https://www.npmjs.com/package/vue-promised) [![coverage](https://img.shields.io/codecov/c/github/posva/vue-promised.svg)](https://codecov.io/github/posva/vue-promised) [![donate](https://img.shields.io/badge/donate-%E2%99%A5-ff69b4.svg)](https://github.com/posva/donate)
 ===
 
 Transform your Promises into components
