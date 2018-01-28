@@ -1470,6 +1470,10 @@ extsprintf@^1.2.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.4.0.tgz#e2689f8f356fad62cca65a3a91c5df5f9551692f"
 
+faked-promise@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/faked-promise/-/faked-promise-1.0.0.tgz#5b7e93c422be46d9bdd1f8ae1293cb709ca352c0"
+
 fast-deep-equal@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-1.0.0.tgz#96256a3bc975595eb36d82e9929d060d893439ff"
