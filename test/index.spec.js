@@ -32,6 +32,22 @@ describe('Promised', () => {
       await tick()
       expect(wrapper.text()).toBe('hello')
     })
+
+    test('cancels previous promise', async () => {
+      const other = await fakePromise()
+      wrapper.setProps({ promise: other[0] })
+      resolve('foo')
+      await tick()
+      expect(wrapper.text()).toBe('loading')
+    })
+
+    test('cancels previous rejected promise', async () => {
+      const other = await fakePromise()
+      wrapper.setProps({ promise: other[0] })
+      reject(new Error('failed'))
+      await tick()
+      expect(wrapper.text()).toBe('loading')
+    })
   })
 
   describe('multiple promise', () => {
@@ -75,6 +91,22 @@ describe('Promised', () => {
       fakedPromises[1].reject(new Error('two'))
       await tick()
       expect(wrapper.text()).toBe('one,two')
+    })
+
+    test('cancels previous promise', async () => {
+      const other = await fakePromise()
+      wrapper.setProps({ promises: [other[0]] })
+      fakedPromises[0].resolve('foo')
+      await tick()
+      expect(wrapper.text()).toBe('loading')
+    })
+
+    test('cancels previous rejected promise', async () => {
+      const other = await fakePromise()
+      wrapper.setProps({ promises: [other[0]] })
+      fakedPromises[0].reject(new Error('failed'))
+      await tick()
+      expect(wrapper.text()).toBe('loading')
     })
   })
 })
