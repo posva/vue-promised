@@ -8,8 +8,8 @@ describe('Promised', () => {
   let wrapper
   describe('single promise', () => {
     let promise, resolve, reject
-    beforeEach(async () => {
-      [promise, resolve, reject] = await fakePromise()
+    beforeEach(() => {
+      [promise, resolve, reject] = fakePromise()
       wrapper = mount(Helper, {
         propsData: {
           promise,
@@ -34,7 +34,7 @@ describe('Promised', () => {
     })
 
     test('cancels previous promise', async () => {
-      const other = await fakePromise()
+      const other = fakePromise()
       wrapper.setProps({ promise: other[0] })
       resolve('foo')
       await tick()
@@ -42,7 +42,7 @@ describe('Promised', () => {
     })
 
     test('cancels previous rejected promise', async () => {
-      const other = await fakePromise()
+      const other = fakePromise()
       wrapper.setProps({ promise: other[0] })
       reject(new Error('failed'))
       await tick()
@@ -53,9 +53,7 @@ describe('Promised', () => {
   describe('multiple promise', () => {
     let fakedPromises
     beforeEach(async () => {
-      fakedPromises = (await Promise.all(
-        Array.from({ length: 3 }, () => fakePromise())
-      )).map(([promise, resolve, reject]) => ({
+      fakedPromises = Array.from({ length: 3 }, () => fakePromise()).map(([promise, resolve, reject]) => ({
         promise,
         resolve,
         reject,
@@ -94,7 +92,7 @@ describe('Promised', () => {
     })
 
     test('cancels previous promise', async () => {
-      const other = await fakePromise()
+      const other = fakePromise()
       wrapper.setProps({ promises: [other[0]] })
       fakedPromises[0].resolve('foo')
       await tick()
@@ -102,7 +100,7 @@ describe('Promised', () => {
     })
 
     test('cancels previous rejected promise', async () => {
-      const other = await fakePromise()
+      const other = fakePromise()
       wrapper.setProps({ promises: [other[0]] })
       fakedPromises[0].reject(new Error('failed'))
       await tick()
