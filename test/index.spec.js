@@ -1,6 +1,9 @@
 import { mount } from '@vue/test-utils'
 import fakePromise from 'faked-promise'
 import Helper from './utils/Helper'
+import NoError from './utils/NoError'
+import NoResolve from './utils/NoResolve'
+import NoPending from './utils/NoPending'
 
 const tick = () => new Promise(resolve => setTimeout(resolve, 0))
 
@@ -53,11 +56,13 @@ describe('Promised', () => {
   describe('multiple promise', () => {
     let fakedPromises
     beforeEach(async () => {
-      fakedPromises = Array.from({ length: 3 }, () => fakePromise()).map(([promise, resolve, reject]) => ({
-        promise,
-        resolve,
-        reject,
-      }))
+      fakedPromises = Array.from({ length: 3 }, () => fakePromise()).map(
+        ([promise, resolve, reject]) => ({
+          promise,
+          resolve,
+          reject,
+        })
+      )
 
       const promises = fakedPromises.map(({ promise }) => promise)
 
@@ -105,6 +110,56 @@ describe('Promised', () => {
       fakedPromises[0].reject(new Error('failed'))
       await tick()
       expect(wrapper.text()).toBe('loading')
+    })
+  })
+
+  describe('errors', () => {
+    let promise, resolve, reject, errorSpy
+    beforeEach(() => {
+      // silence the log
+      errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+        // useful for debugging
+        // console.log('CONSOLE ERROR')
+      })
+      ;[promise, resolve, reject] = fakePromise()
+    })
+
+    afterEach(() => {
+      errorSpy.mockRestore()
+    })
+
+    test('throws if no error scoped slot provided on error', async () => {
+      wrapper = mount(NoError, {
+        propsData: {
+          promise,
+        },
+      })
+      expect(errorSpy).not.toHaveBeenCalled()
+      reject(new Error('nope'))
+      await tick()
+      expect(errorSpy).toHaveBeenCalledTimes(2)
+    })
+
+    test('throws if no default scoped slot provided on resolve', async () => {
+      wrapper = mount(NoResolve, {
+        propsData: {
+          promise,
+        },
+      })
+      expect(errorSpy).not.toHaveBeenCalled()
+      resolve()
+      await tick()
+      expect(errorSpy).toHaveBeenCalledTimes(2)
+    })
+
+    test('throws if no default slot provided while pending', async () => {
+      expect(errorSpy).not.toHaveBeenCalled()
+      wrapper = mount(NoPending, {
+        propsData: {
+          promise,
+        },
+      })
+      expect(errorSpy).toHaveBeenCalledTimes(2)
     })
   })
 })

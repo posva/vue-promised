@@ -1,3 +1,5 @@
+import { assert } from './util'
+
 export default {
   name: 'Promised',
   props: {
@@ -13,10 +15,22 @@ export default {
 
   render (h) {
     if (this.error instanceof Error || (this.error && this.error.length)) {
+      assert(
+        this.$scopedSlots && this.$scopedSlots.error,
+        'Provide exactly one scoped slot named "error" for the rejected promise'
+      )
       return this.$scopedSlots.error(this.error)
     } else if (this.resolved) {
+      assert(
+        this.$scopedSlots && this.$scopedSlots.default,
+        'Provide exactly one default scoped slot for the resolved promise'
+      )
       return this.$scopedSlots.default(this.data)
-    } else if (this.$slots.default && this.$slots.default.length > 0) {
+    } else {
+      assert(
+        this.$slots.default && this.$slots.default.length === 1,
+        'Provide exactly one default slot with no `slot-scope` for the pending promise'
+      )
       return this.$slots.default[0]
     }
   },
