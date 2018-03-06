@@ -16,7 +16,7 @@ export default {
       return this.$scopedSlots.error(this.error)
     } else if (this.resolved) {
       return this.$scopedSlots.default(this.data)
-    } else {
+    } else if (this.$slots.default && this.$slots.default.length>0){
       return this.$slots.default[0]
     }
   },
