@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>VuePromised</title>
+</head>
+
+<body>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="https://unpkg.com/vue"></script>
+  <script src="https://unpkg.com/vue-promised"></script>
+
+  <div id="app">
+    <h2>Single promise</h2>
+
+    <button @click="trySuccess">Success promise</button>
+    <button @click="tryError">Fail promise</button>
+
+    <Promised :promise="promise" ref="multiplePromised">
+      <h3>Loading</h3>
+      <figure slot-scope="data">
+        <img :alt="data.transcript" :src="data.img"/>
+        <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
+      </figure>
+      <h3 slot="catch" slot-scope="error">Error: {{ error.message }}</h3>
+    </Promised>
+
+    <h2>Multiple promises</h2>
+
+    <button @click="tryMultipleSuccess">Add another image</button>
+    <button @click="tryMultipleError">Fail one promise</button>
+    <button @click="resetMultiple">Reset promises</button>
+    <button @click="resetErrors">Reset errors</button>
+
+    <Promised :promises="promises">
+      <h3>Wating for first result</h3>
+      <div slot-scope="items">
+        <h3>{{ items.length }} promises resolved</h3>
+        <figure v-for="item in items">
+          <img :alt="item.transcript" :src="item.img"/>
+          <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
+        </figure>
+      </div>
+      <h3 slot="catch" slot-scope="errors">
+        Failed {{ errors.length }} promises
+      </h3>
+    </Promised>
+  </div>
+
+  <script src="index.js"></script>
+
+</body>
+
+</html>

@@ -1,16 +1,22 @@
 <template>
   <div>
+    <h2>Single promise</h2>
+
     <button @click="trySuccess">Success promise</button>
     <button @click="tryError">Fail promise</button>
 
-    <h2>Single promise</h2>
     <Promised :promise="promise">
       <h3>Loading</h3>
       <h3 slot-scope="data">Success!</h3>
-      <h3 slot="error" slot-scope="error">Error: {{ error.message }}</h3>
+      <h3 slot="catch" slot-scope="error">Error: {{ error.message }}</h3>
     </Promised>
 
     <h2>Multiple promises</h2>
+
+    <button @click="tryMultipleSuccess">Success promise</button>
+    <button @click="tryMultipleError">Fail promise</button>
+    <button @click="resetMultiple">Reset promise</button>
+
     <Promised :promises="promises">
       <h3>Wating for first result</h3>
       <h3 slot-scope="data">
@@ -25,24 +31,33 @@
 
 <script>
 import Promised from '../src'
-const delay = t => new Promise(r => setTimeout(r, t))
+const delay = (t, value) => new Promise(r => setTimeout(r.bind(null, value), t))
 
 export default {
   data: () => ({
-    promise: delay(1000),
+    promise: null,
     promises: [],
   }),
 
   methods: {
     trySuccess () {
       this.promise = delay(500)
-      this.promises.push(this.promise)
     },
     tryError () {
       this.promise = delay(500).then(() => {
         throw new Error('🔥')
       })
-      this.promises.push(this.promise)
+    },
+    tryMultipleSuccess () {
+      this.promises.push(delay(500))
+    },
+    tryMultipleError () {
+      this.promises.push(delay(500).then(() => {
+        throw new Error('🔥')
+      }))
+    },
+    resetMultiple () {
+      this.promises = []
     },
   },
 
