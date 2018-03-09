@@ -17,14 +17,14 @@ export default {
     if (this.error instanceof Error || (this.error && this.error.length)) {
       assert(
         this.$scopedSlots && this.$scopedSlots.catch,
-        'Provide exactly one scoped slot named "error" for the rejected promise'
+        'Provide exactly one scoped slot named "catch" for the rejected promise'
       )
       return this.$scopedSlots.catch(this.error)
     } else if (this.resolved) {
       const slot = this.$scopedSlots.default || this.$scopedSlots.then
       assert(
         this.$scopedSlots && slot,
-        'Provide exactly one default scoped slot for the resolved promise'
+        'Provide exactly one default/then scoped slot for the resolved promise'
       )
       return slot.call(this, this.data)
     } else {

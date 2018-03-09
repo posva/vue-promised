@@ -2,26 +2,30 @@
   <div>
     <button @click="trySuccess">Success promise</button>
     <button @click="tryError">Fail promise</button>
+
+    <h2>Single promise</h2>
     <Promised :promise="promise">
-      <h1>loading</h1>
-      <h1 slot-scope="data">Success!</h1>
-      <h1 slot="error" slot-scope="error">Error: {{ error.message }}</h1>
+      <h3>Loading</h3>
+      <h3 slot-scope="data">Success!</h3>
+      <h3 slot="error" slot-scope="error">Error: {{ error.message }}</h3>
     </Promised>
+
+    <h2>Multiple promises</h2>
     <Promised :promises="promises">
-      <h2>Wating for first result</h2>
-      <h2 slot-scope="data">
-        Succeeded {{ data.length }} times
-      </h2>
-      <h2 slot="error" slot-scope="errors">
-        Failed {{ errors.length }} times
-      </h2>
+      <h3>Wating for first result</h3>
+      <h3 slot-scope="data">
+        Succeeded {{ data.length }} promises
+      </h3>
+      <h3 slot="catch" slot-scope="errors">
+        Failed {{ errors.length }} promises
+      </h3>
     </Promised>
   </div>
 </template>
 
 <script>
-import Promised from '../src';
-const delay = t => new Promise(r => setTimeout(r, t));
+import Promised from '../src'
+const delay = t => new Promise(r => setTimeout(r, t))
 
 export default {
   data: () => ({
@@ -30,18 +34,18 @@ export default {
   }),
 
   methods: {
-    trySuccess() {
-      this.promise = delay(500);
-      this.promises.push(this.promise);
+    trySuccess () {
+      this.promise = delay(500)
+      this.promises.push(this.promise)
     },
-    tryError() {
+    tryError () {
       this.promise = delay(500).then(() => {
-        throw new Error('🔥');
-      });
-      this.promises.push(this.promise);
+        throw new Error('🔥')
+      })
+      this.promises.push(this.promise)
     },
   },
 
   components: { Promised },
-};
+}
 </script>

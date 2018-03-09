@@ -59,6 +59,7 @@
     "coveragePathIgnorePatterns": [
       "<rootDir>/test/*.js",
       "<rootDir>/test/utils/Helper.vue",
+      "<rootDir>/test/utils/NamedSlots.vue",
       "<rootDir>/test/utils/NoResolve.vue",
       "<rootDir>/test/utils/NoPending.vue",
       "<rootDir>/test/utils/NoError.vue",

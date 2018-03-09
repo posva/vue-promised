@@ -139,6 +139,7 @@ describe('Promised', () => {
       reject(new Error('nope'))
       await tick()
       expect(errorSpy).toHaveBeenCalledTimes(2)
+      expect(errorSpy.mock.calls[0][0].toString()).toMatch(/Provide exactly one scoped slot named "catch"/)
     })
 
     test('throws if no default scoped slot provided on resolve', async () => {
@@ -151,6 +152,7 @@ describe('Promised', () => {
       resolve()
       await tick()
       expect(errorSpy).toHaveBeenCalledTimes(2)
+      expect(errorSpy.mock.calls[0][0].toString()).toMatch(/Provide exactly one default\/then scoped slot/)
     })
 
     test('throws if no default slot provided while pending', async () => {
@@ -161,6 +163,7 @@ describe('Promised', () => {
         },
       })
       expect(errorSpy).toHaveBeenCalledTimes(2)
+      expect(errorSpy.mock.calls[0][0].toString()).toMatch(/Provide exactly one default\/pending slot/)
     })
   })
 
