@@ -172,8 +172,15 @@ describe('Promised', () => {
         propsData: { promise },
       })
     })
+
     test('supports named pending slot', () => {
       expect(wrapper.text()).toBe('loading')
+    })
+
+    test('supports named pending slot', async () => {
+      resolve('foo')
+      await tick()
+      expect(wrapper.text()).toBe('foo')
     })
   })
 })

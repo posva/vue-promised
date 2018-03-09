@@ -21,11 +21,12 @@ export default {
       )
       return this.$scopedSlots.error(this.error)
     } else if (this.resolved) {
+      const slot = this.$scopedSlots.default || this.$scopedSlots.then
       assert(
-        this.$scopedSlots && this.$scopedSlots.default,
+        this.$scopedSlots && slot,
         'Provide exactly one default scoped slot for the resolved promise'
       )
-      return this.$scopedSlots.default(this.data)
+      return slot.call(this, this.data)
     } else {
       assert(
         (this.$slots.default && this.$slots.default.length === 1) ||
