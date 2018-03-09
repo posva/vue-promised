@@ -16,10 +16,10 @@ export default {
   render (h) {
     if (this.error instanceof Error || (this.error && this.error.length)) {
       assert(
-        this.$scopedSlots && this.$scopedSlots.error,
+        this.$scopedSlots && this.$scopedSlots.catch,
         'Provide exactly one scoped slot named "error" for the rejected promise'
       )
-      return this.$scopedSlots.error(this.error)
+      return this.$scopedSlots.catch(this.error)
     } else if (this.resolved) {
       const slot = this.$scopedSlots.default || this.$scopedSlots.then
       assert(

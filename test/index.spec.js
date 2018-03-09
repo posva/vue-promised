@@ -129,7 +129,7 @@ describe('Promised', () => {
       errorSpy.mockRestore()
     })
 
-    test('throws if no error scoped slot provided on error', async () => {
+    test('throws if no catch scoped slot provided on error', async () => {
       wrapper = mount(NoError, {
         propsData: {
           promise,
@@ -177,10 +177,16 @@ describe('Promised', () => {
       expect(wrapper.text()).toBe('loading')
     })
 
-    test('supports named pending slot', async () => {
+    test('supports scoped slot named then', async () => {
       resolve('foo')
       await tick()
       expect(wrapper.text()).toBe('foo')
+    })
+
+    test('supports scoped slot named catch', async () => {
+      reject(new Error('nope'))
+      await tick()
+      expect(wrapper.text()).toBe('nope')
     })
   })
 })
