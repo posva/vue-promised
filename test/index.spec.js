@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import fakePromise from 'faked-promise'
 import Helper from './utils/Helper'
+import NamedSlots from './utils/NamedSlots'
 import NoError from './utils/NoError'
 import NoResolve from './utils/NoResolve'
 import NoPending from './utils/NoPending'
@@ -160,6 +161,19 @@ describe('Promised', () => {
         },
       })
       expect(errorSpy).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe('slots names', () => {
+    let promise, resolve, reject
+    beforeEach(() => {
+      [promise, resolve, reject] = fakePromise()
+      wrapper = mount(NamedSlots, {
+        propsData: { promise },
+      })
+    })
+    test('supports named pending slot', () => {
+      expect(wrapper.text()).toBe('loading')
     })
   })
 })

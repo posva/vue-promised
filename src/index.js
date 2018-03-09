@@ -28,10 +28,11 @@ export default {
       return this.$scopedSlots.default(this.data)
     } else {
       assert(
-        this.$slots.default && this.$slots.default.length === 1,
-        'Provide exactly one default slot with no `slot-scope` for the pending promise'
+        (this.$slots.default && this.$slots.default.length === 1) ||
+        (this.$slots.pending && this.$slots.pending.length === 1),
+        'Provide exactly one default/pending slot with no `slot-scope` for the pending promise'
       )
-      return this.$slots.default[0]
+      return this.$slots.default ? this.$slots.default[0] : this.$slots.pending[0]
     }
   },
 
