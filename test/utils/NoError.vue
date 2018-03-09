@@ -7,15 +7,9 @@
 </template>
 
 <script>
-import Promised from '../../src'
+import common from './common'
 
 export default {
-  props: ['promise', 'promises'],
-  filters: {
-    text(data) {
-      return Array.isArray(data) ? data.join(',') : data
-    },
-  },
-  components: { Promised },
+  mixins: [common],
 }
 </script>
