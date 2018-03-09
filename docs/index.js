@@ -24,6 +24,7 @@ new Vue({
     xkcd.get('/info.0.json').then(res => {
       this.max = res.data.num
       this.promise = getRandomImage(this.max)
+      this.promises.push(this.promise)
     })
   },
 
@@ -37,7 +38,7 @@ new Vue({
       })
     },
     tryMultipleSuccess () {
-      this.promises.push(getRandomImage(this.max))
+      this.promises.unshift(getRandomImage(this.max))
     },
     tryMultipleError () {
       this.promises.push(delay(500).then(() => {

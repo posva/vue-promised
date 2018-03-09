@@ -5,7 +5,31 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>VuePromised</title>
+ <title>VuePromised</title>
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
+
+ <style>
+   figure {
+     margin: 0;
+   }
+   .siimple-box img {
+     max-width: 100%;
+     display: block;
+     margin: auto;
+   }
+   .text-center {
+     text-align: center;
+   }
+
+   .space {
+     margin: 14px 0;
+   }
+
+   .logo-container {
+     display: flex;
+     align-items: center;
+   }
+ </style>
 </head>
 
 <body>
@@ -15,40 +39,72 @@
   <script src="https://unpkg.com/vue-promised"></script>
 
   <div id="app">
-    <h2>Single promise</h2>
 
-    <button @click="trySuccess">Success promise</button>
-    <button @click="tryError">Fail promise</button>
-
-    <Promised :promise="promise" ref="multiplePromised">
-      <h3>Loading</h3>
-      <figure slot-scope="data">
-        <img :alt="data.transcript" :src="data.img"/>
-        <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
-      </figure>
-      <h3 slot="catch" slot-scope="error">Error: {{ error.message }}</h3>
-    </Promised>
-
-    <h2>Multiple promises</h2>
-
-    <button @click="tryMultipleSuccess">Add another image</button>
-    <button @click="tryMultipleError">Fail one promise</button>
-    <button @click="resetMultiple">Reset promises</button>
-    <button @click="resetErrors">Reset errors</button>
-
-    <Promised :promises="promises">
-      <h3>Wating for first result</h3>
-      <div slot-scope="items">
-        <h3>{{ items.length }} promises resolved</h3>
-        <figure v-for="item in items">
-          <img :alt="item.transcript" :src="item.img"/>
-          <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
-        </figure>
+    <div class="siimple-navbar">
+      <div class="siimple-layout--left">
+        <span class="siimple-navbar-title">VuePromised</span>
       </div>
-      <h3 slot="catch" slot-scope="errors">
-        Failed {{ errors.length }} promises
-      </h3>
-    </Promised>
+      <div class="siimple-layout--right">
+        <a class="siimple-navbar-link logo-container" href="https://github.com/posva/vue-promised">
+          <img height="32" width="32" src="https://unpkg.com/simple-icons@latest/icons/github.svg" />
+        </a>
+      </div>
+    </div>
+
+    <div class="siimple-content--medium">
+      <div class="siimple-box siimple-box--white">
+        <h2 class="siimple-h2 text-center">Single promise</h2>
+
+        <div class="siimple-content--fluid text-center">
+          <button class="siimple-btn siimple-btn--blue" @click="trySuccess">Fetch a new comic</button>
+          <button class="siimple-btn siimple-btn--red" @click="tryError">Purposely fail</button>
+        </div>
+
+        <div class="space"></div>
+
+        <Promised :promise="promise">
+          <div class="siimple-spinner siimple-spinner--teal"></div>
+          <figure class="text-center" slot-scope="data">
+            <img :alt="data.transcript" :src="data.img"/>
+            <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
+          </figure>
+          <div slot="catch" slot-scope="error" class="siimple-alert siimple-alert--orange">
+            Error: {{ error.message }}
+          </div>
+        </Promised>
+
+      </div>
+
+      <div class="siimple-box siimple-box--white text-center">
+        <h2 class="siimple-h2">Multiple promises</h2>
+
+        <button class="siimple-btn siimple-btn--blue" @click="tryMultipleSuccess">Add another image</button>
+        <button class="siimple-btn siimple-btn--red" @click="tryMultipleError">Fail one promise</button>
+        <button class="siimple-btn siimple-btn--navy" @click="resetMultiple">Reset promises</button>
+        <!-- <button class="siimple-btn siimple-btn-purple" @click="resetErrors">Reset errors</button> -->
+
+        <div class="space"></div>
+
+        <Promised :promises="promises" ref="multiplePromised">
+          <div class="siimple-spinner siimple-spinner--teal"></div>
+          <div slot-scope="items">
+            <h3>{{ items.length }} promises resolved</h3>
+            <figure v-for="item in items">
+              <img :alt="item.transcript" :src="item.img"/>
+              <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
+            </figure>
+          </div>
+          <div slot="catch" slot-scope="errors" class="siimple-tip siimple-tip--exclamation siimple-tip--red">
+            Failed {{ errors.length }} promises
+          </div>
+        </Promised>
+      </div>
+
+      <div class="siimple-footer" align="center">
+        Made by Eduardo San Martin Morote <a href="https://twitter.com/posva">@posva</a>
+      </div>
+
+    </div>
   </div>
 
   <script src="index.js"></script>
