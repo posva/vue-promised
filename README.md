@@ -21,31 +21,43 @@ import Promised from 'vue-promised'
 Vue.component('Promised', Promised)
 ```
 
-`promise` should be a promise. `data` will contain the result of the promise
-```html
+`promise` should be a Promise. `data` will contain the result of the promise. You can of course name it the way you want:
+
+```vue
 <Promised :promise="promise">
-    <!-- Use the default slot for loading content
-         Make sure to have ONLY 1 NODE
-         (you can always nest things inside of a div
-     -->
-    <h1>Loading</h1>
-    <!-- The default scoped slots will be used as the result -->
-    <h1 slot-scope="data">Success!</h1>
-    <!-- The 'error' named scoped slots will be used if there is an error -->
-    <h1 slot="error" slot-scope="error">Error: {{ error.message }}</h1>
+  <!--
+    Use the default slot for loading content
+    Make sure to have ONLY 1 NODE
+    (you can always nest things inside of a div
+  -->
+  <h1 slot="pending">Loading</h1>
+  <!-- The default scoped slots will be used as the result -->
+  <h1 slot="then" slot-scope="data">Success!</h1>
+  <!-- The 'catch' named scoped slots will be used if there is an error -->
+  <h1 slot="catch" slot-scope="error">Error: {{ error.message }}</h1>
 </Promised>
 ```
 
-Pass an array of Promises with `promises`
+You can omit the `pending` and `then` names, VuePromised will pick them up automatically, resulting in a more concise writing:
 
-```html
+```vue
+<Promised :promise="promise">
+  <h1>Loading</h1>
+  <h1 slot-scope="data">Success!</h1>
+  <h1 slot="catch" slot-scope="error">Error: {{ error.message }}</h1>
+</Promised>
+```
+
+You can also pass an array of Promises with the prop `promises`:
+
+```vue
 <Promised :promises="promises">
   <h2>Wating for first result</h2>
   <h2 slot-scope="data">
     Succeeded {{ data.length }} times
   </h2>
-  <h2 slot="error" slot-scope="errors">
-    Failed {{ errors.length }} times
+  <h2 slot="catch" slot-scope="errors">
+    Failed {{ errors.length }} promises
   </h2>
 </Promised>
 ```
