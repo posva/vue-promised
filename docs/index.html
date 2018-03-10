@@ -5,8 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
- <title>VuePromised</title>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
+  <title>VuePromised</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/prismjs@1.12.2/themes/prism.css">
 
  <style>
    figure {
@@ -29,6 +30,9 @@
      display: flex;
      align-items: center;
    }
+   [v-cloak] {
+     display: none;
+   }
  </style>
 </head>
 
@@ -36,7 +40,9 @@
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
-  <script src="https://unpkg.com/vue-promised"></script>
+  <script src="https://unpkg.com/vue-promised/dist/vue-promised.min.js"></script>
+  <script src="https://unpkg.com/prismjs@1.12.2/prism.js"></script>
+  <script src="https://unpkg.com/vue-prism-component@1.0.1/dist/vue-prism-component.min.js"></script>
 
   <div id="app">
 
@@ -51,32 +57,37 @@
       </div>
     </div>
 
-    <div class="siimple-content--medium">
-      <div class="siimple-box siimple-box--white">
-        <h2 class="siimple-h2 text-center">Single promise</h2>
+    <div class="siimple-content--medium" v-cloak>
+      <div class="siimple-box siimple-box--white text-center">
+        <h2 class="siimple-h2">Single promise</h2>
 
-        <div class="siimple-content--fluid text-center">
+        <div class="siimple-content--fluid">
           <button class="siimple-btn siimple-btn--blue" @click="trySuccess">Fetch a new comic</button>
           <button class="siimple-btn siimple-btn--red" @click="tryError">Purposely fail</button>
         </div>
 
         <div class="space"></div>
 
-        <Promised :promise="promise">
-          <div class="siimple-spinner siimple-spinner--teal"></div>
-          <figure class="text-center" slot-scope="data">
-            <img :alt="data.transcript" :src="data.img"/>
-            <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
-          </figure>
-          <div slot="catch" slot-scope="error" class="siimple-alert siimple-alert--orange">
-            Error: {{ error.message }}
-          </div>
-        </Promised>
+        <demo-code :code="samples.single">
+          <Promised :promise="promise">
+            <div class="siimple-spinner siimple-spinner--teal"></div>
+            <figure class="text-center" slot-scope="data">
+              <img :alt="data.transcript" :src="data.img"/>
+              <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
+            </figure>
+            <div slot="catch" slot-scope="error" class="siimple-alert siimple-alert--orange">
+              Error: {{ error.message }}
+            </div>
+          </Promised>
+        </demo-code>
 
       </div>
 
       <div class="siimple-box siimple-box--white text-center">
         <h2 class="siimple-h2">Multiple promises</h2>
+
+        <a class="siimple-link siimple-small" target="_blank" href="https://github.com/posva/vue-promised/issues/4">psst, I need help to improve the API, see #4 to help</a>
+        <br/>
 
         <button class="siimple-btn siimple-btn--blue" @click="tryMultipleSuccess">Add another image</button>
         <button class="siimple-btn siimple-btn--red" @click="tryMultipleError">Fail one promise</button>
@@ -85,19 +96,22 @@
 
         <div class="space"></div>
 
-        <Promised :promises="promises" ref="multiplePromised">
-          <div class="siimple-spinner siimple-spinner--teal"></div>
-          <div slot-scope="items">
-            <h3>{{ items.length }} promises resolved</h3>
-            <figure v-for="item in items">
-              <img :alt="item.transcript" :src="item.img"/>
-              <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
-            </figure>
-          </div>
-          <div slot="catch" slot-scope="errors" class="siimple-tip siimple-tip--exclamation siimple-tip--red">
-            Failed {{ errors.length }} promises
-          </div>
-        </Promised>
+        <demo-code :code="samples.multiple">
+          <Promised :promises="promises" ref="multiplePromised">
+            <div class="siimple-spinner siimple-spinner--teal"></div>
+            <div slot-scope="items">
+              <h3>{{ items.length }} promises resolved</h3>
+              <figure v-for="item in items" :key="item.num">
+                <img :alt="item.transcript" :src="item.img"/>
+                <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
+              </figure>
+            </div>
+            <div slot="catch" slot-scope="errors" class="siimple-tip siimple-tip--exclamation siimple-tip--red">
+              Failed {{ errors.length }} promises
+            </div>
+          </Promised>
+        </demo-code>
+
       </div>
 
       <div class="siimple-footer" align="center">
@@ -106,6 +120,20 @@
 
     </div>
   </div>
+
+  <script type="text/x-template" id="demo-code">
+    <div>
+      <h5>
+        <a class="siimple-link" href="#" role="button" @click.prevent="showCode = !showCode">{{ seeLabel }}</a>
+      </h5>
+      <div class="demo__demo" v-if="!showCode">
+        <slot/>
+      </div>
+      <div class="demo__code" v-else>
+        <Prism language="html" :code="code"/>
+      </div>
+    </div>
+  </script>
 
   <script src="index.js"></script>
 
