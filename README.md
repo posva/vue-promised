@@ -48,19 +48,44 @@ You can omit the `pending` and `then` names, VuePromised will pick them up autom
 </Promised>
 ```
 
-You can also pass an array of Promises with the prop `promises`:
+You can also pass an array of Promises with the prop `promises` but keep in mind the order is not maintained for the resolved `items`:
 
 ```vue
 <Promised :promises="promises">
   <h2>Wating for first result</h2>
-  <h2 slot-scope="data">
-    Succeeded {{ data.length }} times
+  <h2 slot-scope="items">
+    Succeeded {{ items.length }} times
   </h2>
   <h2 slot="catch" slot-scope="errors">
     Failed {{ errors.length }} promises
   </h2>
 </Promised>
 ```
+
+## API Reference
+
+### `Promised` component
+
+`Promised` will watch its prop `promise` and change its state accordingly.
+
+#### props
+
+| Name | Description | Type |
+| --- | --- | --- |
+| `promise` | Promise to be resolved | `Promise` |
+| `promises` | Array of Promises to be resolved | `Promise`  |
+
+#### slots
+
+`pending` and `then` slots are provided in case you prefer a more explicit approach.
+
+| Name | Description | Scope |
+| --- | --- | --- |
+| _default_ | Content to display while the promise is pending | — |
+| _default_ | Content to display once the promise has been successfully resolved | `data`: resolved value |
+| `catch` | Content to display if the promise is rejected | `error`: rejection reason |
+| `pending` | Same as _non scoped default_  | — |
+| `then` | Same as _scoped default_ | `data`: resolved value |
 
 ## License
 
