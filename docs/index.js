@@ -67,7 +67,7 @@ new Vue({
     Failed {{ errors.length }} promises
   </div>
 </Promised>
-`
+`,
     },
   }),
 
