@@ -74,6 +74,7 @@ You can also pass an array of Promises with the prop `promises` but keep in mind
 | --- | --- | --- |
 | `promise` | Promise to be resolved | `Promise` |
 | `promises` | Array of Promises to be resolved | `Promise`  |
+| `pendingDelay` | Delay in ms to wait before displaying the pending slot. Defaults to 200 | `Number` |
 
 #### slots
 
