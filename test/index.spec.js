@@ -6,7 +6,10 @@ import NoError from './utils/NoError'
 import NoResolve from './utils/NoResolve'
 import NoPending from './utils/NoPending'
 
-const tick = () => new Promise(resolve => setTimeout(resolve, 0))
+// keep a real setTimeout
+const timeout = setTimeout
+const tick = () => new Promise(resolve => timeout(resolve, 0))
+jest.useFakeTimers()
 
 describe('Promised', () => {
   let wrapper
@@ -17,6 +20,7 @@ describe('Promised', () => {
       wrapper = mount(Helper, {
         propsData: {
           promise,
+          pendingDelay: 0,
         },
       })
     })
@@ -70,6 +74,7 @@ describe('Promised', () => {
       wrapper = mount(Helper, {
         propsData: {
           promises,
+          pendingDelay: 0,
         },
       })
     })
@@ -133,6 +138,7 @@ describe('Promised', () => {
       wrapper = mount(NoError, {
         propsData: {
           promise,
+          pendingDelay: 0,
         },
       })
       expect(errorSpy).not.toHaveBeenCalled()
@@ -146,6 +152,7 @@ describe('Promised', () => {
       wrapper = mount(NoResolve, {
         propsData: {
           promise,
+          pendingDelay: 0,
         },
       })
       expect(errorSpy).not.toHaveBeenCalled()
@@ -160,6 +167,7 @@ describe('Promised', () => {
       wrapper = mount(NoPending, {
         propsData: {
           promise,
+          pendingDelay: 0,
         },
       })
       expect(errorSpy).toHaveBeenCalledTimes(2)
@@ -172,7 +180,10 @@ describe('Promised', () => {
     beforeEach(() => {
       [promise, resolve, reject] = fakePromise()
       wrapper = mount(NamedSlots, {
-        propsData: { promise },
+        propsData: {
+          promise,
+          pendingDelay: 0,
+        },
       })
     })
 
@@ -190,6 +201,78 @@ describe('Promised', () => {
       reject(new Error('nope'))
       await tick()
       expect(wrapper.text()).toBe('nope')
+    })
+  })
+
+  describe('pendingDelay', () => {
+    describe('single promise', () => {
+      let promise
+      beforeEach(() => {
+        clearTimeout.mockClear()
+        ;[promise] = fakePromise()
+        wrapper = mount(Helper, {
+          propsData: {
+            promise,
+            pendingDelay: 300,
+          },
+        })
+      })
+
+      test('displays nothing before the delay', async () => {
+        expect(wrapper.text()).toBe('')
+        jest.runAllTimers()
+        await tick()
+        expect(wrapper.text()).toBe('loading')
+      })
+
+      test('custom pendingDelay', async () => {
+        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 300)
+        ;[promise] = fakePromise()
+        wrapper.setProps({
+          promise,
+          pendingDelay: 100,
+        })
+        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100)
+      })
+
+      test('cancels previous timeouts', () => {
+        expect(clearTimeout).not.toHaveBeenCalled()
+        ;[promise] = fakePromise()
+        wrapper.setProps({
+          promise,
+          pendingDelay: 100,
+        })
+        expect(clearTimeout).toHaveBeenCalled()
+      })
+    })
+
+    describe('multiple promises', () => {
+      let fakedPromises
+      beforeEach(async () => {
+        fakedPromises = Array.from({ length: 3 }, () => fakePromise()).map(
+          ([promise, resolve, reject]) => ({
+            promise,
+            resolve,
+            reject,
+          })
+        )
+
+        const promises = fakedPromises.map(({ promise }) => promise)
+
+        wrapper = mount(Helper, {
+          propsData: {
+            promises,
+            pendingDelay: 300,
+          },
+        })
+      })
+
+      test('displays nothing before the delay', async () => {
+        expect(wrapper.text()).toBe('')
+        jest.runAllTimers()
+        await tick()
+        expect(wrapper.text()).toBe('loading')
+      })
     })
   })
 })

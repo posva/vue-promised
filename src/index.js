@@ -5,12 +5,18 @@ export default {
   props: {
     promise: Promise,
     promises: Array,
+    pendingDelay: {
+      type: [Number, String],
+      default: 200,
+    },
   },
 
   data: () => ({
     resolved: false,
     data: null,
     error: null,
+
+    isDelayElapsed: false,
   }),
 
   render (h) {
@@ -27,7 +33,7 @@ export default {
         'Provide exactly one default/then scoped slot for the resolved promise'
       )
       return slot.call(this, this.data)
-    } else {
+    } else if (this.isDelayElapsed) {
       assert(
         (this.$slots.default && this.$slots.default.length === 1) ||
         (this.$slots.pending && this.$slots.pending.length === 1),
@@ -35,6 +41,9 @@ export default {
       )
       return this.$slots.default ? this.$slots.default[0] : this.$slots.pending[0]
     }
+
+    // do not render anything
+    return h()
   },
 
   watch: {
@@ -43,6 +52,7 @@ export default {
         if (!promise) return
         this.resolved = false
         this.error = null
+        this.setupDelay()
         promise
           .then(data => {
             if (this.promise === promise) {
@@ -63,6 +73,7 @@ export default {
         this.resolved = false
         this.error = []
         this.data = []
+        this.setupDelay()
         promises.forEach(p => {
           p
             .then(data => {
@@ -77,6 +88,18 @@ export default {
         })
       },
       immediate: true,
+    },
+  },
+
+  methods: {
+    setupDelay () {
+      if (this.pendingDelay > 0) {
+        this.isDelayElapsed = false
+        if (this.timerId) clearTimeout(this.timerId)
+        this.timerId = setTimeout(() => this.isDelayElapsed = true, this.pendingDelay)
+      } else {
+        this.isDelayElapsed = true
+      }
     },
   },
 }

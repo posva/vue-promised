@@ -1,7 +1,7 @@
 import Promised from '../../src'
 
 export default {
-  props: ['promise', 'promises'],
+  props: ['promise', 'promises', 'pendingDelay'],
   filters: {
     text (data) {
       return Array.isArray(data) ? data.join(',') : data
