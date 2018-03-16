@@ -108,6 +108,9 @@ describe('Promised', () => {
       fakedPromises[0].resolve('foo')
       await tick()
       expect(wrapper.text()).toBe('loading')
+      other[1]('done')
+      await tick()
+      expect(wrapper.text()).toBe('done')
     })
 
     test('cancels previous rejected promise', async () => {
@@ -116,6 +119,9 @@ describe('Promised', () => {
       fakedPromises[0].reject(new Error('failed'))
       await tick()
       expect(wrapper.text()).toBe('loading')
+      other[2](new Error('nope'))
+      await tick()
+      expect(wrapper.text()).toBe('nope')
     })
   })
 

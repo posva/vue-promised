@@ -68,13 +68,19 @@ export default {
     },
 
     promises: {
-      handler (promises) {
+      handler (promises, oldPromises) {
         if (!promises) return
-        this.resolved = false
-        this.error = []
-        this.data = []
-        this.setupDelay()
-        promises.forEach(p => {
+        if (promises !== oldPromises) {
+          // reset the map if there's a new array
+          this.ongoingPromises = new Map()
+          this.resolved = false
+          this.error = []
+          this.data = []
+          this.setupDelay()
+        }
+        // do not listen for already set up promises
+        promises.filter(p => !this.ongoingPromises.has(p)).forEach(p => {
+          this.ongoingPromises.set(p, true)
           p
             .then(data => {
               if (this.promises === promises) {
