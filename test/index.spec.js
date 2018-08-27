@@ -110,6 +110,8 @@ describe('Promised', () => {
       expect(wrapper.text()).toBe('loading')
       other[1]('done')
       await tick()
+      // XXX looks like a bug in vue test utils, need to rerender to actually display things
+      wrapper.setProps({ pendingDelay: 100 })
       expect(wrapper.text()).toBe('done')
     })
 
@@ -121,6 +123,8 @@ describe('Promised', () => {
       expect(wrapper.text()).toBe('loading')
       other[2](new Error('nope'))
       await tick()
+      // XXX looks like a bug in vue test utils, need to rerender to actually display things
+      wrapper.setProps({ pendingDelay: 100 })
       expect(wrapper.text()).toBe('nope')
     })
   })
@@ -151,7 +155,9 @@ describe('Promised', () => {
       reject(new Error('nope'))
       await tick()
       expect(errorSpy).toHaveBeenCalledTimes(2)
-      expect(errorSpy.mock.calls[0][0].toString()).toMatch(/Provide exactly one scoped slot named "catch"/)
+      expect(errorSpy.mock.calls[0][0].toString()).toMatch(
+        /Provide exactly one scoped slot named "catch"/
+      )
     })
 
     test('throws if no default scoped slot provided on resolve', async () => {
@@ -164,20 +170,25 @@ describe('Promised', () => {
       expect(errorSpy).not.toHaveBeenCalled()
       resolve()
       await tick()
-      expect(errorSpy).toHaveBeenCalledTimes(2)
-      expect(errorSpy.mock.calls[0][0].toString()).toMatch(/Provide exactly one default\/then scoped slot/)
+      expect(errorSpy.mock.calls[0][0].toString()).toMatch(
+        /Provide exactly one default\/then scoped slot/
+      )
     })
 
     test('throws if no default slot provided while pending', async () => {
       expect(errorSpy).not.toHaveBeenCalled()
-      wrapper = mount(NoPending, {
-        propsData: {
-          promise,
-          pendingDelay: 0,
-        },
-      })
-      expect(errorSpy).toHaveBeenCalledTimes(2)
-      expect(errorSpy.mock.calls[0][0].toString()).toMatch(/Provide exactly one default\/pending slot/)
+      expect(() => {
+        wrapper = mount(NoPending, {
+          propsData: {
+            promise,
+            pendingDelay: 0,
+          },
+        })
+      }).toThrowError(/Provide exactly one default\/pending slot/)
+      // expect(errorSpy).toHaveBeenCalledTimes(2)
+      // expect(errorSpy.mock.calls[0][0].toString()).toMatch(
+      //   /Provide exactly one default\/pending slot/
+      // )
     })
   })
 
@@ -215,6 +226,7 @@ describe('Promised', () => {
       let promise
       beforeEach(() => {
         clearTimeout.mockClear()
+        setTimeout.mockClear()
         ;[promise] = fakePromise()
         wrapper = mount(Helper, {
           propsData: {
@@ -232,12 +244,14 @@ describe('Promised', () => {
       })
 
       test('custom pendingDelay', async () => {
+        expect(setTimeout).toHaveBeenCalledTimes(1)
         expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 300)
         ;[promise] = fakePromise()
         wrapper.setProps({
-          promise,
           pendingDelay: 100,
+          promise,
         })
+        expect(setTimeout).toHaveBeenCalledTimes(2)
         expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100)
       })
 

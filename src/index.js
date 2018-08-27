@@ -36,7 +36,7 @@ export default {
     } else if (this.isDelayElapsed) {
       assert(
         (this.$slots.default && this.$slots.default.length === 1) ||
-        (this.$slots.pending && this.$slots.pending.length === 1),
+          (this.$slots.pending && this.$slots.pending.length === 1),
         'Provide exactly one default/pending slot with no `slot-scope` for the pending promise'
       )
       return this.$slots.default ? this.$slots.default[0] : this.$slots.pending[0]
@@ -81,16 +81,14 @@ export default {
         // do not listen for already set up promises
         promises.filter(p => !this.ongoingPromises.has(p)).forEach(p => {
           this.ongoingPromises.set(p, true)
-          p
-            .then(data => {
-              if (this.promises === promises) {
-                this.resolved = true
-                this.data.push(data)
-              }
-            })
-            .catch(err => {
-              if (this.promises === promises) this.error.push(err)
-            })
+          p.then(data => {
+            if (this.promises === promises) {
+              this.resolved = true
+              this.data.push(data)
+            }
+          }).catch(err => {
+            if (this.promises === promises) this.error.push(err)
+          })
         })
       },
       immediate: true,
@@ -102,7 +100,7 @@ export default {
       if (this.pendingDelay > 0) {
         this.isDelayElapsed = false
         if (this.timerId) clearTimeout(this.timerId)
-        this.timerId = setTimeout(() => this.isDelayElapsed = true, this.pendingDelay)
+        this.timerId = setTimeout(() => (this.isDelayElapsed = true), this.pendingDelay)
       } else {
         this.isDelayElapsed = true
       }
