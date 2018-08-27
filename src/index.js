@@ -3,7 +3,10 @@ import { assert } from './util'
 export default {
   name: 'Promised',
   props: {
-    promise: Promise,
+    promise: {
+      // allow polyfied Promise
+      validator: p => p && typeof p.then === 'function' && typeof p.catch === 'function',
+    },
     promises: Array,
     pendingDelay: {
       type: [Number, String],
