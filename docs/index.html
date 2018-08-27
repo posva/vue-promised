@@ -9,31 +9,34 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
   <link rel="stylesheet" href="https://unpkg.com/prismjs@1.12.2/themes/prism.css">
 
- <style>
-   figure {
-     margin: 0;
-   }
-   .siimple-box img {
-     max-width: 100%;
-     display: block;
-     margin: auto;
-   }
-   .text-center {
-     text-align: center;
-   }
+  <style>
+    figure {
+      margin: 0;
+    }
 
-   .space {
-     margin: 14px 0;
-   }
+    .siimple-box img {
+      max-width: 100%;
+      display: block;
+      margin: auto;
+    }
 
-   .logo-container {
-     display: flex;
-     align-items: center;
-   }
-   [v-cloak] {
-     display: none;
-   }
- </style>
+    .text-center {
+      text-align: center;
+    }
+
+    .space {
+      margin: 14px 0;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    [v-cloak] {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
@@ -77,16 +80,16 @@
         <div class="space"></div>
 
         <demo-code :code="samples.single">
-          <Promised :promise="promise">
+          <promised :promise="promise">
             <div class="siimple-spinner siimple-spinner--teal"></div>
             <figure class="text-center" slot-scope="data">
-              <img :alt="data.transcript" :src="data.img"/>
+              <img :alt="data.transcript" :src="data.img" />
               <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
             </figure>
             <div slot="catch" slot-scope="error" class="siimple-alert siimple-alert--orange">
               Error: {{ error.message }}
             </div>
-          </Promised>
+          </promised>
         </demo-code>
 
       </div>
@@ -94,7 +97,8 @@
       <div class="siimple-box siimple-box--white text-center">
         <h2 class="siimple-h2">Multiple promises</h2>
 
-        <a class="siimple-link siimple-small" target="_blank" href="https://github.com/posva/vue-promised/issues/4">psst, I need help to improve the API, see #4 to help</a>
+        <a class="siimple-link siimple-small" target="_blank" href="https://github.com/posva/vue-promised/issues/4">psst,
+          I need help to improve the API, see #4 to help</a>
         <br/>
 
         <button class="siimple-btn siimple-btn--blue" @click="tryMultipleSuccess">Add another image</button>
@@ -110,7 +114,7 @@
             <div slot-scope="items">
               <h3>{{ items.length }} promises resolved</h3>
               <figure v-for="item in items" :key="item.num">
-                <img :alt="item.transcript" :src="item.img"/>
+                <img :alt="item.transcript" :src="item.img" />
                 <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
               </figure>
             </div>

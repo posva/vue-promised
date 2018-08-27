@@ -7,14 +7,16 @@ const xkcd = axios.create({
 })
 
 function getRandomImage (max) {
-  return xkcd.get(`/${Math.round(Math.random() * max) + 1}/info.0.json`)
-    .then(res => res.data)
+  return xkcd.get(`/${Math.round(Math.random() * max) + 1}/info.0.json`).then(res => res.data)
 }
 
 Vue.component('DemoCode', {
-  template: '#demo-code',
+  components: { Prism: PrismComponent },
   props: {
-    code: String,
+    code: {
+      type: String,
+      required: true,
+    },
   },
 
   data () {
@@ -28,13 +30,14 @@ Vue.component('DemoCode', {
       return this.showCode ? 'See demo' : 'See code'
     },
   },
-
-  components: { Prism: PrismComponent },
+  template: '#demo-code',
 })
 
 // eslint-disable-next-line
 new Vue({
   el: '#app',
+
+  components: { Promised: VuePromised },
 
   data: () => ({
     promise: null,
@@ -92,9 +95,11 @@ new Vue({
       this.promises.unshift(getRandomImage(this.max))
     },
     tryMultipleError () {
-      this.promises.push(delay(500).then(() => {
-        throw new Error('🔥')
-      }))
+      this.promises.push(
+        delay(500).then(() => {
+          throw new Error('🔥')
+        })
+      )
     },
     resetMultiple () {
       this.promises = []
@@ -104,6 +109,4 @@ new Vue({
       this.$refs.multiplePromised.errors = []
     },
   },
-
-  components: { Promised: VuePromised },
 })
