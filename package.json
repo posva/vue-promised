@@ -65,6 +65,7 @@
       "<rootDir>/test/utils/NoError.vue",
       "<rootDir>/test/.*.js",
       "<rootDir>/test/*/*.js"
-    ]
+    ],
+    "testURL": "http://localhost"
   }
 }
