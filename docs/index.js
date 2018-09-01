@@ -3,7 +3,7 @@
 const delay = (t, value) => new Promise(r => setTimeout(r.bind(null, value), t))
 
 const xkcd = axios.create({
-  baseURL: 'https://cors.now.sh/https://xkcd.com',
+  baseURL: 'https://cors-now-lbiomgdmwp.now.sh/https://xkcd.com',
 })
 
 function getRandomImage (max) {
