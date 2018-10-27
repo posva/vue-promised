@@ -33,16 +33,16 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@vue/test-utils": "^1.0.0-beta.24",
-    "babel-jest": "^23.4.2",
+    "@vue/test-utils": "^1.0.0-beta.25",
+    "babel-jest": "^23.6.0",
     "babel-preset-env": "^1.7.0",
-    "codecov": "^3.0.4",
-    "eslint": "^5.4.0",
-    "eslint-config-posva": "^2.0.1",
+    "codecov": "^3.1.0",
+    "eslint": "^5.8.0",
+    "eslint-config-posva": "^2.0.2",
     "faked-promise": "^2.0.0",
-    "jest": "^23.5.0",
+    "jest": "^23.6.0",
     "vue": "^2.5.17",
-    "vue-jest": "^2.6.0",
+    "vue-jest": "^3.0.0",
     "vue-template-compiler": "^2.5.17"
   },
   "jest": {
