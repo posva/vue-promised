@@ -5,7 +5,7 @@
   "main": "dist/vue-promised.cjs.js",
   "module": "dist/vue-promised.es.js",
   "unpkg": "dist/vue-promised.js",
-  "browser": "dist/vue-promised.js",
+  "browser": "dist/vue-promised.es.js",
   "scripts": {
     "lint": "eslint --color --ext=js,html src test docs",
     "unit": "jest",
