@@ -10,6 +10,11 @@ npm install vue-promised
 yarn add vue-promised
 ```
 
+## Migrating from `v0.2.x`
+
+Migrating to v1 should be doable in a small amount of time as the only breaking changes are some slots name and the way `Promised` component is imported.
+[Check releases notes to see the list of breaking changes](https://github.com/posva/vue-promised/releases/tag/v1.0.0)
+
 ## Usage
 
 Import the component to use it
