@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-npm install --save vue-promised
+npm install vue-promised
 # or
 yarn add vue-promised
 ```
@@ -94,14 +94,12 @@ This allows to create more advanced async templates like this one featuring a Se
 
 #### slots
 
-`pending` and `then` slots are provided in case you prefer a more explicit approach.
-
-| Name       | Description                                                                           | Scope                                    |
-| ---------- | ------------------------------------------------------------------------------------- | ---------------------------------------- |
-| `pending`  | Content to display while the promise is pending                                       | —                                        |
-| _default_  | Content to display once the promise has been successfully resolved                    | `data`: resolved value                   |
-| `rejected` | Content to display if the promise is rejected                                         | `error`: rejection reason                |
-| `combined` | Combines all slots allows to provide a granular control over what should be displayed | `context` [See details](#context-object) |
+| Name       | Description                                                                     | Scope                                    |
+| ---------- | ------------------------------------------------------------------------------- | ---------------------------------------- |
+| `pending`  | Content to display while the promise is pending and before pendingDelay is over | —                                        |
+| _default_  | Content to display once the promise has been successfully resolved              | `data`: resolved value                   |
+| `rejected` | Content to display if the promise is rejected                                   | `error`: rejection reason                |
+| `combined` | Combines all slots to provide a granular control over what should be displayed  | `context` [See details](#context-object) |
 
 ## License
 
