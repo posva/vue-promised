@@ -29,6 +29,15 @@ describe('Promised', () => {
       })
     })
 
+    it('displays nothing with no promise', () => {
+      wrapper = mount(Promised, {
+        propsData: { promise: null, pendingDelay: 0 },
+        slots,
+        scopedSlots,
+      })
+      expect(wrapper.text()).toBe('')
+    })
+
     it('displays pending', async () => {
       expect(wrapper.text()).toBe('pending')
     })
@@ -37,6 +46,20 @@ describe('Promised', () => {
       resolve('foo')
       await tick()
       expect(wrapper.text()).toBe('foo')
+    })
+
+    it('works with a non scoped-slot', async () => {
+      [promise, resolve, reject] = fakePromise()
+      wrapper = mount(Promised, {
+        propsData: { promise, pendingDelay: 0 },
+        slots: {
+          ...slots,
+          default: `<p>finished</p>`,
+        },
+      })
+      resolve('whatever')
+      await tick()
+      expect(wrapper.text()).toBe('finished')
     })
 
     it('displays an error if rejected', async () => {
@@ -132,6 +155,12 @@ describe('Promised', () => {
         await tick()
         expect(wrapper.is('span')).toBe(true)
         expect(wrapper.text()).toBe('hello')
+      })
+
+      it('can customize the tag', () => {
+        wrapper.setProps({ tag: 'p' })
+        expect(wrapper.is('p')).toBe(true)
+        expect(wrapper.text()).toBe('pending')
       })
     })
   })

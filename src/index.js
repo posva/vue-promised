@@ -145,10 +145,14 @@ export const Promised = {
       return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
 
+    const defaultSlot = this.$slots.default
     if (this.resolved) {
-      const slot = this.$scopedSlots.default
-      const node = slot.call(this, this.data)
-      return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
+      if (this.$scopedSlots.default) {
+        const node = this.$scopedSlots.default(this.data)
+        return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
+      } else if (defaultSlot && defaultSlot.length) {
+        return convertVNodeArray(h, this.tag, defaultSlot)
+      }
     }
 
     if (!this.isDelayElapsed) return h()

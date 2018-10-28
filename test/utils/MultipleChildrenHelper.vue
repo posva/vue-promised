@@ -12,7 +12,7 @@
 import { Promised } from '../../src'
 
 export default {
-  props: ['promise', 'pendingDelay'],
+  props: ['promise', 'pendingDelay', 'tag'],
   components: { Promised },
 }
 </script>

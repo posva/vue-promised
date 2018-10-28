@@ -11,7 +11,7 @@ const timeout = setTimeout
 const tick = () => new Promise(resolve => timeout(resolve, 0))
 jest.useFakeTimers()
 
-describe.skip('Promised', () => {
+describe.skip('Old Promised', () => {
   let wrapper
   describe('single promise', () => {
     let promise, resolve, reject
