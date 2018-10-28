@@ -37,7 +37,7 @@ Vue.component('DemoCode', {
 new Vue({
   el: '#app',
 
-  components: { Promised: VuePromised },
+  components: { Promised: VuePromised.Promised },
 
   data: () => ({
     promise: null,

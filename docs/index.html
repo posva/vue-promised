@@ -81,47 +81,15 @@
 
         <demo-code :code="samples.single">
           <promised :promise="promise">
-            <div class="siimple-spinner siimple-spinner--teal"></div>
+            <div slot="pending" class="siimple-spinner siimple-spinner--teal"></div>
             <figure class="text-center" slot-scope="data">
               <img :alt="data.transcript" :src="data.img" />
               <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
             </figure>
-            <div slot="catch" slot-scope="error" class="siimple-alert siimple-alert--orange">
+            <div slot="rejected" slot-scope="error" class="siimple-alert siimple-alert--orange">
               Error: {{ error.message }}
             </div>
           </promised>
-        </demo-code>
-
-      </div>
-
-      <div class="siimple-box siimple-box--white text-center">
-        <h2 class="siimple-h2">Multiple promises</h2>
-
-        <a class="siimple-link siimple-small" target="_blank" href="https://github.com/posva/vue-promised/issues/4">psst,
-          I need help to improve the API, see #4 to help</a>
-        <br/>
-
-        <button class="siimple-btn siimple-btn--blue" @click="tryMultipleSuccess">Add another image</button>
-        <button class="siimple-btn siimple-btn--red" @click="tryMultipleError">Fail one promise</button>
-        <button class="siimple-btn siimple-btn--navy" @click="resetMultiple">Reset promises</button>
-        <!-- <button class="siimple-btn siimple-btn-purple" @click="resetErrors">Reset errors</button> -->
-
-        <div class="space"></div>
-
-        <demo-code :code="samples.multiple">
-          <Promised :promises="promises" ref="multiplePromised">
-            <div class="siimple-spinner siimple-spinner--teal"></div>
-            <div slot-scope="items">
-              <h3>{{ items.length }} promises resolved</h3>
-              <figure v-for="item in items" :key="item.num">
-                <img :alt="item.transcript" :src="item.img" />
-                <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
-              </figure>
-            </div>
-            <div slot="catch" slot-scope="errors" class="siimple-tip siimple-tip--exclamation siimple-tip--red">
-              Failed {{ errors.length }} promises
-            </div>
-          </Promised>
         </demo-code>
 
       </div>
