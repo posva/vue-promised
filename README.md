@@ -35,6 +35,18 @@ Vue.component('Promised', Promised)
 </Promised>
 ```
 
+You can also provide a single `combined` slot that will receive a context with all relevant information:
+
+```vue
+```
+
+### `context` object
+
+- `isPending`
+- `isDelayOver`
+- `data`
+- `error`
+
 ## API Reference
 
 ### `Promised` component
@@ -53,11 +65,12 @@ Vue.component('Promised', Promised)
 
 `pending` and `then` slots are provided in case you prefer a more explicit approach.
 
-| Name       | Description                                                        | Scope                     |
-| ---------- | ------------------------------------------------------------------ | ------------------------- |
-| `pending`  | Content to display while the promise is pending                    | —                         |
-| _default_  | Content to display once the promise has been successfully resolved | `data`: resolved value    |
-| `rejected` | Content to display if the promise is rejected                      | `error`: rejection reason |
+| Name       | Description                                                                           | Scope                                    |
+| ---------- | ------------------------------------------------------------------------------------- | ---------------------------------------- |
+| `pending`  | Content to display while the promise is pending                                       | —                                        |
+| _default_  | Content to display once the promise has been successfully resolved                    | `data`: resolved value                   |
+| `rejected` | Content to display if the promise is rejected                                         | `error`: rejection reason                |
+| `combined` | Combines all slots allows to provide a granular control over what should be displayed | `context` [See details][#context object] |
 
 ## License
 
