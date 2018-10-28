@@ -41,7 +41,6 @@ new Vue({
 
   data: () => ({
     promise: null,
-    promises: [],
 
     samples: {
       single: `\
@@ -73,7 +72,6 @@ new Vue({
     xkcd.get('/info.0.json').then(res => {
       this.max = res.data.num
       this.promise = getRandomImage(this.max)
-      this.promises.push(this.promise)
     })
   },
 
@@ -85,23 +83,6 @@ new Vue({
       this.promise = delay(500).then(() => {
         return Promise.reject(new Error('🔥'))
       })
-    },
-    tryMultipleSuccess () {
-      this.promises.unshift(getRandomImage(this.max))
-    },
-    tryMultipleError () {
-      this.promises.push(
-        delay(500).then(() => {
-          throw new Error('🔥')
-        })
-      )
-    },
-    resetMultiple () {
-      this.promises = []
-    },
-
-    resetErrors () {
-      this.$refs.multiplePromised.errors = []
     },
   },
 })
