@@ -1,6 +1,6 @@
 {
   "name": "vue-promised",
-  "version": "0.2.3",
+  "version": "1.0.0",
   "description": "Promises as components",
   "main": "dist/vue-promised.cjs.js",
   "module": "dist/vue-promised.es.js",
