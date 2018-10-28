@@ -70,7 +70,7 @@ You can also provide a single `combined` slot that will receive a context with a
 | `pending`  | Content to display while the promise is pending                                       | —                                        |
 | _default_  | Content to display once the promise has been successfully resolved                    | `data`: resolved value                   |
 | `rejected` | Content to display if the promise is rejected                                         | `error`: rejection reason                |
-| `combined` | Combines all slots allows to provide a granular control over what should be displayed | `context` [See details][#context object] |
+| `combined` | Combines all slots allows to provide a granular control over what should be displayed | `context` [See details](#context-object) |
 
 ## License
 
