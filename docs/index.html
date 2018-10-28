@@ -36,6 +36,11 @@
     [v-cloak] {
       display: none;
     }
+
+    .code {
+      text-align: initial;
+      overflow: auto;
+    }
   </style>
 </head>
 
@@ -43,7 +48,7 @@
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="https://unpkg.com/vue"></script>
-  <script src="https://unpkg.com/vue-promised/dist/vue-promised.min.js"></script>
+  <script src="https://unpkg.com/vue-promised/dist/vue-promised.js"></script>
   <script src="https://unpkg.com/prismjs@1.12.2/prism.js"></script>
   <script src="https://unpkg.com/vue-prism-component@1.0.1/dist/vue-prism-component.min.js"></script>
 
@@ -92,6 +97,24 @@
           </promised>
         </demo-code>
 
+        <div class="siimple-box siimple-box--white text-center">
+          <h2 class="siimple-h2">Combined slot</h2>
+
+          <p>Here is the same promised displayed by using the <code><a href="https://github.com/posva/vue-promised#context-object">combined</a></code>
+            slot:</p>
+
+          <demo-code :code="samples.combined">
+            <promised :promise="promise" :pending-delay="1000">
+              <pre slot="combined" slot-scope="props" class="code">
+isPending: {{ props.isPending }}
+isDelayOver:{{ props.isDelayOver }}
+error:{{ props.error && props.error.message }}
+data: {{ props.data }}
+            </pre>
+            </promised>
+          </demo-code>
+
+        </div>
       </div>
 
       <div class="siimple-footer" align="center">

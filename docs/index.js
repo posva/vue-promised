@@ -46,30 +46,25 @@ new Vue({
     samples: {
       single: `\
 <Promised :promise="promise">
-  <div class="loading-spinner"></div>
+  <div slot="pending" class="loading-spinner"></div>
   <figure slot-scope="data">
     <img :alt="data.transcript" :src="data.img"/>
     <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
   </figure>
-  <div slot="catch" slot-scope="error" class="message--error">
+  <div slot="rejected" slot-scope="error" class="message--error">
     Error: {{ error.message }}
   </div>
 </Promised>
 `,
-      multiple: `\
-<Promised :promises="promises">
-  <div class="loading-spinner"></div>
-  <div slot-scope="items">
-    <h3>{{ items.length }} promises resolved</h3>
-    <figure v-for="item in items">
-      <img :alt="item.transcript" :src="item.img"/>
-      <figcaption>#{{ item.num }} - {{ item.title }}</figcaption>
-    </figure>
-  </div>
-  <div slot="catch" slot-scope="errors" class="tip--error">
-    Failed {{ errors.length }} promises
-  </div>
-</Promised>
+      combined: `\
+<promised :promise="promise" :pending-delay="1000">
+  <pre slot="combined" slot-scope="props" class="code">
+    isPending: {{ props.isPending }}
+    isDelayOver:{{ props.isDelayOver }}
+    error:{{ props.error && props.error.message }}
+    data: {{ props.data }}
+  </pre>
+</promised>
 `,
     },
   }),

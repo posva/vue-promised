@@ -27,6 +27,8 @@ Vue.component('Promised', Promised)
 
 `promise` should be a Promise but can also be `null`. `data` will contain the result of the promise. You can of course name it the way you want:
 
+### Using `pending`, default and `error slots
+
 ```vue
 <Promised :promise="promise">
   <!--
@@ -39,6 +41,8 @@ Vue.component('Promised', Promised)
   <h1 slot="rejected" slot-scope="error">Error: {{ error.message }}</h1>
 </Promised>
 ```
+
+### Using one single `combined` slot
 
 You can also provide a single `combined` slot that will receive a context with all relevant information
 
@@ -76,7 +80,7 @@ This allows to create more advanced async templates like this one featuring a Se
 </Promised>
 ```
 
-### `context` object
+#### `context` object
 
 - `isPending`: is `true` while the promise is in a _pending_ status. Becomes true once the promise is resolved **or** rejected. It is resetted to `false` when `promise` prop changes.
 - `isDelayOver`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is resetted when `promise` prop changes.
