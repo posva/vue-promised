@@ -286,5 +286,33 @@ describe('Promised', () => {
       expect(wrapper.find('.delay').text()).toBe('true')
       expect(wrapper.find('.data').text()).toBe('bar')
     })
+
+    it.skip('throws if slot is empty', async () => {
+      expect(() => {
+        wrapper = mount(Promised, {
+          scopedSlots: {
+            combined: `<template></template>`,
+          },
+          propsData: { promise: null, pendingDelay: 0 },
+        })
+      }).toThrowError(
+        /Provided "combined" scoped-slot cannot be empty and must contain one single children/
+      )
+    })
+
+    // TODO test utils seems to not support that version of scopedSlot
+    it.skip('throws if multiple nodes are provided', async () => {
+      console.log('HEUETUHTNEHUOHTNUHOEHOUNTH')
+      expect(() => {
+        wrapper = mount(Promised, {
+          scopedSlots: {
+            combined: `<template><p>a</p><p>b<p/></template>`,
+          },
+          propsData: { promise, pendingDelay: 0 },
+        })
+      }).toThrowError(
+        /Provided "combined" scoped-slot cannot be empty and must contain one single children/
+      )
+    })
   })
 })

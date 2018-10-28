@@ -26,12 +26,17 @@ export const Promised = {
 
   render (h) {
     if (this.$scopedSlots.combined) {
-      return this.$scopedSlots.combined({
+      const node = this.$scopedSlots.combined({
         isPending: !this.resolved,
         isDelayOver: this.isDelayElapsed,
         data: this.data,
         error: this.error,
       })
+      assert(
+        (Array.isArray(node) && node.length === 1) || node,
+        'Provided "combined" scoped-slot cannot be empty and must contain one single children'
+      )
+      return Array.isArray(node) ? node[0] : node
     }
 
     if (this.error) {
