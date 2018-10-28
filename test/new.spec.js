@@ -163,5 +163,48 @@ describe('Promised', () => {
         expect(wrapper.text()).toBe('pending')
       })
     })
+
+    describe('errors', () => {
+      let promise, resolve, reject, errorSpy
+      beforeEach(() => {
+        // silence the log
+        errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+          // useful for debugging
+          // console.log('CONSOLE ERROR')
+        })
+        ;[promise, resolve, reject] = fakePromise()
+        wrapper = mount(Promised, {
+          slots,
+          propsData: { promise, pendingDelay: 0 },
+        })
+      })
+
+      afterEach(() => {
+        errorSpy.mockRestore()
+      })
+
+      it('throws if no rejected scoped slot provided on error', async () => {
+        expect(errorSpy).not.toHaveBeenCalled()
+        reject(new Error('nope'))
+        await tick()
+        expect(errorSpy).toHaveBeenCalledTimes(2)
+        expect(errorSpy.mock.calls[0][0].toString()).toMatch(/No slot "rejected" provided/)
+      })
+
+      it('throws if no default scoped or regular slot provided on resolve', async () => {
+        expect(errorSpy).not.toHaveBeenCalled()
+        resolve()
+        await tick()
+        expect(errorSpy.mock.calls[0][0].toString()).toMatch(/No default slot provided/)
+      })
+
+      it('throws if pending slot provided', async () => {
+        expect(() => {
+          wrapper = mount(Promised, {
+            propsData: { promise, pendingDelay: 0 },
+          })
+        }).toThrowError(/No "pending" slot provided/)
+      })
+    })
   })
 })
