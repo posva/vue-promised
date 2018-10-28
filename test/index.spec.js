@@ -287,6 +287,36 @@ describe('Promised', () => {
       expect(wrapper.find('.data').text()).toBe('bar')
     })
 
+    it('data contains previous resolved data in between calls', async () => {
+      resolve('foo')
+      await tick()
+      expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.delay').text()).toBe('true')
+      expect(wrapper.find('.data').text()).toBe('foo')
+      ;[promise, resolve, reject] = fakePromise()
+
+      wrapper.setProps({ promise })
+      await tick()
+
+      // create another promise to cancel previous one
+      const otherResolve = resolve
+      ;[promise, resolve, reject] = fakePromise()
+      wrapper.setProps({ promise })
+      await tick()
+      otherResolve('other')
+      resolve('bar')
+
+      expect(wrapper.find('.pending').text()).toBe('true')
+      expect(wrapper.find('.delay').text()).toBe('true')
+      expect(wrapper.find('.data').text()).toBe('foo')
+
+      await tick()
+
+      expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.delay').text()).toBe('true')
+      expect(wrapper.find('.data').text()).toBe('bar')
+    })
+
     it.skip('throws if slot is empty', async () => {
       expect(() => {
         wrapper = mount(Promised, {
