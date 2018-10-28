@@ -221,7 +221,6 @@ describe('Promised', () => {
             <p class="delay">{{ props.isDelayOver }}</p>
             <p class="error">{{ props.error && props.error.message }}</p>
             <p class="data">{{ props.data }}</p>
-            <p class="previous">{{ props.previous }}</p>
           </div>`,
         },
       })
@@ -235,6 +234,7 @@ describe('Promised', () => {
       resolve('foo')
       await tick()
       expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.delay').text()).toBe('true')
       expect(wrapper.find('.data').text()).toBe('foo')
     })
 
@@ -248,7 +248,6 @@ describe('Promised', () => {
             <p class="delay">{{ props.isDelayOver }}</p>
             <p class="error">{{ props.error && props.error.message }}</p>
             <p class="data">{{ props.data }}</p>
-            <p class="previous">{{ props.previous }}</p>
           </div>`,
           },
         })
@@ -260,8 +259,32 @@ describe('Promised', () => {
       reject(new Error('hello'))
       await tick()
       expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.delay').text()).toBe('true')
       expect(wrapper.find('.data').text()).toBe('')
       expect(wrapper.find('.error').text()).toBe('hello')
+    })
+
+    it('data contains previous data in between calls', async () => {
+      resolve('foo')
+      await tick()
+      expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.delay').text()).toBe('true')
+      expect(wrapper.find('.data').text()).toBe('foo')
+      ;[promise, resolve, reject] = fakePromise()
+
+      wrapper.setProps({ promise })
+      await tick()
+
+      resolve('bar')
+      expect(wrapper.find('.pending').text()).toBe('true')
+      expect(wrapper.find('.delay').text()).toBe('true')
+      expect(wrapper.find('.data').text()).toBe('foo')
+
+      await tick()
+
+      expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.delay').text()).toBe('true')
+      expect(wrapper.find('.data').text()).toBe('bar')
     })
   })
 })

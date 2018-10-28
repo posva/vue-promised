@@ -31,7 +31,6 @@ export const Promised = {
         isDelayOver: this.isDelayElapsed,
         data: this.data,
         error: this.error,
-        previousData: this.data,
       })
     }
 
