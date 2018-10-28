@@ -207,4 +207,61 @@ describe('Promised', () => {
       })
     })
   })
+
+  describe('combined slot', () => {
+    /** @type {import('@vue/test-utils').Wrapper} */
+    let wrapper, promise, resolve, reject
+    beforeEach(() => {
+      [promise, resolve, reject] = fakePromise()
+      wrapper = mount(Promised, {
+        propsData: { promise, pendingDelay: 0 },
+        scopedSlots: {
+          combined: `<div>
+            <p class="pending">{{ props.isPending }}</p>
+            <p class="delay">{{ props.isDelayOver }}</p>
+            <p class="error">{{ props.error && props.error.message }}</p>
+            <p class="data">{{ props.data }}</p>
+            <p class="previous">{{ props.previous }}</p>
+          </div>`,
+        },
+      })
+    })
+
+    it('displays initial state', () => {
+      expect(wrapper.text()).toBe('true true')
+    })
+
+    it('displays data when resolved', async () => {
+      resolve('foo')
+      await tick()
+      expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.data').text()).toBe('foo')
+    })
+
+    it('works with no promise', () => {
+      expect(() => {
+        wrapper = mount(Promised, {
+          propsData: { promise: null, pendingDelay: 0 },
+          scopedSlots: {
+            combined: `<div>
+            <p class="pending">{{ props.isPending }}</p>
+            <p class="delay">{{ props.isDelayOver }}</p>
+            <p class="error">{{ props.error && props.error.message }}</p>
+            <p class="data">{{ props.data }}</p>
+            <p class="previous">{{ props.previous }}</p>
+          </div>`,
+          },
+        })
+      }).not.toThrow()
+      expect(wrapper.text()).toBe('true false')
+    })
+
+    it('displays an error if rejected', async () => {
+      reject(new Error('hello'))
+      await tick()
+      expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.data').text()).toBe('')
+      expect(wrapper.find('.error').text()).toBe('hello')
+    })
+  })
 })

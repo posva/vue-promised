@@ -25,6 +25,16 @@ export const Promised = {
   }),
 
   render (h) {
+    if (this.$scopedSlots.combined) {
+      return this.$scopedSlots.combined({
+        isPending: !this.resolved,
+        isDelayOver: this.isDelayElapsed,
+        data: this.data,
+        error: this.error,
+        previousData: this.data,
+      })
+    }
+
     if (this.error) {
       assert(this.$scopedSlots.rejected, 'No slot "rejected" provided. Cannot display the error')
       const node = this.$scopedSlots.rejected(this.error)
@@ -68,12 +78,15 @@ export const Promised = {
         promise
           .then(data => {
             if (this.promise === promise) {
-              this.resolved = true
               this.data = data
+              this.resolved = true
             }
           })
           .catch(err => {
-            if (this.promise === promise) this.error = err
+            if (this.promise === promise) {
+              this.error = err
+              this.resolved = true
+            }
           })
       },
       immediate: true,
