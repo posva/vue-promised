@@ -115,6 +115,10 @@ export default OldPromised
 
 export const Promised = {
   props: {
+    tag: {
+      type: String,
+      default: 'span',
+    },
     promise: {
       // allow polyfied Promise
       validator: p => p && typeof p.then === 'function' && typeof p.catch === 'function',
@@ -135,48 +139,26 @@ export const Promised = {
 
   render (h) {
     if (this.error) {
-      const errorNode = this.$scopedSlots.rejected(this.error)
+      const node = this.$scopedSlots.rejected(this.error)
       // errorNode is either a node or an array of nodes
-      if (!errorNode && !errorNode.length) throw this.error
-      return Array.isArray(errorNode) ? errorNode[0] : errorNode
+      if (!node && !node.length) throw this.error
+      return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
 
     if (this.resolved) {
       const slot = this.$scopedSlots.default
       const node = slot.call(this, this.data)
-      return Array.isArray(node) ? node[0] : node
+      return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
 
     if (!this.isDelayElapsed) return h()
 
-    if (this.$slots.pending && this.$slots.pending.length) {
-      return this.$slots.pending[0]
+    const pendingSlot = this.$slots.pending
+    if (pendingSlot && pendingSlot.length) {
+      return convertVNodeArray(h, this.tag, pendingSlot)
     }
     // TODO assert error on default case
-
-    if (this.error instanceof Error || (this.error && this.error.length)) {
-      assert(
-        this.$scopedSlots && this.$scopedSlots.catch,
-        'Provide exactly one scoped slot named "catch" for the rejected promise'
-      )
-      return this.$scopedSlots.catch(this.error)
-    } else if (this.resolved) {
-      const slot = this.$scopedSlots.default || this.$scopedSlots.then
-      assert(
-        this.$scopedSlots && slot,
-        'Provide exactly one default/then scoped slot for the resolved promise'
-      )
-      return slot.call(this, this.data)
-    } else if (this.isDelayElapsed) {
-      assert(
-        (this.$slots.default && this.$slots.default.length === 1) ||
-          (this.$slots.pending && this.$slots.pending.length === 1),
-        'Provide exactly one default/pending slot with no `slot-scope` for the pending promise'
-      )
-      return this.$slots.default ? this.$slots.default[0] : this.$slots.pending[0]
-    }
-
-    // do not render anything
+    console.log('NOOOO')
     return h()
   },
 
@@ -213,4 +195,9 @@ export const Promised = {
       }
     },
   },
+}
+
+function convertVNodeArray (h, wrapperTag, nodes) {
+  if (nodes.length > 1 || !nodes[0].tag) return h(wrapperTag, {}, nodes)
+  return nodes[0]
 }

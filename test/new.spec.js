@@ -1,6 +1,7 @@
 import { mount } from '@vue/test-utils'
 import { Promised } from '../src'
 import fakePromise from 'faked-promise'
+import MultipleChildrenHelper from './utils/MultipleChildrenHelper.vue'
 
 // keep a real setTimeout
 const timeout = setTimeout
@@ -103,6 +104,34 @@ describe('Promised', () => {
           pendingDelay: 100,
         })
         expect(clearTimeout).toHaveBeenCalled()
+      })
+    })
+
+    describe('multipe children', () => {
+      beforeEach(() => {
+        [promise, resolve, reject] = fakePromise()
+        wrapper = mount(MultipleChildrenHelper, {
+          propsData: { promise, pendingDelay: 0 },
+        })
+      })
+
+      it('displays pending', async () => {
+        expect(wrapper.is('span')).toBe(true)
+        expect(wrapper.text()).toBe('pending')
+      })
+
+      it('displays the resolved value once resolved', async () => {
+        resolve('foo')
+        await tick()
+        expect(wrapper.is('span')).toBe(true)
+        expect(wrapper.text()).toBe('foo')
+      })
+
+      it('displays an error if rejected', async () => {
+        reject(new Error('hello'))
+        await tick()
+        expect(wrapper.is('span')).toBe(true)
+        expect(wrapper.text()).toBe('hello')
       })
     })
   })
