@@ -35,17 +35,48 @@ Vue.component('Promised', Promised)
 </Promised>
 ```
 
-You can also provide a single `combined` slot that will receive a context with all relevant information:
+You can also provide a single `combined` slot that will receive a context with all relevant information
 
 ```vue
+<Promised :promise="promise">
+  <pre slot="combined" slot-scope="{ isPending, isDelayOver, data, error }">
+    pending: {{ isPending }}
+    is delay over: {{ isDelayOver }}
+    data: {{ data }}
+    error: {{ error && error.message }}
+  </pre>
+</Promised>
+```
+
+This allows to create more advanced async templates like this one featuring a Search component that must be displayed while the `searchResults` are being fetched:
+
+```vue
+<Promised :promise="searchResults" :pending-delay="200">
+  <div slot="combined" slot-scope="{ isPending, isDelayOver, data, error }">
+    <!-- data contains previous data or null when starting -->
+    <Search :disabled-pagination="isPending || error" :items="data || []">
+      <!-- The Search handles filtering logic with pagination -->
+      <template slot-scope="{ results, query }">
+        <ProfileCard v-for="user in results" :user="user"/>
+      </template>
+      <!-- If there is an error, data is null, therefore there are no results and we can display
+      the error -->
+      <MySpinner v-if="isPending && isDelayOver" slot="loading"/>
+      <template slot="noResults">
+        <p v-if="error" class="error">Error: {{ error.message }}</p>
+        <p v-else class="info">No results for "{{ query }}"</p>
+      </template>
+    </Search>
+  </div>
+</Promised>
 ```
 
 ### `context` object
 
-- `isPending`
-- `isDelayOver`
-- `data`
-- `error`
+- `isPending`: is `true` while the promise is in a _pending_ status. Becomes true once the promise is resolved **or** rejected. It is resetted to `false` when `promise` prop changes.
+- `isDelayOver`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is resetted when `promise` prop changes.
+- `data`: contains last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
+- `error`: contais last rejection or `null` if the promise was fullfiled.
 
 ## API Reference
 
