@@ -147,6 +147,8 @@ export const Promised = {
       return Array.isArray(node) ? node[0] : node
     }
 
+    if (!this.isDelayElapsed) return h()
+
     if (this.$slots.pending && this.$slots.pending.length) {
       return this.$slots.pending[0]
     }
