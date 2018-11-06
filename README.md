@@ -27,7 +27,7 @@ Vue.component('Promised', Promised)
 
 `promise` should be a Promise but can also be `null`. `data` will contain the result of the promise. You can of course name it the way you want:
 
-### Using `pending`, default and `error slots
+### Using `pending`, `default` and `rejected` slots
 
 ```vue
 <Promised :promise="promise">
