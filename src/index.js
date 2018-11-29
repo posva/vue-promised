@@ -20,19 +20,19 @@ export const Promised = {
   },
 
   data: () => ({
-    vue_promised_resolved: false,
-    vue_promised_data: null,
-    vue_promised_error: null,
-    isDelayElapsed: false,
+    promise_resolved: false,
+    promise_data: null,
+    promise_error: null,
+    promise_isDelayElapsed: false,
   }),
 
   render (h) {
     if (this.$scopedSlots.combined) {
       const node = this.$scopedSlots.combined({
-        isPending: !this.vue_promised_resolved,
-        isDelayOver: this.isDelayElapsed,
-        data: this.vue_promised_data,
-        error: this.vue_promised_error,
+        isPending: !this.promise_resolved,
+        isDelayOver: this.promise_isDelayElapsed,
+        data: this.promise_data,
+        error: this.promise_error,
       })
       assert(
         (Array.isArray(node) && node.length === 1) || node,
@@ -41,12 +41,12 @@ export const Promised = {
       return Array.isArray(node) ? node[0] : node
     }
 
-    if (this.vue_promised_error) {
+    if (this.promise_error) {
       assert(
         this.$scopedSlots.rejected,
         'No slot "rejected" provided. Cannot display the error'
       )
-      const node = this.$scopedSlots.rejected(this.vue_promised_error)
+      const node = this.$scopedSlots.rejected(this.promise_error)
       assert(
         (Array.isArray(node) && node.length) || node,
         'Provided slot "rejected" is empty. Cannot display the error'
@@ -57,9 +57,9 @@ export const Promised = {
     }
 
     const defaultSlot = this.$slots.default
-    if (this.vue_promised_resolved) {
+    if (this.promise_resolved) {
       if (this.$scopedSlots.default) {
-        const node = this.$scopedSlots.default(this.vue_promised_data)
+        const node = this.$scopedSlots.default(this.promise_data)
         assert(
           (Array.isArray(node) && node.length) || node,
           'Provided default scoped-slot is empty. Cannot display the data'
@@ -79,7 +79,7 @@ export const Promised = {
       return convertVNodeArray(h, this.tag, defaultSlot)
     }
 
-    if (!this.isDelayElapsed) return h()
+    if (!this.promise_isDelayElapsed) return h()
 
     const pendingSlot = this.$slots.pending
     assert(
@@ -97,20 +97,20 @@ export const Promised = {
     promise: {
       handler (promise) {
         if (!promise) return
-        this.vue_promised_resolved = false
-        this.vue_promised_error = null
+        this.promise_resolved = false
+        this.promise_error = null
         this.setupDelay()
         promise
           .then(data => {
             if (this.promise === promise) {
-              this.vue_promised_data = data
-              this.vue_promised_resolved = true
+              this.promise_data = data
+              this.promise_resolved = true
             }
           })
           .catch(err => {
             if (this.promise === promise) {
-              this.vue_promised_error = err
-              this.vue_promised_resolved = true
+              this.promise_error = err
+              this.promise_resolved = true
             }
           })
       },
@@ -121,14 +121,14 @@ export const Promised = {
   methods: {
     setupDelay () {
       if (this.pendingDelay > 0) {
-        this.isDelayElapsed = false
+        this.promise_isDelayElapsed = false
         if (this.timerId) clearTimeout(this.timerId)
         this.timerId = setTimeout(
-          () => (this.isDelayElapsed = true),
+          () => (this.promise_isDelayElapsed = true),
           this.pendingDelay
         )
       } else {
-        this.isDelayElapsed = true
+        this.promise_isDelayElapsed = true
       }
     },
   },
