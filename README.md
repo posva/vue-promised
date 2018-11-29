@@ -1,3 +1,8 @@
+# Fork
+
+This is a fork of vue-promised. It's been created to avoid property name
+conflict with global mixins
+
 # vue-promised [![Build Status](https://badgen.net/circleci/github/posva/vue-promised)](https://circleci.com/gh/posva/vue-promised) [![npm package](https://img.shields.io/npm/v/vue-promised.svg)](https://www.npmjs.com/package/vue-promised) [![coverage](https://img.shields.io/codecov/c/github/posva/vue-promised.svg)](https://codecov.io/github/posva/vue-promised) [![thanks](https://img.shields.io/badge/thanks-%E2%99%A5-ff69b4.svg)](https://github.com/posva/thanks)
 
 > Transform your Promises into components !
