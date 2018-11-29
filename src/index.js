@@ -99,7 +99,7 @@ export const Promised = {
         if (!promise) return
         this.promise_resolved = false
         this.promise_error = null
-        this.setupDelay()
+        this.promise_setupDelay()
         promise
           .then(data => {
             if (this.promise === promise) {
@@ -119,7 +119,7 @@ export const Promised = {
   },
 
   methods: {
-    setupDelay () {
+    promise_setupDelay () {
       if (this.pendingDelay > 0) {
         this.promise_isDelayElapsed = false
         if (this.timerId) clearTimeout(this.timerId)
