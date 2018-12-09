@@ -7,7 +7,7 @@
   "unpkg": "dist/vue-promised.js",
   "browser": "dist/vue-promised.es.js",
   "scripts": {
-    "lint": "eslint --color --ext=js,html src test docs",
+    "lint": "eslint --fix --color --ext=js,html src tests docs *.js",
     "unit": "jest",
     "dev": "npm run unit -- --watchAll",
     "test": "npm run lint && npm run unit",
@@ -33,39 +33,18 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
     "@vue/test-utils": "^1.0.0-beta.25",
+    "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
-    "babel-preset-env": "^1.7.0",
     "codecov": "^3.1.0",
     "eslint": "^5.8.0",
     "eslint-config-posva": "^2.0.2",
     "faked-promise": "^2.0.0",
     "jest": "^23.6.0",
-    "vue": "^2.5.17",
+    "vue": "^2.5.18",
     "vue-jest": "^3.0.0",
-    "vue-template-compiler": "^2.5.17"
-  },
-  "jest": {
-    "collectCoverage": true,
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "vue"
-    ],
-    "transform": {
-      "^.+\\.js$": "<rootDir>/node_modules/babel-jest",
-      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest"
-    },
-    "coveragePathIgnorePatterns": [
-      "<rootDir>/test/*.js",
-      "<rootDir>/test/utils/Helper.vue",
-      "<rootDir>/test/utils/NamedSlots.vue",
-      "<rootDir>/test/utils/NoResolve.vue",
-      "<rootDir>/test/utils/NoPending.vue",
-      "<rootDir>/test/utils/NoError.vue",
-      "<rootDir>/test/.*.js",
-      "<rootDir>/test/*/*.js"
-    ],
-    "testURL": "http://localhost"
+    "vue-template-compiler": "^2.5.18"
   }
 }
