@@ -7,7 +7,8 @@
   "unpkg": "dist/vue-promised.js",
   "browser": "dist/vue-promised.es.js",
   "scripts": {
-    "lint": "eslint --fix --color --ext=js,html src tests docs *.js",
+    "lint": "eslint --color --ext=js,html src tests docs *.js",
+    "lint:fix": "npm run lint -- --fix",
     "unit": "jest",
     "dev": "npm run unit -- --watchAll",
     "test": "npm run lint && npm run unit",
