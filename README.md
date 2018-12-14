@@ -10,6 +10,59 @@ npm install vue-promised
 yarn add vue-promised
 ```
 
+## Why?
+
+When dealing with asynchronous requests like fetching content through API calls, you may want to display the loading state with a spinner, handle the error and even hide everything until at least 200ms have been elapsed so the user doesn't see a loading spinner flashing when the request takes very little time. This is quite some boilerplate, and you need to repeat this for every request you want:
+
+```vue
+<template>
+  <div>
+    <p v-if="error">Error: {{ error.message }}</p>
+    <p v-else-if="isLoading && isDelayElapsed">Loading...</p>
+    <ul v-else>
+      <lh v-for="user in data">{{ user.name }}</lh>
+    </ul>
+  </div>
+</template>
+
+<script>
+export default {
+  data: () => ({
+    isLoading: false,
+    error: null,
+    data: null,
+    isDelayElapsed: false,
+  }),
+
+  methods: {
+    fetchUsers() {
+      this.error = null
+      this.isLoading = true
+      this.isDelayElapsed = false
+      getUsers()
+        .then(users => {
+          this.data = users
+          this.isLoading = false
+        })
+        .catch(error => {
+          this.error = error
+          this.isLoading = false
+        })
+      setTimeout(() => {
+        this.isDelayElapsed = true
+      }, 200)
+    },
+  },
+
+  created() {
+    this.fetchUsers()
+  },
+}
+</script>
+```
+
+That is quite a lot of boilerplate and it's not handling cancelling on going requests when `fetchUsers` is called again. Vue Promised encapsulates all of that to reduce the boilerplate.
+
 ## Migrating from `v0.2.x`
 
 Migrating to v1 should be doable in a small amount of time as the only breaking changes are some slots name and the way `Promised` component is imported.
@@ -31,9 +84,7 @@ Vue.component('Promised', Promised)
 
 ```vue
 <Promised :promise="promise">
-  <!--
-    Use the "pending" slot for loading content
-  -->
+  <!-- Use the "pending" slot for loading content -->
   <h1 slot="pending">Loading</h1>
   <!-- The default scoped slots will be used as the result -->
   <h1 slot-scope="data">Success!</h1>
@@ -66,11 +117,13 @@ This allows to create more advanced async templates like this one featuring a Se
     <Search :disabled-pagination="isPending || error" :items="data || []">
       <!-- The Search handles filtering logic with pagination -->
       <template slot-scope="{ results, query }">
-        <ProfileCard v-for="user in results" :user="user"/>
+        <ProfileCard v-for="user in results" :user="user" />
       </template>
-      <!-- If there is an error, data is null, therefore there are no results and we can display
-      the error -->
-      <MySpinner v-if="isPending && isDelayOver" slot="loading"/>
+      <!--
+        If there is an error, data is null, therefore there are no results and we can display
+        the error
+      -->
+      <MySpinner v-if="isPending && isDelayOver" slot="loading" />
       <template slot="noResults">
         <p v-if="error" class="error">Error: {{ error.message }}</p>
         <p v-else class="info">No results for "{{ query }}"</p>
