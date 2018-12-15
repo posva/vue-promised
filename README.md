@@ -61,6 +61,8 @@ export default {
 </script>
 ```
 
+👉 Compare this to [the version using Vue Promised](#using-pending-default-and-rejected-slots) that handles new promises.
+
 That is quite a lot of boilerplate and it's not handling cancelling on going requests when `fetchUsers` is called again. Vue Promised encapsulates all of that to reduce the boilerplate.
 
 ## Migrating from `v0.2.x`
@@ -83,19 +85,33 @@ In the following examples, `promise` is a Promise but can initially be `null`. `
 ### Using `pending`, `default` and `rejected` slots
 
 ```vue
-<Promised :promise="promise">
-  <!-- Use the "pending" slot for loading content -->
-  <h1 slot="pending">Loading</h1>
-  <!-- The default scoped slots will be used as the result -->
-  <h1 slot-scope="data">Success!</h1>
-  <!-- The "rejected" scoped slot will be used if there is an error -->
-  <h1 slot="rejected" slot-scope="error">Error: {{ error.message }}</h1>
-</Promised>
+<template>
+  <Promised :promise="usersPromise">
+    <!-- Use the "pending" slot to display a loading message -->
+    <p slot="pending">Loading...</p>
+    <!-- The default scoped slots will be used as the result -->
+    <ul slot-scope="users">
+      <li v-for="user in users">{{ user.name }}</li>
+    </ul>
+    <!-- The "rejected" scoped slot will be used if there is an error -->
+    <p slot="rejected" slot-scope="error">Error: {{ error.message }}</p>
+  </Promised>
+</template>
+
+<script>
+export default {
+  data: () => ({ usersPromise: null }),
+
+  created() {
+    this.usersPromise = this.getUsers()
+  },
+}
+</script>
 ```
 
 ### Using one single `combined` slot
 
-You can also provide a single `combined` slot that will receive a context with all relevant information
+You can also provide a single `combined` slot that will receive a context with all relevant information. That way you can customise the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
 
 ```vue
 <Promised :promise="promise">
