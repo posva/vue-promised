@@ -78,7 +78,7 @@ import { Promised } from 'vue-promised'
 Vue.component('Promised', Promised)
 ```
 
-`promise` should be a Promise but can also be `null`. `data` will contain the result of the promise. You can of course name it the way you want:
+In the following examples, `promise` is a Promise but can initially be `null`. `data` contains the result of the promise. You can of course name it the way you want:
 
 ### Using `pending`, `default` and `rejected` slots
 
@@ -139,6 +139,32 @@ This allows to create more advanced async templates like this one featuring a Se
 - `isDelayOver`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is resetted when `promise` prop changes.
 - `data`: contains last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
 - `error`: contais last rejection or `null` if the promise was fullfiled.
+
+### Setting the `promise`
+
+There are different ways to provide a promise to `Promised`. The first one, is setting it in the created hook:
+
+```js
+export default {
+  data: () => ({ promise: null }),
+  created() {
+    this.promise = fetchData()
+  },
+}
+```
+
+But most of the time, you can use a computed property. This makes even more sense if you are passing a prop or a data property to the function returning a promise (`fetchData` in the example):
+
+```js
+export default {
+  props: ['id'],
+  computed: {
+    promise() {
+      return fetchData(this.id)
+    },
+  },
+}
+```
 
 ## API Reference
 
