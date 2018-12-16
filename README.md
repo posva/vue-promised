@@ -89,7 +89,7 @@ In the following examples, `promise` is a Promise but can initially be `null`. `
   <Promised :promise="usersPromise">
     <!-- Use the "pending" slot to display a loading message -->
     <p slot="pending">Loading...</p>
-    <!-- The default scoped slots will be used as the result -->
+    <!-- The default scoped slot will be used as the result -->
     <ul slot-scope="users">
       <li v-for="user in users">{{ user.name }}</li>
     </ul>
