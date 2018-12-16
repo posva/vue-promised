@@ -42,10 +42,11 @@ export default {
       getUsers()
         .then(users => {
           this.data = users
-          this.isLoading = false
         })
         .catch(error => {
           this.error = error
+        })
+        .finally(() => {
           this.isLoading = false
         })
       setTimeout(() => {
