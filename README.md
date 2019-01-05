@@ -2,6 +2,35 @@
 
 > Transform your Promises into components !
 
+**Help me keep working on Open Source in a sustainable way 🚀**
+
+<p>
+  <a href="https://www.patreon.com/posva" target="_blank" title="Patreon">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon" width="180px">
+  </a>
+</p>
+
+<h3 align="center">Silver Sponsors</h3>
+
+<p align="center">
+  <a href="https://www.vuemastery.com" title="Vue Mastery" target="_blank">
+    <img src="https://www.vuemastery.com/images/lgo-vuemastery.svg" alt="Vue Mastery logo" height="48px">
+  </a>
+</p>
+
+<h3 align="center">Bronze Sponsors</h3>
+
+<p align="center">
+  <a href="https://www.gridsome.org" title="Gridsome" target="_blank">
+    <img src="https://gridsome.org/logos/logo-circle-light.svg" alt="Gridsome logo" height="32px">
+  </a>
+  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
+    <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" height="32px">
+  </a>
+</p>
+
+---
+
 ## Installation
 
 ```bash
