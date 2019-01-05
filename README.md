@@ -2,6 +2,77 @@
 
 > Transform your Promises into components !
 
+---
+
+<h3 align="center">Silver Sponsors</h3>
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://www.bitsrc.io/?utm_source=vue&utm_medium=vue&utm_campaign=vue&utm_term=vue&utm_content=vue" target="_blank">
+          <img width="222px" src="https://raw.githubusercontent.com/vuejs/vuejs.org/master/themes/vue/source/images/bit-wide.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="http://tooltwist.com/" target="_blank">
+          <img width="222px" src="https://raw.githubusercontent.com/vuejs/vuejs.org/master/themes/vue/source/images/tooltwist.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="https://vueschool.io/?utm_source=Vuejs.org&utm_medium=Banner&utm_campaign=Sponsored%20Banner&utm_content=V1" target="_blank">
+          <img width="222px" src="https://raw.githubusercontent.com/vuejs/vuejs.org/master/themes/vue/source/images/vueschool.png">
+        </a>
+      </td>
+      <td align="center" valign="middle">
+        <a href="https://vehikl.com/" target="_blank">
+          <img width="222px" src="https://raw.githubusercontent.com/vuejs/vuejs.org/master/themes/vue/source/images/vehikl.png">
+        </a>
+      </td>
+    </tr><tr></tr>
+    <tr>
+      <td align="center" valign="middle">
+        <a href="https://www.nativescript.org/vue?utm_source=vue-js-org&utm_medium=website&utm_campaign=nativescript-awareness" target="_blank">
+          <img width="222px" src="https://raw.githubusercontent.com/vuejs/vuejs.org/master/themes/vue/source/images/nativescript.png">
+        </a>
+      </td>
+    </tr><tr></tr>
+  </tbody>
+</table>
+
+<p align="center">
+  <a href="https://www.vuemastery.com" title="Vue Mastery" target="_blank">
+    <img src="https://www.vuemastery.com/images/lgo-vuemastery.svg" alt="Vue Mastery logo" height="48px">
+  </a>
+  <a href="https://www.vuemastery.com" title="Vue Mastery" target="_blank">
+    <img src="https://www.vuemastery.com/images/lgo-vuemastery.svg" alt="VueSchool logo" height="48px">
+  </a>
+</p>
+
+<h3 align="center">Bronze Sponsors</h3>
+
+<p align="center">
+  <a href="https://www.gridsome.org" title="Gridsome" target="_blank">
+    <img src="https://gridsome.org/logos/logo-circle-light.svg" alt="Gridsome logo" height="32px">
+  </a>
+  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
+    <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" width="32px">
+  </a>
+  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
+    <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" width="32px">
+  </a>
+</p>
+
+Help me to keep working on Open Source in a sustainable way 🚀
+
+<p>
+  <a href="https://www.patreon.com/posva" target="_blank" title="Patreon">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+  </a>
+</p>
+
+---
+
 ## Installation
 
 ```bash
