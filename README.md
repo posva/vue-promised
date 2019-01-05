@@ -22,10 +22,10 @@
 
 <p align="center">
   <a href="https://www.gridsome.org" title="Gridsome" target="_blank">
-    <img src="https://gridsome.org/logos/logo-circle-light.svg" alt="Gridsome logo" height="32px">
+    <img src="https://gridsome.org/logos/logo-normal.svg" alt="Gridsome logo" height="24px">
   </a>
   <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
-    <img src="https://cdn.vuetifyjs.com/images/logos/v-alt.svg" height="32px">
+    <img src="https://vuejs.org/images/vuetify.png" height="32px">
   </a>
 </p>
 
