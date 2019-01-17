@@ -40,8 +40,9 @@ export const Promised = {
     }
 
     if (this.error) {
-      assert(this.$scopedSlots.rejected, 'No slot "rejected" provided. Cannot display the error')
-      const node = this.$scopedSlots.rejected(this.error)
+      const slot = this.$scopedSlots.rejected || this.$slots.rejected
+      assert(slot, 'No slot "rejected" provided. Cannot display the error')
+      const node = slot(this.error)
       assert(
         (Array.isArray(node) && node.length) || node,
         'Provided slot "rejected" is empty. Cannot display the error'
