@@ -95,9 +95,9 @@ function convertVNodeArray (h, wrapperTag, nodes) {
   return nodes[0]
 }
 
-function getSlotVNode (instance, h, slotName, VNodeData) {
+function getSlotVNode (instance, h, slotName, vNodeData) {
   if (instance.$scopedSlots && instance.$scopedSlots[slotName]) {
-    const node = instance.$scopedSlots[slotName](VNodeData)
+    const node = instance.$scopedSlots[slotName](vNodeData)
     assert(
       (Array.isArray(node) && node.length) || node,
       `Provided "${slotName}" scoped-slot is empty. Cannot display the data`
