@@ -7,7 +7,9 @@ const xkcd = axios.create({
 })
 
 function getRandomImage (max) {
-  return xkcd.get(`/${Math.round(Math.random() * max) + 1}/info.0.json`).then(res => res.data)
+  return xkcd
+    .get(`/${Math.round(Math.random() * max) + 1}/info.0.json`)
+    .then(res => res.data)
 }
 
 Vue.component('DemoCode', {
@@ -45,19 +47,25 @@ new Vue({
     samples: {
       single: `\
 <Promised :promise="promise">
-  <div slot="pending" class="loading-spinner"></div>
-  <figure slot-scope="data">
-    <img :alt="data.transcript" :src="data.img"/>
-    <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
-  </figure>
-  <div slot="rejected" slot-scope="error" class="message--error">
-    Error: {{ error.message }}
-  </div>
+  <template v-slot:pending>
+    <div class="loading-spinner"></div>
+  </template>
+  <template v-slot="data">
+    <figure slot-scope="data">
+      <img :alt="data.transcript" :src="data.img"/>
+      <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
+    </figure>
+  </template>
+  <template v-slot:rejected="error">
+    <div slot="rejected" slot-scope="error" class="message--error">
+      Error: {{ error.message }}
+    </div>
+  </template>
 </Promised>
 `,
       combined: `\
-<promised :promise="promise" :pending-delay="1000">
-  <pre slot="combined" slot-scope="props" class="code">
+<promised :promise="promise" :pending-delay="1000" v-slot:combined="props">
+  <pre class="code">
     isPending: {{ props.isPending }}
     isDelayOver:{{ props.isDelayOver }}
     error:{{ props.error && props.error.message }}

@@ -1,145 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>VuePromised</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/prismjs@1.12.2/themes/prism.css"
+    />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>VuePromised</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/siimple@3.0.0/dist/siimple.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/prismjs@1.12.2/themes/prism.css">
+    <style>
+      figure {
+        margin: 0;
+      }
 
-  <style>
-    figure {
-      margin: 0;
-    }
+      .siimple-box img {
+        max-width: 100%;
+        display: block;
+        margin: auto;
+      }
 
-    .siimple-box img {
-      max-width: 100%;
-      display: block;
-      margin: auto;
-    }
+      .text-center {
+        text-align: center;
+      }
 
-    .text-center {
-      text-align: center;
-    }
+      .space {
+        margin: 14px 0;
+      }
 
-    .space {
-      margin: 14px 0;
-    }
+      .logo-container {
+        display: flex;
+        align-items: center;
+      }
 
-    .logo-container {
-      display: flex;
-      align-items: center;
-    }
+      [v-cloak] {
+        display: none;
+      }
 
-    [v-cloak] {
-      display: none;
-    }
+      .code {
+        text-align: initial;
+        overflow: auto;
+      }
+    </style>
+  </head>
 
-    .code {
-      text-align: initial;
-      overflow: auto;
-    }
-  </style>
-</head>
+  <body>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/vue-promised/dist/vue-promised.js"></script>
+    <script src="https://unpkg.com/prismjs@1.12.2/prism.js"></script>
+    <script src="https://unpkg.com/vue-prism-component@1.0.1/dist/vue-prism-component.min.js"></script>
 
-<body>
-
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script src="https://unpkg.com/vue"></script>
-  <script src="https://unpkg.com/vue-promised/dist/vue-promised.js"></script>
-  <script src="https://unpkg.com/prismjs@1.12.2/prism.js"></script>
-  <script src="https://unpkg.com/vue-prism-component@1.0.1/dist/vue-prism-component.min.js"></script>
-
-  <div id="app">
-
-    <div class="siimple-navbar">
-      <div class="siimple-layout--left">
-        <span class="siimple-navbar-title">VuePromised</span>
-      </div>
-      <div class="siimple-layout--right">
-        <a class="siimple-navbar-link" href="https://github.com/posva/vue-promised#usage">
-          Docs
-        </a>
-        <a class="siimple-navbar-link" href="https://github.com/posva/vue-promised#api-reference">
-          API
-        </a>
-        <a class="siimple-navbar-link" href="https://github.com/posva/vue-promised">
-          <div class="logo-container">
-            <img height="32" width="32" src="https://unpkg.com/simple-icons@latest/icons/github.svg" />
-          </div>
-        </a>
-      </div>
-    </div>
-
-    <div class="siimple-content--medium" v-cloak>
-      <div class="siimple-box siimple-box--white text-center">
-        <h2 class="siimple-h2">Single promise</h2>
-
-        <div class="siimple-content--fluid">
-          <button class="siimple-btn siimple-btn--blue" @click="trySuccess">Fetch a new comic</button>
-          <button class="siimple-btn siimple-btn--red" @click="tryError">Purposely fail</button>
+    <div id="app">
+      <div class="siimple-navbar">
+        <div class="siimple-layout--left">
+          <span class="siimple-navbar-title">VuePromised</span>
         </div>
-
-        <div class="space"></div>
-
-        <demo-code :code="samples.single">
-          <promised :promise="promise">
-            <div slot="pending" class="siimple-spinner siimple-spinner--teal"></div>
-            <figure class="text-center" slot-scope="data">
-              <img :alt="data.transcript" :src="data.img" />
-              <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
-            </figure>
-            <div slot="rejected" slot-scope="error" class="siimple-alert siimple-alert--orange">
-              Error: {{ error.message }}
+        <div class="siimple-layout--right">
+          <a
+            class="siimple-navbar-link"
+            href="https://github.com/posva/vue-promised#usage"
+          >
+            Docs
+          </a>
+          <a
+            class="siimple-navbar-link"
+            href="https://github.com/posva/vue-promised#api-reference"
+          >
+            API
+          </a>
+          <a
+            class="siimple-navbar-link"
+            href="https://github.com/posva/vue-promised"
+          >
+            <div class="logo-container">
+              <img
+                height="32"
+                width="32"
+                src="https://unpkg.com/simple-icons@latest/icons/github.svg"
+              />
             </div>
-          </promised>
-        </demo-code>
+          </a>
+        </div>
+      </div>
 
+      <div class="siimple-content--medium" v-cloak>
         <div class="siimple-box siimple-box--white text-center">
-          <h2 class="siimple-h2">Combined slot</h2>
+          <h2 class="siimple-h2">Single promise</h2>
 
-          <p>Here is the same promised displayed by using the <code><a href="https://github.com/posva/vue-promised#context-object">combined</a></code>
-            slot:</p>
+          <div class="siimple-content--fluid">
+            <button class="siimple-btn siimple-btn--blue" @click="trySuccess">
+              Fetch a new comic
+            </button>
+            <button class="siimple-btn siimple-btn--red" @click="tryError">
+              Purposely fail
+            </button>
+          </div>
 
-          <demo-code :code="samples.combined">
-            <promised :promise="promise" :pending-delay="1000">
-              <pre slot="combined" slot-scope="props" class="code">
+          <div class="space"></div>
+
+          <demo-code :code="samples.single">
+            <promised :promise="promise">
+              <template v-slot:pending>
+                <div class="siimple-spinner siimple-spinner--teal"></div>
+              </template>
+              <template v-slot="data">
+                <figure class="text-center">
+                  <img :alt="data.transcript" :src="data.img" />
+                  <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
+                </figure>
+              </template>
+              <template v-slot:rejected="error">
+                <div class="siimple-alert siimple-alert--orange">
+                  Error: {{ error.message }}
+                </div>
+              </template>
+            </promised>
+          </demo-code>
+
+          <div class="siimple-box siimple-box--white text-center">
+            <h2 class="siimple-h2">Combined slot</h2>
+
+            <p>
+              Here is the same promised displayed by using the
+              <code
+                ><a href="https://github.com/posva/vue-promised#context-object"
+                  >combined</a
+                ></code
+              >
+              slot:
+            </p>
+
+            <demo-code :code="samples.combined">
+              <promised
+                :promise="promise"
+                :pending-delay="1000"
+                v-slot:combined="props"
+              >
+                <pre class="code">
 isPending: {{ props.isPending }}
 isDelayOver:{{ props.isDelayOver }}
 error:{{ props.error && props.error.message }}
 data: {{ props.data }}
-            </pre>
-            </promised>
-          </demo-code>
+            </pre
+                >
+              </promised>
+            </demo-code>
+          </div>
+        </div>
 
+        <div class="siimple-footer" align="center">
+          Made by Eduardo San Martin Morote
+          <a class="siimple-link" href="https://twitter.com/posva">@posva</a>
         </div>
       </div>
-
-      <div class="siimple-footer" align="center">
-        Made by Eduardo San Martin Morote <a class="siimple-link" href="https://twitter.com/posva">@posva</a>
-      </div>
-
     </div>
-  </div>
 
-  <script type="text/x-template" id="demo-code">
-    <div>
-      <h5>
-        <a class="siimple-link" href="#" role="button" @click.prevent="showCode = !showCode">{{ seeLabel }}</a>
-      </h5>
-      <div class="demo__demo" v-if="!showCode">
-        <slot/>
+    <script type="text/x-template" id="demo-code">
+      <div>
+        <h5>
+          <a class="siimple-link" href="#" role="button" @click.prevent="showCode = !showCode">{{ seeLabel }}</a>
+        </h5>
+        <div class="demo__demo" v-if="!showCode">
+          <slot/>
+        </div>
+        <div class="demo__code" v-else>
+          <Prism language="html" :code="code"/>
+        </div>
       </div>
-      <div class="demo__code" v-else>
-        <Prism language="html" :code="code"/>
-      </div>
-    </div>
-  </script>
+    </script>
 
-  <script src="index.js"></script>
-
-</body>
-
+    <script src="index.js"></script>
+  </body>
 </html>
