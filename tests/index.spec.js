@@ -188,14 +188,18 @@ describe('Promised', () => {
         reject(new Error('nope'))
         await tick()
         expect(errorSpy).toHaveBeenCalledTimes(2)
-        expect(errorSpy.mock.calls[0][0].toString()).toMatch(/No slot "rejected" provided/)
+        expect(errorSpy.mock.calls[0][0].toString()).toMatch(
+          /No slot "rejected" provided/
+        )
       })
 
       it('throws if no default scoped or regular slot provided on resolve', async () => {
         expect(errorSpy).not.toHaveBeenCalled()
         resolve()
         await tick()
-        expect(errorSpy.mock.calls[0][0].toString()).toMatch(/No default slot provided/)
+        expect(errorSpy.mock.calls[0][0].toString()).toMatch(
+          /No default slot provided/
+        )
       })
 
       it('throws if pending slot provided', async () => {
@@ -343,6 +347,23 @@ describe('Promised', () => {
       }).toThrowError(
         /Provided "combined" scoped-slot cannot be empty and must contain one single children/
       )
+    })
+
+    it('can be resolved right away', async () => {
+      const wrapper = mount(Promised, {
+        propsData: { promise: null, pendingDelay: 0 },
+        scopedSlots: {
+          combined: `<div>
+            <p class="pending">{{ props.isPending }}</p>
+            <p class="delay">{{ props.isDelayOver }}</p>
+            <p class="error">{{ props.error && props.error.message }}</p>
+            <p class="data">{{ props.data }}</p>
+          </div>`,
+        },
+      })
+      wrapper.setProps({ promise: Promise.resolve('Hello') })
+      await tick()
+      expect(wrapper.text()).toBe('false true  Hello')
     })
   })
 })
