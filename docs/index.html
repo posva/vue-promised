@@ -106,16 +106,16 @@
 
           <demo-code :code="samples.single">
             <promised :promise="promise">
-              <template v-slot:pending>
+              <template #pending>
                 <div class="siimple-spinner siimple-spinner--teal"></div>
               </template>
-              <template v-slot="data">
+              <template #default="data">
                 <figure class="text-center">
                   <img :alt="data.transcript" :src="data.img" />
                   <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
                 </figure>
               </template>
-              <template v-slot:rejected="error">
+              <template #rejected="error">
                 <div class="siimple-alert siimple-alert--orange">
                   Error: {{ error.message }}
                 </div>

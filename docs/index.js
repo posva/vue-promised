@@ -77,9 +77,10 @@ new Vue({
   }),
 
   created () {
-    xkcd.get('/info.0.json').then(res => {
-      this.max = res.data.num
-      this.promise = getRandomImage(this.max)
+    // when the api takes too much time
+    this.max = 2000
+    this.promise = xkcd.get('/info.0.json').then(res => {
+      this.max = res.data.num || this.max // Error fallback
     })
   },
 
