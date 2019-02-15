@@ -123,13 +123,13 @@ In the following examples, `promise` is a Promise but can initially be `null`. `
     </template>
     <!-- The default scoped slot will be used as the result -->
     <template v-bind="data">
-      <ul slot-scope="users">
-        <li v-for="user in users">{{ user.name }}</li>
+      <ul>
+        <li v-for="user in data">{{ user.name }}</li>
       </ul>
     </template>
     <!-- The "rejected" scoped slot will be used if there is an error -->
     <template v-bind:rejected="error">
-      <p slot="rejected" slot-scope="error">Error: {{ error.message }}</p>
+      <p>Error: {{ error.message }}</p>
     </template>
   </Promised>
 </template>
