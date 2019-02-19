@@ -197,7 +197,7 @@ This allows to create more advanced async templates like this one featuring a Se
 - `isPending`: is `true` while the promise is in a _pending_ status. Becomes true once the promise is resolved **or** rejected. It is resetted to `false` when `promise` prop changes.
 - `isDelayOver`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is resetted when `promise` prop changes.
 - `data`: contains last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
-- `error`: contais last rejection or `null` if the promise was fullfiled.
+- `error`: contains last rejection or `null` if the promise was fullfiled.
 
 ### Setting the `promise`
 
