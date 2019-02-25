@@ -33,14 +33,17 @@ export const Promised = {
         error: this.error,
       })
       assert(
-        (Array.isArray(node) && node.length === 1) || node,
-        'Provided "combined" scoped-slot cannot be empty and must contain one single children'
+        (Array.isArray(node) && node.length) || node,
+        'Provided "combined" scoped slot cannot be empty'
       )
-      return Array.isArray(node) ? node[0] : node
+      return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
 
     if (this.error) {
-      assert(this.$scopedSlots.rejected, 'No slot "rejected" provided. Cannot display the error')
+      assert(
+        this.$scopedSlots.rejected,
+        'No slot "rejected" provided. Cannot display the error'
+      )
       const node = this.$scopedSlots.rejected(this.error)
       assert(
         (Array.isArray(node) && node.length) || node,
@@ -49,7 +52,6 @@ export const Promised = {
       return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
 
-    const defaultSlot = this.$slots.default
     if (this.resolved) {
       if (this.$scopedSlots.default) {
         const node = this.$scopedSlots.default(this.data)
@@ -59,16 +61,26 @@ export const Promised = {
         )
         return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
       }
+      const defaultSlot = this.$slots.default
       assert(defaultSlot, 'No default slot provided. Cannot display the data')
-      assert(defaultSlot.length, 'Provided default slot is empty. Cannot display the data')
+      assert(
+        defaultSlot.length,
+        'Provided default slot is empty. Cannot display the data'
+      )
       return convertVNodeArray(h, this.tag, defaultSlot)
     }
 
     if (!this.isDelayElapsed) return h()
 
     const pendingSlot = this.$slots.pending
-    assert(pendingSlot, 'No "pending" slot provided. Cannot display pending state')
-    assert(pendingSlot.length, 'Provided "pending" slot is empty. Cannot display pending state')
+    assert(
+      pendingSlot,
+      'No "pending" slot provided. Cannot display pending state'
+    )
+    assert(
+      pendingSlot.length,
+      'Provided "pending" slot is empty. Cannot display pending state'
+    )
     return convertVNodeArray(h, this.tag, pendingSlot)
   },
 
@@ -81,12 +93,14 @@ export const Promised = {
         this.setupDelay()
         promise
           .then(data => {
+            // ensure we are dealing with the same promise
             if (this.promise === promise) {
               this.data = data
               this.resolved = true
             }
           })
           .catch(err => {
+            // ensure we are dealing with the same promise
             if (this.promise === promise) {
               this.error = err
               this.resolved = true
@@ -102,7 +116,10 @@ export const Promised = {
       if (this.pendingDelay > 0) {
         this.isDelayElapsed = false
         if (this.timerId) clearTimeout(this.timerId)
-        this.timerId = setTimeout(() => (this.isDelayElapsed = true), this.pendingDelay)
+        this.timerId = setTimeout(
+          () => (this.isDelayElapsed = true),
+          this.pendingDelay
+        )
       } else {
         this.isDelayElapsed = true
       }
@@ -111,6 +128,7 @@ export const Promised = {
 }
 
 function convertVNodeArray (h, wrapperTag, nodes) {
+  // for arrays and single text nodes
   if (nodes.length > 1 || !nodes[0].tag) return h(wrapperTag, {}, nodes)
   return nodes[0]
 }
