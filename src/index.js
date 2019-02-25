@@ -8,7 +8,8 @@ export const Promised = {
     },
     promise: {
       // allow polyfied Promise
-      validator: p => p && typeof p.then === 'function' && typeof p.catch === 'function',
+      validator: p =>
+        p && typeof p.then === 'function' && typeof p.catch === 'function',
     },
     pendingDelay: {
       type: [Number, String],
