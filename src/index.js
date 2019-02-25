@@ -62,12 +62,15 @@ export const Promised = {
         )
         return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
       }
+      // NOTE: for Vue < 2.6.0
       const defaultSlot = this.$slots.default
       assert(defaultSlot, 'No default slot provided. Cannot display the data')
+      /* istanbul ignore next */
       assert(
         defaultSlot.length,
         'Provided default slot is empty. Cannot display the data'
       )
+      /* istanbul ignore next */
       return convertVNodeArray(h, this.tag, defaultSlot)
     }
 
