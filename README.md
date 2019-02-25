@@ -118,17 +118,17 @@ In the following examples, `promise` is a Promise but can initially be `null`. `
 <template>
   <Promised :promise="usersPromise">
     <!-- Use the "pending" slot to display a loading message -->
-    <template v-bind:pending>
+    <template v-slot:pending>
       <p>Loading...</p>
     </template>
     <!-- The default scoped slot will be used as the result -->
-    <template v-bind="data">
+    <template v-slot="data">
       <ul>
         <li v-for="user in data">{{ user.name }}</li>
       </ul>
     </template>
     <!-- The "rejected" scoped slot will be used if there is an error -->
-    <template v-bind:rejected="error">
+    <template v-slot:rejected="error">
       <p>Error: {{ error.message }}</p>
     </template>
   </Promised>
