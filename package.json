@@ -6,19 +6,21 @@
   "module": "dist/vue-promised.es.js",
   "unpkg": "dist/vue-promised.js",
   "browser": "dist/vue-promised.es.js",
-  "types": "src/index.d.ts",
+  "types": "types/index.d.ts",
   "sideEffects": false,
   "scripts": {
     "lint": "eslint --color --ext=js,html src tests docs *.js",
     "lint:fix": "npm run lint -- --fix",
     "unit": "jest",
     "dev": "npm run unit -- --watchAll",
+    "types": "tsc -p ./types/test/tsconfig.json",
     "test": "npm run lint && npm run unit",
     "prepublishOnly": "rollit"
   },
   "files": [
     "src",
-    "dist",
+    "types/*.d.ts",
+    "dist/*.js",
     "LICENSE",
     "README.md"
   ],
@@ -46,6 +48,7 @@
     "eslint-config-posva": "^2.0.3",
     "faked-promise": "^2.0.0",
     "jest": "^24.1.0",
+    "typescript": "^3.3.3333",
     "vue": "^2.6.7",
     "vue-jest": "^3.0.3",
     "vue-template-compiler": "^2.6.7"

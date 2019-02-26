@@ -16,7 +16,7 @@ interface Data {
 
 interface Props {
   tag: String
-  promise: Promise | null
+  promise: Promise<any> | null
   pendingDelay: Number | String
 }
 
@@ -24,6 +24,6 @@ export type Promised = ComponentOptions<
   never,
   Data,
   DefaultMethods<never>,
-  DefaultComputed<never>,
+  DefaultComputed,
   Props
 >

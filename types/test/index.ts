@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { Promised } from '../src/index'
+import { Promised } from '../'
 
 const P = {} as Promised
 
