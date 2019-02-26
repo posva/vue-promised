@@ -8,7 +8,8 @@ export const Promised = {
     },
     promise: {
       // allow polyfied Promise
-      validator: p => p && typeof p.then === 'function' && typeof p.catch === 'function',
+      validator: p =>
+        p && typeof p.then === 'function' && typeof p.catch === 'function',
     },
     pendingDelay: {
       type: [Number, String],
@@ -33,10 +34,10 @@ export const Promised = {
         error: this.error,
       })
       assert(
-        (Array.isArray(node) && node.length === 1) || node,
-        'Provided "combined" scoped-slot cannot be empty and must contain one single children'
+        (Array.isArray(node) && node.length) || node,
+        'Provided "combined" scoped slot cannot be empty'
       )
-      return Array.isArray(node) ? node[0] : node
+      return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
 
     if (this.error) {
@@ -61,12 +62,14 @@ export const Promised = {
         this.setupDelay()
         promise
           .then(data => {
+            // ensure we are dealing with the same promise
             if (this.promise === promise) {
               this.data = data
               this.resolved = true
             }
           })
           .catch(err => {
+            // ensure we are dealing with the same promise
             if (this.promise === promise) {
               this.error = err
               this.resolved = true
@@ -82,7 +85,10 @@ export const Promised = {
       if (this.pendingDelay > 0) {
         this.isDelayElapsed = false
         if (this.timerId) clearTimeout(this.timerId)
-        this.timerId = setTimeout(() => (this.isDelayElapsed = true), this.pendingDelay)
+        this.timerId = setTimeout(
+          () => (this.isDelayElapsed = true),
+          this.pendingDelay
+        )
       } else {
         this.isDelayElapsed = true
       }
@@ -91,6 +97,7 @@ export const Promised = {
 }
 
 function convertVNodeArray (h, wrapperTag, nodes) {
+  // for arrays and single text nodes
   if (nodes.length > 1 || !nodes[0].tag) return h(wrapperTag, {}, nodes)
   return nodes[0]
 }
@@ -106,7 +113,7 @@ function getSlotVNode (instance, h, slotName, vNodeData) {
   }
 
   const slot = instance.$slots && instance.$slots[slotName]
-  assert(slot, `No "${slotName}" slot provided. Cannot display the data`)
+  assert(slot, `No slot "${slotName}" provided. Cannot display the data`)
   assert(slot.length, `Provided "${slotName}" slot is empty. Cannot display the data`)
   return convertVNodeArray(h, instance.tag, slot)
 }

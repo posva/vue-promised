@@ -118,13 +118,19 @@ In the following examples, `promise` is a Promise but can initially be `null`. `
 <template>
   <Promised :promise="usersPromise">
     <!-- Use the "pending" slot to display a loading message -->
-    <p slot="pending">Loading...</p>
+    <template v-slot:pending>
+      <p>Loading...</p>
+    </template>
     <!-- The default scoped slot will be used as the result -->
-    <ul slot-scope="users">
-      <li v-for="user in users">{{ user.name }}</li>
-    </ul>
+    <template v-slot="data">
+      <ul>
+        <li v-for="user in data">{{ user.name }}</li>
+      </ul>
+    </template>
     <!-- The "rejected" scoped slot will be used if there is an error -->
-    <p slot="rejected" slot-scope="error">Error: {{ error.message }}</p>
+    <template v-slot:rejected="error">
+      <p>Error: {{ error.message }}</p>
+    </template>
   </Promised>
 </template>
 
@@ -144,8 +150,11 @@ export default {
 You can also provide a single `combined` slot that will receive a context with all relevant information. That way you can customise the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
 
 ```vue
-<Promised :promise="promise">
-  <pre slot="combined" slot-scope="{ isPending, isDelayOver, data, error }">
+<Promised
+  :promise="promise"
+  v-slot:combined="{ isPending, isDelayOver, data, error }"
+>
+  <pre>
     pending: {{ isPending }}
     is delay over: {{ isDelayOver }}
     data: {{ data }}
@@ -157,8 +166,12 @@ You can also provide a single `combined` slot that will receive a context with a
 This allows to create more advanced async templates like this one featuring a Search component that must be displayed while the `searchResults` are being fetched:
 
 ```vue
-<Promised :promise="searchResults" :pending-delay="200">
-  <div slot="combined" slot-scope="{ isPending, isDelayOver, data, error }">
+<Promised
+  :promise="searchResults"
+  :pending-delay="200"
+  v-slot:combined="{ isPending, isDelayOver, data, error }"
+>
+  <div>
     <!-- data contains previous data or null when starting -->
     <Search :disabled-pagination="isPending || error" :items="data || []">
       <!-- The Search handles filtering logic with pagination -->
@@ -181,10 +194,10 @@ This allows to create more advanced async templates like this one featuring a Se
 
 #### `context` object
 
-- `isPending`: is `true` while the promise is in a _pending_ status. Becomes true once the promise is resolved **or** rejected. It is resetted to `false` when `promise` prop changes.
-- `isDelayOver`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is resetted when `promise` prop changes.
-- `data`: contains last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
-- `error`: contais last rejection or `null` if the promise was fullfiled.
+- `isPending`: is `true` while the promise is in a _pending_ status. Becomes `false` once the promise is resolved **or** rejected. It is reset to `true` when the `promise` prop changes.
+- `isDelayOver`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is reset when the `promise` prop changes.
+- `data`: contains the last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
+- `error`: contains last rejection or `null` if the promise was fullfiled.
 
 ### Setting the `promise`
 

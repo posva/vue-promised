@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils'
 import { Promised } from '../src'
 import fakePromise from 'faked-promise'
 import MultipleChildrenHelper from './utils/MultipleChildrenHelper.vue'
+import CombinedMultipleChildren from './utils/CombinedMultipleChildren.vue'
 
 // keep a real setTimeout
 const timeout = setTimeout
@@ -202,14 +203,18 @@ describe('Promised', () => {
         reject(new Error('nope'))
         await tick()
         expect(errorSpy).toHaveBeenCalledTimes(2)
-        expect(errorSpy.mock.calls[0][0].toString()).toMatch(/No "rejected" slot provided/)
+        expect(errorSpy.mock.calls[0][0].toString()).toMatch(
+          /No slot "rejected" provided/
+        )
       })
 
       it('throws if no default scoped or regular slot provided on resolve', async () => {
         expect(errorSpy).not.toHaveBeenCalled()
         resolve()
         await tick()
-        expect(errorSpy.mock.calls[0][0].toString()).toMatch(/No "default" slot provided/)
+        expect(errorSpy.mock.calls[0][0].toString()).toMatch(
+          /No slot "default" provided/
+        )
       })
 
       it('throws if pending slot provided', async () => {
@@ -217,16 +222,21 @@ describe('Promised', () => {
           wrapper = mount(Promised, {
             propsData: { promise, pendingDelay: 0 },
           })
-        }).toThrowError(/No "pending" slot provided/)
+        }).toThrowError(/No slot "pending" provided/)
       })
     })
   })
 
   describe('combined slot', () => {
     /** @type {import('@vue/test-utils').Wrapper} */
-    let wrapper, promise, resolve, reject
+    let wrapper, promise, resolve, reject, errorSpy
     beforeEach(() => {
-      [promise, resolve, reject] = fakePromise()
+      // silence the log
+      errorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
+        // useful for debugging
+        // console.log('CONSOLE ERROR')
+      })
+      ;[promise, resolve, reject] = fakePromise()
       wrapper = mount(Promised, {
         propsData: { promise, pendingDelay: 0 },
         scopedSlots: {
@@ -238,6 +248,10 @@ describe('Promised', () => {
           </div>`,
         },
       })
+    })
+
+    afterEach(() => {
+      errorSpy.mockRestore()
     })
 
     it('displays initial state', () => {
@@ -331,7 +345,8 @@ describe('Promised', () => {
       expect(wrapper.find('.data').text()).toBe('bar')
     })
 
-    it.skip('throws if slot is empty', async () => {
+    it('throws if slot is empty', () => {
+      expect(errorSpy).not.toHaveBeenCalled()
       expect(() => {
         wrapper = mount(Promised, {
           scopedSlots: {
@@ -339,24 +354,34 @@ describe('Promised', () => {
           },
           propsData: { promise: null, pendingDelay: 0 },
         })
-      }).toThrowError(
-        /Provided "combined" scoped-slot cannot be empty and must contain one single children/
-      )
+      }).toThrow(/Provided "combined" scoped slot cannot be empty/)
+      expect(errorSpy).toHaveBeenCalledTimes(2)
     })
 
-    // TODO test utils seems to not support that version of scopedSlot
-    it.skip('throws if multiple nodes are provided', async () => {
-      console.log('HEUETUHTNEHUOHTNUHOEHOUNTH')
-      expect(() => {
-        wrapper = mount(Promised, {
-          scopedSlots: {
-            combined: `<template><p>a</p><p>b<p/></template>`,
-          },
-          propsData: { promise, pendingDelay: 0 },
-        })
-      }).toThrowError(
-        /Provided "combined" scoped-slot cannot be empty and must contain one single children/
-      )
+    it('allows multiple nodes', async () => {
+      wrapper = mount(CombinedMultipleChildren, {
+        propsData: { promise, pendingDelay: 0 },
+      })
+      resolve('foo')
+      await tick()
+      expect(wrapper.text()).toBe('false true foo')
+    })
+
+    it('can be resolved right away', async () => {
+      const wrapper = mount(Promised, {
+        propsData: { promise: null, pendingDelay: 0 },
+        scopedSlots: {
+          combined: `<div>
+            <p class="pending">{{ props.isPending }}</p>
+            <p class="delay">{{ props.isDelayOver }}</p>
+            <p class="error">{{ props.error && props.error.message }}</p>
+            <p class="data">{{ props.data }}</p>
+          </div>`,
+        },
+      })
+      wrapper.setProps({ promise: Promise.resolve('Hello') })
+      await tick()
+      expect(wrapper.text()).toBe('false true  Hello')
     })
   })
 })
