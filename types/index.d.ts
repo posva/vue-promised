@@ -27,3 +27,5 @@ export type Promised = ComponentOptions<
   DefaultComputed,
   Props
 >
+
+export var Promised: Promised;
