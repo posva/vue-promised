@@ -20,12 +20,10 @@ interface Props {
   pendingDelay: Number | String
 }
 
-export type Promised = ComponentOptions<
+export var Promised: ComponentOptions<
   never,
   Data,
   DefaultMethods<never>,
   DefaultComputed,
   Props
 >
-
-export var Promised: Promised;
