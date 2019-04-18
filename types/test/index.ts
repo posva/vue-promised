@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import { Promised } from '../'
 
-const P = {} as Promised
+Vue.component('Promised', Promised);
 
 new Vue({
-  components: { P },
+  components: { Promised },
+})
+
+Vue.extend({
+  extends: Promised
 })

@@ -2,7 +2,9 @@ import {
   DefaultMethods,
   DefaultComputed,
   ComponentOptions,
+  PropsDefinition,
 } from 'vue/types/options'
+import { Vue } from 'vue/types/vue';
 
 interface Data {
   (): {
@@ -21,9 +23,9 @@ interface Props {
 }
 
 export var Promised: ComponentOptions<
-  never,
+  Vue,
   Data,
-  DefaultMethods<never>,
+  DefaultMethods<Vue>,
   DefaultComputed,
-  Props
+  PropsDefinition<Props>
 >
