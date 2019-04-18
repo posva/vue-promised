@@ -10,11 +10,12 @@
   "sideEffects": false,
   "scripts": {
     "lint": "eslint --color --ext=js,html src tests docs *.js",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "yarn run lint -- --fix",
     "unit": "jest",
-    "dev": "npm run unit -- --watchAll",
+    "dev": "yarn run unit -- --watchAll",
     "types": "tsc -p ./types/test/tsconfig.json",
-    "test": "npm run lint && npm run unit",
+    "pretest": "yarn run lint",
+    "test": "yarn run types && yarn run unit",
     "prepublishOnly": "rollit"
   },
   "files": [
@@ -38,19 +39,19 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
     "@vue/test-utils": "^1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^24.1.0",
-    "codecov": "^3.2.0",
-    "eslint": "^5.14.1",
+    "babel-jest": "^24.7.1",
+    "codecov": "^3.3.0",
+    "eslint": "^5.16.0",
     "eslint-config-posva": "^2.0.3",
-    "faked-promise": "^2.0.0",
-    "jest": "^24.1.0",
-    "typescript": "^3.3.3333",
-    "vue": "^2.6.7",
-    "vue-jest": "^3.0.3",
-    "vue-template-compiler": "^2.6.7"
+    "faked-promise": "^2.1.0",
+    "jest": "^24.7.1",
+    "typescript": "^3.4.3",
+    "vue": "^2.6.10",
+    "vue-jest": "^3.0.4",
+    "vue-template-compiler": "^2.6.10"
   }
 }

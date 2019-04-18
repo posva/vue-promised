@@ -30,7 +30,7 @@ jobs:
           key: v1-dependencies-{{ checksum "yarn.lock" }}
 
       # run tests!
-      - run: npm test
+      - run: yarn run test
 
       - run:
           name: Send code coverage
