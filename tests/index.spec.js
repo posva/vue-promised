@@ -129,6 +129,14 @@ describe('Promised', () => {
         })
         expect(clearTimeout).toHaveBeenCalled()
       })
+
+      it('cancels timeout when promise is set to null', () => {
+        expect(setTimeout).toHaveBeenCalledTimes(1)
+        wrapper.setProps({
+          promise: null,
+        })
+        expect(clearTimeout).toHaveBeenCalledTimes(1)
+      })
     })
 
     describe('multipe children', () => {
@@ -329,6 +337,19 @@ describe('Promised', () => {
       expect(wrapper.find('.pending').text()).toBe('false')
       expect(wrapper.find('.delay').text()).toBe('true')
       expect(wrapper.find('.data').text()).toBe('bar')
+    })
+
+    it('data is reset when promise is set to null', async () => {
+      resolve('foo')
+      await tick()
+      expect(wrapper.find('.pending').text()).toBe('false')
+      expect(wrapper.find('.delay').text()).toBe('true')
+      expect(wrapper.find('.data').text()).toBe('foo')
+
+      wrapper.setProps({ promise: null })
+      await tick()
+
+      expect(wrapper.text()).toBe('true false')
     })
 
     it('throws if slot is empty', () => {
