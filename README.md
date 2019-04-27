@@ -145,6 +145,26 @@ export default {
 </script>
 ```
 
+The `pending` slot can also be _scoped_. In that case it receives the data that was previously available:
+
+```vue
+<Promised :promise="usersPromise">
+  <template v-slot:pending="previousData">
+    <p>Refreshing</p>
+    <ul>
+      <li v-for="user in previousData">{{ user.name }}</li>
+    </ul>
+  </template>
+  <template v-slot="data">
+    <ul>
+      <li v-for="user in data">{{ user.name }}</li>
+    </ul>
+  </template>
+</Promised>
+```
+
+Although, depending on the use case, this could create duplication and using a `combined` slot would be a better approach.
+
 ### Using one single `combined` slot
 
 You can also provide a single `combined` slot that will receive a context with all relevant information. That way you can customise the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
@@ -225,6 +245,19 @@ export default {
 }
 ```
 
+You can also set the `promise` prop to `null` to reset the Promised component to the initial state: no error, no data, and pending:
+
+```js
+export default {
+  data: () => ({ promise: null }),
+  methods: {
+    resetPromise() {
+      this.promise = null
+    },
+  },
+}
+```
+
 ## API Reference
 
 ### `Promised` component
@@ -241,12 +274,14 @@ export default {
 
 #### slots
 
-| Name       | Description                                                                     | Scope                                    |
-| ---------- | ------------------------------------------------------------------------------- | ---------------------------------------- |
-| `pending`  | Content to display while the promise is pending and before pendingDelay is over | —                                        |
-| _default_  | Content to display once the promise has been successfully resolved              | `data`: resolved value                   |
-| `rejected` | Content to display if the promise is rejected                                   | `error`: rejection reason                |
-| `combined` | Combines all slots to provide a granular control over what should be displayed  | `context` [See details](#context-object) |
+All slots but `combined` can be used as _scoped_ or regular slots.
+
+| Name       | Description                                                                     | Scope                                     |
+| ---------- | ------------------------------------------------------------------------------- | ----------------------------------------- |
+| `pending`  | Content to display while the promise is pending and before pendingDelay is over | `previousData`: previously resolved value |
+| _default_  | Content to display once the promise has been successfully resolved              | `data`: resolved value                    |
+| `rejected` | Content to display if the promise is rejected                                   | `error`: rejection reason                 |
+| `combined` | Combines all slots to provide a granular control over what should be displayed  | `context` [See details](#context-object)  |
 
 ## License
 
