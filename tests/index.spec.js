@@ -386,7 +386,7 @@ describe('Promised', () => {
           },
           propsData: { promise: null, pendingDelay: 0 },
         })
-      }).toThrow(/Provided "combined" scoped slot cannot be empty/)
+      }).toThrow(/Provided scoped slot "combined" cannot be empty/)
       expect(errorSpy).toHaveBeenCalledTimes(2)
     })
 

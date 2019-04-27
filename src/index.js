@@ -35,7 +35,7 @@ export const Promised = {
       })
       assert(
         (Array.isArray(node) && node.length) || node,
-        'Provided "combined" scoped slot cannot be empty'
+        'Provided scoped slot "combined" cannot be empty'
       )
       return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
@@ -114,7 +114,7 @@ function getSlotVNode (vm, h, slotName, data) {
     const node = vm.$scopedSlots[slotName](data)
     assert(
       (Array.isArray(node) && node.length) || node,
-      `Provided "${slotName}" scoped-slot is empty`
+      `Provided scoped slot "${slotName}" is empty`
     )
     return Array.isArray(node) ? convertVNodeArray(h, vm.tag, node) : node
   }
@@ -122,6 +122,6 @@ function getSlotVNode (vm, h, slotName, data) {
   const slot = vm.$slots[slotName]
   assert(slot, `No slot "${slotName}" provided`)
   // 2.5.x compatibility
-  assert(slot.length, `Provided "${slotName}" slot is empty`)
+  assert(slot.length, `Provided slot "${slotName}" is empty`)
   return convertVNodeArray(h, vm.tag, slot)
 }
