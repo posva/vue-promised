@@ -63,7 +63,7 @@ describe('Promised', () => {
       expect(wrapper.text()).toBe('finished')
     })
 
-    it('works with a non error scoped-slot', async () => {
+    it('works with a non scoped-slot for the rejected slot', async () => {
       [promise, resolve, reject] = fakePromise()
       wrapper = mount(Promised, {
         propsData: { promise, pendingDelay: 0 },
@@ -75,6 +75,17 @@ describe('Promised', () => {
       reject('whatever')
       await tick()
       expect(wrapper.text()).toBe('oh no')
+    })
+
+    it('works with a scoped-slot for the pending slot', async () => {
+      [promise, resolve, reject] = fakePromise()
+      wrapper = mount(Promised, {
+        propsData: { promise, pendingDelay: 0 },
+        scopedSlots: {
+          pending: `<p>pending</p>`,
+        },
+      })
+      expect(wrapper.text()).toBe('pending')
     })
 
     it('displays an error if rejected', async () => {
@@ -225,7 +236,7 @@ describe('Promised', () => {
         )
       })
 
-      it('throws if pending slot provided', async () => {
+      it('throws if no pending slot provided', async () => {
         expect(() => {
           wrapper = mount(Promised, {
             propsData: { promise, pendingDelay: 0 },

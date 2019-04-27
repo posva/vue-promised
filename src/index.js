@@ -108,18 +108,20 @@ function convertVNodeArray (h, wrapperTag, nodes) {
   return nodes[0]
 }
 
-function getSlotVNode (instance, h, slotName, vNodeData) {
-  if (instance.$scopedSlots && instance.$scopedSlots[slotName]) {
-    const node = instance.$scopedSlots[slotName](vNodeData)
+function getSlotVNode (vm, h, slotName, data) {
+  // use scopedSlots if available
+  if (vm.$scopedSlots[slotName]) {
+    const node = vm.$scopedSlots[slotName](data)
     assert(
       (Array.isArray(node) && node.length) || node,
-      `Provided "${slotName}" scoped-slot is empty. Cannot display the data`
+      `Provided "${slotName}" scoped-slot is empty`
     )
-    return Array.isArray(node) ? convertVNodeArray(h, instance.tag, node) : node
+    return Array.isArray(node) ? convertVNodeArray(h, vm.tag, node) : node
   }
 
-  const slot = instance.$slots && instance.$slots[slotName]
-  assert(slot, `No slot "${slotName}" provided. Cannot display the data`)
-  assert(slot.length, `Provided "${slotName}" slot is empty. Cannot display the data`)
-  return convertVNodeArray(h, instance.tag, slot)
+  const slot = vm.$slots[slotName]
+  assert(slot, `No slot "${slotName}" provided`)
+  // 2.5.x compatibility
+  assert(slot.length, `Provided "${slotName}" slot is empty`)
+  return convertVNodeArray(h, vm.tag, slot)
 }
