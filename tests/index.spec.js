@@ -88,6 +88,27 @@ describe('Promised', () => {
       expect(wrapper.text()).toBe('pending')
     })
 
+    it('contains previous data in pending scoped-slot', async () => {
+      [promise, resolve, reject] = fakePromise()
+      wrapper = mount(Promised, {
+        propsData: { promise, pendingDelay: 0 },
+        scopedSlots: {
+          pending: `<p>pending: {{ props }}</p>`,
+          default: `<p>data: {{ props }}</p>`,
+        },
+      })
+      resolve('ok')
+      await tick()
+      expect(wrapper.text()).toBe('data: ok')
+      // create a new promise
+      ;[promise, resolve, reject] = fakePromise()
+      wrapper.setProps({ promise })
+      resolve('okay')
+      expect(wrapper.text()).toBe('pending: ok')
+      await tick()
+      expect(wrapper.text()).toBe('data: okay')
+    })
+
     it('displays an error if rejected', async () => {
       reject(new Error('hello'))
       await tick()
