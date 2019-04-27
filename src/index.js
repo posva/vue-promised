@@ -91,9 +91,15 @@ export const Promised = {
   watch: {
     promise: {
       handler (promise) {
-        if (!promise) return
         this.resolved = false
         this.error = null
+        if (!promise) {
+          this.data = null
+          this.isDelayElapsed = false
+          if (this.timerId) clearTimeout(this.timerId)
+          this.timerId = null
+          return
+        }
         this.setupDelay()
         promise
           .then(data => {
