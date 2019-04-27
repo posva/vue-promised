@@ -41,51 +41,16 @@ export const Promised = {
     }
 
     if (this.error) {
-      assert(
-        this.$scopedSlots.rejected,
-        'No slot "rejected" provided. Cannot display the error'
-      )
-      const node = this.$scopedSlots.rejected(this.error)
-      assert(
-        (Array.isArray(node) && node.length) || node,
-        'Provided slot "rejected" is empty. Cannot display the error'
-      )
-      return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
+      return getSlotVNode(this, h, 'rejected', this.error)
     }
 
     if (this.resolved) {
-      if (this.$scopedSlots.default) {
-        const node = this.$scopedSlots.default(this.data)
-        assert(
-          (Array.isArray(node) && node.length) || node,
-          'Provided default scoped-slot is empty. Cannot display the data'
-        )
-        return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
-      }
-      // NOTE: for Vue < 2.6.0
-      const defaultSlot = this.$slots.default
-      assert(defaultSlot, 'No default slot provided. Cannot display the data')
-      /* istanbul ignore next */
-      assert(
-        defaultSlot.length,
-        'Provided default slot is empty. Cannot display the data'
-      )
-      /* istanbul ignore next */
-      return convertVNodeArray(h, this.tag, defaultSlot)
+      return getSlotVNode(this, h, 'default', this.data)
     }
 
     if (!this.isDelayElapsed) return h()
 
-    const pendingSlot = this.$slots.pending
-    assert(
-      pendingSlot,
-      'No "pending" slot provided. Cannot display pending state'
-    )
-    assert(
-      pendingSlot.length,
-      'Provided "pending" slot is empty. Cannot display pending state'
-    )
-    return convertVNodeArray(h, this.tag, pendingSlot)
+    return getSlotVNode(this, h, 'pending', this.data)
   },
 
   watch: {
@@ -141,4 +106,20 @@ function convertVNodeArray (h, wrapperTag, nodes) {
   // for arrays and single text nodes
   if (nodes.length > 1 || !nodes[0].tag) return h(wrapperTag, {}, nodes)
   return nodes[0]
+}
+
+function getSlotVNode (instance, h, slotName, vNodeData) {
+  if (instance.$scopedSlots && instance.$scopedSlots[slotName]) {
+    const node = instance.$scopedSlots[slotName](vNodeData)
+    assert(
+      (Array.isArray(node) && node.length) || node,
+      `Provided "${slotName}" scoped-slot is empty. Cannot display the data`
+    )
+    return Array.isArray(node) ? convertVNodeArray(h, instance.tag, node) : node
+  }
+
+  const slot = instance.$slots && instance.$slots[slotName]
+  assert(slot, `No slot "${slotName}" provided. Cannot display the data`)
+  assert(slot.length, `Provided "${slotName}" slot is empty. Cannot display the data`)
+  return convertVNodeArray(h, instance.tag, slot)
 }

@@ -63,6 +63,20 @@ describe('Promised', () => {
       expect(wrapper.text()).toBe('finished')
     })
 
+    it('works with a non error scoped-slot', async () => {
+      [promise, resolve, reject] = fakePromise()
+      wrapper = mount(Promised, {
+        propsData: { promise, pendingDelay: 0 },
+        slots: {
+          ...slots,
+          rejected: `<p>oh no</p>`,
+        },
+      })
+      reject('whatever')
+      await tick()
+      expect(wrapper.text()).toBe('oh no')
+    })
+
     it('displays an error if rejected', async () => {
       reject(new Error('hello'))
       await tick()
@@ -207,7 +221,7 @@ describe('Promised', () => {
         resolve()
         await tick()
         expect(errorSpy.mock.calls[0][0].toString()).toMatch(
-          /No default slot provided/
+          /No slot "default" provided/
         )
       })
 
@@ -216,7 +230,7 @@ describe('Promised', () => {
           wrapper = mount(Promised, {
             propsData: { promise, pendingDelay: 0 },
           })
-        }).toThrowError(/No "pending" slot provided/)
+        }).toThrowError(/No slot "pending" provided/)
       })
     })
   })
