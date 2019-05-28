@@ -28,7 +28,7 @@ export const Promised = {
   render (h) {
     if (this.$scopedSlots.combined) {
       const node = this.$scopedSlots.combined({
-        isPending: this.promise && !this.resolved,
+        isPending: Boolean(this.promise && !this.resolved),
         isDelayOver: this.isDelayElapsed,
         data: this.data,
         error: this.error,
