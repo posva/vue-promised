@@ -18,16 +18,15 @@
   </a>
 </p>
 
+<!--
 <h3 align="center">Bronze Sponsors</h3>
 
 <p align="center">
-  <a href="https://www.gridsome.org" title="Gridsome" target="_blank">
-    <img src="https://gridsome.org/logos/logo-normal.svg" alt="Gridsome logo" height="24px">
-  </a>
-  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
-    <img src="https://vuejs.org/images/vuetify.png" height="32px">
+  <a href="https://www.some.org" title="title" target="_blank">
+    <img src="logo" alt="title logo" height="24px">
   </a>
 </p>
+-->
 
 ---
 
