@@ -45,7 +45,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.7.1",
     "codecov": "^3.3.0",
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.0",
     "eslint-config-posva": "^2.0.3",
     "faked-promise": "^2.1.0",
     "jest": "^24.7.1",
