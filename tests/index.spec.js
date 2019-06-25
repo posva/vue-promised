@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
 import { Promised } from '../src'
 import fakePromise from 'faked-promise'
@@ -89,7 +90,7 @@ describe('Promised', () => {
     })
 
     it('contains previous data in pending scoped-slot', async () => {
-      [promise, resolve, reject] = fakePromise()
+      let [promise, resolve, reject] = fakePromise()
       wrapper = mount(Promised, {
         propsData: { promise, pendingDelay: 0 },
         scopedSlots: {
@@ -268,6 +269,22 @@ describe('Promised', () => {
   })
 
   describe('combined slot', () => {
+    function factory () {
+      const [promise, resolve, reject] = fakePromise()
+      const wrapper = mount(Promised, {
+        propsData: { promise, pendingDelay: 0 },
+        scopedSlots: {
+          combined: `<div>
+            <p class="pending">{{ props.isPending }}</p>
+            <p class="delay">{{ props.isDelayOver }}</p>
+            <p class="error">{{ props.error && props.error.message }}</p>
+            <p class="data">{{ props.data }}</p>
+          </div>`,
+        },
+      })
+      return { wrapper, promise, resolve, reject }
+    }
+
     /** @type {import('@vue/test-utils').Wrapper} */
     let wrapper, promise, resolve, reject, errorSpy
     beforeEach(() => {
@@ -333,11 +350,13 @@ describe('Promised', () => {
     })
 
     it('data contains previous data in between calls', async () => {
+      let { wrapper, promise, resolve, reject } = factory()
       resolve('foo')
       await tick()
       expect(wrapper.find('.pending').text()).toBe('false')
       expect(wrapper.find('.delay').text()).toBe('true')
       expect(wrapper.find('.data').text()).toBe('foo')
+
       ;[promise, resolve, reject] = fakePromise()
 
       wrapper.setProps({ promise })
@@ -356,6 +375,7 @@ describe('Promised', () => {
     })
 
     it('data contains previous resolved data in between calls', async () => {
+      let { wrapper, promise, resolve, reject } = factory()
       resolve('foo')
       await tick()
       expect(wrapper.find('.pending').text()).toBe('false')
