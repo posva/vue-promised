@@ -5,6 +5,7 @@
   "main": "dist/vue-promised.cjs.js",
   "module": "dist/vue-promised.es.js",
   "unpkg": "dist/vue-promised.js",
+  "jsdelivr": "dist/vue-promised.js",
   "browser": "dist/vue-promised.es.js",
   "types": "types/index.d.ts",
   "sideEffects": false,
