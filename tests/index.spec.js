@@ -11,11 +11,11 @@ const tick = () => new Promise(resolve => timeout(resolve, 0))
 jest.useFakeTimers()
 
 const slots = {
-  pending: `<span>pending</span>`,
+  pending: '<span>pending</span>',
 }
 const scopedSlots = {
-  default: `<span slot-scope="data">{{ data }}</span>`,
-  rejected: `<span class="error" slot-scope="error">{{ error.message }}</span>`,
+  default: '<span slot-scope="data">{{ data }}</span>',
+  rejected: '<span class="error" slot-scope="error">{{ error.message }}</span>',
 }
 
 describe('Promised', () => {
@@ -56,7 +56,7 @@ describe('Promised', () => {
         propsData: { promise, pendingDelay: 0 },
         slots: {
           ...slots,
-          default: `<p>finished</p>`,
+          default: '<p>finished</p>',
         },
       })
       resolve('whatever')
@@ -70,7 +70,7 @@ describe('Promised', () => {
         propsData: { promise, pendingDelay: 0 },
         slots: {
           ...slots,
-          rejected: `<p>oh no</p>`,
+          rejected: '<p>oh no</p>',
         },
       })
       reject('whatever')
@@ -83,7 +83,7 @@ describe('Promised', () => {
       wrapper = mount(Promised, {
         propsData: { promise, pendingDelay: 0 },
         scopedSlots: {
-          pending: `<p>pending</p>`,
+          pending: '<p>pending</p>',
         },
       })
       expect(wrapper.text()).toBe('pending')
@@ -94,8 +94,8 @@ describe('Promised', () => {
       wrapper = mount(Promised, {
         propsData: { promise, pendingDelay: 0 },
         scopedSlots: {
-          pending: `<p>pending: {{ props }}</p>`,
-          default: `<p>data: {{ props }}</p>`,
+          pending: '<p>pending: {{ props }}</p>',
+          default: '<p>data: {{ props }}</p>',
         },
       })
       resolve('ok')
@@ -423,7 +423,7 @@ describe('Promised', () => {
       expect(() => {
         wrapper = mount(Promised, {
           scopedSlots: {
-            combined: `<template></template>`,
+            combined: '<template></template>',
           },
           propsData: { promise: null, pendingDelay: 0 },
         })
