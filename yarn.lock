@@ -2125,9 +2125,9 @@ extsprintf@^1.2.0:
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
 faked-promise@^2.1.0:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/faked-promise/-/faked-promise-2.2.1.tgz#daab80791dc6549ec82caa1fa49e333242e442a0"
-  integrity sha512-lxi2VPFTc2v7dOlXQZvcm1e9E5FmZyT47ZVR+mJQQdggXaWNbxrzIvASbANRPxpFu777kl2ELmXmG/0Lg9HgBg==
+  version "2.2.2"
+  resolved "https://registry.yarnpkg.com/faked-promise/-/faked-promise-2.2.2.tgz#c89dd11d29a561bb03229813e3aa13a369df137c"
+  integrity sha512-1kaSWavyNHJw83/aJ0dZAhKWID/FAED9vlgBa43kW8Vb61BSXORXf8f9W6NJ7qepTtlPSaJc557qkpxT1HCUBw==
 
 fast-deep-equal@^2.0.1:
   version "2.0.1"
