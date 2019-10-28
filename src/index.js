@@ -35,7 +35,7 @@ export const Promised = {
       })
       assert(
         (Array.isArray(node) && node.length) || node,
-        'Provided scoped slot "combined" cannot be empty'
+        'Provided scoped slot "combined" cannot be empty',
       )
       return Array.isArray(node) ? convertVNodeArray(h, this.tag, node) : node
     }
@@ -93,7 +93,7 @@ export const Promised = {
         if (this.timerId) clearTimeout(this.timerId)
         this.timerId = setTimeout(
           () => (this.isDelayElapsed = true),
-          this.pendingDelay
+          this.pendingDelay,
         )
       } else {
         this.isDelayElapsed = true
@@ -114,7 +114,7 @@ function getSlotVNode (vm, h, slotName, data) {
     const node = vm.$scopedSlots[slotName](data)
     assert(
       (Array.isArray(node) && node.length) || node,
-      `Provided scoped slot "${slotName}" is empty`
+      `Provided scoped slot "${slotName}" is empty`,
     )
     return Array.isArray(node) ? convertVNodeArray(h, vm.tag, node) : node
   }

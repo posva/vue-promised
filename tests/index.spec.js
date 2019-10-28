@@ -245,7 +245,7 @@ describe('Promised', () => {
         await tick()
         expect(errorSpy).toHaveBeenCalledTimes(2)
         expect(errorSpy.mock.calls[0][0].toString()).toMatch(
-          /No slot "rejected" provided/
+          /No slot "rejected" provided/,
         )
       })
 
@@ -254,7 +254,7 @@ describe('Promised', () => {
         resolve()
         await tick()
         expect(errorSpy.mock.calls[0][0].toString()).toMatch(
-          /No slot "default" provided/
+          /No slot "default" provided/,
         )
       })
 
