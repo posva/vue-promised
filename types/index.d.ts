@@ -3,29 +3,21 @@ import {
   DefaultComputed,
   ComponentOptions,
   PropsDefinition,
+  PropType
 } from 'vue/types/options'
-import { Vue } from 'vue/types/vue';
+import { Vue } from 'vue/types/vue'
 
-interface Data {
-  (): {
+export declare var Promised: {
+  props: {
+    tag: PropType<string>
+    promise: PropType<Promise<any> | null>
+    pendingDelay: PropType<number | string>
+  }
+
+  data: () => {
     resolved: boolean
     data: any | null
     error: any | null
-
     isDelayElapsed: boolean
   }
 }
-
-interface Props {
-  tag: String
-  promise: Promise<any> | null
-  pendingDelay: Number | String
-}
-
-export var Promised: ComponentOptions<
-  Vue,
-  Data,
-  DefaultMethods<Vue>,
-  DefaultComputed,
-  PropsDefinition<Props>
->
