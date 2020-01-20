@@ -41,8 +41,8 @@
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.4.3",
-    "@babel/preset-env": "^7.4.3",
-    "@vue/test-utils": "^1.0.0-beta.29",
+    "@babel/preset-env": "^7.8.3",
+    "@vue/test-utils": "^1.0.0-beta.30",
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^24.7.1",
     "codecov": "^3.3.0",
