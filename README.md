@@ -12,11 +12,17 @@
   </a>
 </p>
 
+<p align="center">
+  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
+    <img src="https://vuejs.org/images/vuetify.png" alt="Vuetify logo" height="48px">
+  </a>
+</p>
+
 <h3 align="center">Bronze Sponsors</h3>
 
 <p align="center">
-  <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
-    <img src="https://vuejs.org/images/vuetify.png" height="32px">
+  <a href="https://www.storyblok.com" target="_blank" title="Storyblok">
+    <img src="https://a.storyblok.com/f/51376/3856x824/fea44d52a9/colored-full.png" alt="Storyblok logo" height="32px">
   </a>
 </p>
 
