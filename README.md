@@ -167,45 +167,42 @@ Although, depending on the use case, this could create duplication and using a `
 You can also provide a single `combined` slot that will receive a context with all relevant information. That way you can customise the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
 
 ```vue
-<Promised
-  :promise="promise"
-  v-slot:combined="{ isPending, isDelayOver, data, error }"
->
-  <pre>
-    pending: {{ isPending }}
-    is delay over: {{ isDelayOver }}
-    data: {{ data }}
-    error: {{ error && error.message }}
-  </pre>
+<Promised :promise="promise">
+  <template v-slot:combined="{ isPending, isDelayOver, data, error }">
+    <pre>
+      pending: {{ isPending }}
+      is delay over: {{ isDelayOver }}
+      data: {{ data }}
+      error: {{ error && error.message }}
+    </pre>
+  </template>
 </Promised>
 ```
 
 This allows to create more advanced async templates like this one featuring a Search component that must be displayed while the `searchResults` are being fetched:
 
 ```vue
-<Promised
-  :promise="searchResults"
-  :pending-delay="200"
-  v-slot:combined="{ isPending, isDelayOver, data, error }"
->
-  <div>
-    <!-- data contains previous data or null when starting -->
-    <Search :disabled-pagination="isPending || error" :items="data || []">
-      <!-- The Search handles filtering logic with pagination -->
-      <template slot-scope="{ results, query }">
-        <ProfileCard v-for="user in results" :user="user" />
-      </template>
-      <!--
-        If there is an error, data is null, therefore there are no results and we can display
-        the error
-      -->
-      <MySpinner v-if="isPending && isDelayOver" slot="loading" />
-      <template slot="noResults">
-        <p v-if="error" class="error">Error: {{ error.message }}</p>
-        <p v-else class="info">No results for "{{ query }}"</p>
-      </template>
-    </Search>
-  </div>
+<Promised :promise="searchResults" :pending-delay="200">
+  <template v-slot:combined="{ isPending, isDelayOver, data, error }">
+    <div>
+      <!-- data contains previous data or null when starting -->
+      <Search :disabled-pagination="isPending || error" :items="data || []">
+        <!-- The Search handles filtering logic with pagination -->
+        <template slot-scope="{ results, query }">
+          <ProfileCard v-for="user in results" :user="user" />
+        </template>
+        <!--
+          If there is an error, data is null, therefore there are no results and we can display
+          the error
+        -->
+        <MySpinner v-if="isPending && isDelayOver" slot="loading" />
+        <template slot="noResults">
+          <p v-if="error" class="error">Error: {{ error.message }}</p>
+          <p v-else class="info">No results for "{{ query }}"</p>
+        </template>
+      </Search>
+    </div>
+  </template>
 </Promised>
 ```
 
