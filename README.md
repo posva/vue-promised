@@ -188,15 +188,15 @@ This allows to create more advanced async templates like this one featuring a Se
       <!-- data contains previous data or null when starting -->
       <Search :disabled-pagination="isPending || error" :items="data || []">
         <!-- The Search handles filtering logic with pagination -->
-        <template slot-scope="{ results, query }">
+        <template v-slot="{ results, query }">
           <ProfileCard v-for="user in results" :user="user" />
         </template>
         <!--
           If there is an error, data is null, therefore there are no results and we can display
           the error
         -->
-        <MySpinner v-if="isPending && isDelayOver" slot="loading" />
-        <template slot="noResults">
+        <MySpinner v-if="isPending && isDelayOver" v-slot:loading />
+        <template v-slot:noResults>
           <p v-if="error" class="error">Error: {{ error.message }}</p>
           <p v-else class="info">No results for "{{ query }}"</p>
         </template>
