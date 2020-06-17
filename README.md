@@ -192,10 +192,11 @@ This allows to create more advanced async templates like this one featuring a Se
           <ProfileCard v-for="user in results" :user="user" />
         </template>
         <!--
-          If there is an error, data is null, therefore there are no results and we can display
-          the error
+          Display a loading spinner only if an initial delay of 200ms is elapsed
         -->
-        <MySpinner v-if="isPending && isDelayOver" v-slot:loading />
+        <template v-slot:loading>
+          <MySpinner v-if="isPending && isDelayOver" />
+        </template>
         <!-- `query` is the same as in the default slot -->
         <template v-slot:noResults="{ query }">
           <p v-if="error" class="error">Error: {{ error.message }}</p>
