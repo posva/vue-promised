@@ -196,7 +196,8 @@ This allows to create more advanced async templates like this one featuring a Se
           the error
         -->
         <MySpinner v-if="isPending && isDelayOver" v-slot:loading />
-        <template v-slot:noResults>
+        <!-- `query` is the same as in the default slot -->
+        <template v-slot:noResults="{ query }">
           <p v-if="error" class="error">Error: {{ error.message }}</p>
           <p v-else class="info">No results for "{{ query }}"</p>
         </template>
