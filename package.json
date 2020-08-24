@@ -50,7 +50,7 @@
     "eslint-config-posva": "^3.0.2",
     "faked-promise": "^2.1.0",
     "jest": "^26.0.1",
-    "typescript": "^3.7.5",
+    "typescript": "^4.0.2",
     "vue": "^2.6.10",
     "vue-jest": "^3.0.4",
     "vue-template-compiler": "^2.6.10"
