@@ -8,13 +8,11 @@
 
 <p align="center">
   <a href="https://www.vuemastery.com" title="Vue Mastery" target="_blank">
-    <img src="https://www.vuemastery.com/images/lgo-vuemastery.svg" alt="Vue Mastery logo" height="48px">
+    <img src="https://www.vuemastery.com/images/vuemastery.svg" alt="Vue Mastery logo" height="48px">
   </a>
-</p>
 
-<p align="center">
   <a href="https://vuetifyjs.com" target="_blank" title="Vuetify">
-    <img src="https://vuejs.org/images/vuetify.png" alt="Vuetify logo" height="48px">
+    <img src="https://cdn.vuetifyjs.com/docs/images/logos/vuetify-logo-light-text.svg" alt="Vuetify logo" height="48px">
   </a>
 </p>
 
