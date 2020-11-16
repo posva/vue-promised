@@ -92,8 +92,7 @@ That is quite a lot of boilerplate and it's not handling cancelling on going req
 
 ## Migrating from `v1`
 
-Migrating to v2 from v1 should be doable in a small amount of time as the only breaking changes are some slots name and the way `Promised` component is imported.
-[Check releases notes to see the list of breaking changes](https://github.com/posva/vue-promised/releases/tag/v2.0.0)
+v2 should expose the same API as v1.
 
 ## Usage
 
