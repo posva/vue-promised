@@ -1,12 +1,12 @@
 {
-  "name": "vue-lib",
+  "name": "vue-promised",
   "version": "0.0.0",
   "description": "Some awesome description",
-  "main": "dist/vue-lib.cjs.js",
-  "unpkg": "dist/vue-lib.global.js",
-  "jsdelivr": "dist/vue-lib.global.js",
-  "module": "dist/vue-lib.esm-bundler.js",
-  "types": "dist/vue-lib.d.ts",
+  "main": "dist/vue-promised.cjs.js",
+  "unpkg": "dist/vue-promised.global.js",
+  "jsdelivr": "dist/vue-promised.global.js",
+  "module": "dist/vue-promised.esm-bundler.js",
+  "types": "dist/vue-promised.d.ts",
   "sideEffects": false,
   "author": {
     "name": "Eduardo San Martin Morote",
@@ -26,7 +26,7 @@
   },
   "files": [
     "dist/*.js",
-    "dist/vue-lib.d.ts",
+    "dist/vue-promised.d.ts",
     "LICENSE",
     "README.md"
   ],
@@ -73,7 +73,10 @@
   },
   "size-limit": [
     {
-      "path": "size-checks/basic.js"
+      "path": "size-checks/minimal.js"
+    },
+    {
+      "path": "size-checks/all.js"
     }
   ],
   "peerDependencies": {
@@ -81,10 +84,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/posva/vue-lib.git"
+    "url": "git+https://github.com/posva/vue-promised.git"
   },
   "bugs": {
-    "url": "https://github.com/posva/vue-lib/issues"
+    "url": "https://github.com/posva/vue-promised/issues"
   },
-  "homepage": "https://github.com/posva/vue-lib#readme"
+  "homepage": "https://github.com/posva/vue-promised#readme"
 }
