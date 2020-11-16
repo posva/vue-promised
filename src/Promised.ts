@@ -27,9 +27,9 @@ export const Promised = defineComponent({
 
       const [slotName, slotData] = promiseState.error
         ? ['rejected', promiseState.error]
-        : !promiseState.pending
+        : !promiseState.isPending
         ? ['default', promiseState.data]
-        : promiseState.delayElapsed
+        : promiseState.isDelayElapsed
         ? ['pending', promiseState.data]
         : [null]
 

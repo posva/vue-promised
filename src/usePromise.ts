@@ -12,8 +12,8 @@ export function usePromise<T = unknown>(
   promise: Refable<Promise<T> | null | undefined>,
   pendingDelay: Refable<number | string> = 200
 ) {
-  const pending = ref(false)
-  const delayElapsed = ref(false)
+  const isPending = ref(false)
+  const isDelayElapsed = ref(false)
   const error = ref<Error | undefined | null>()
   const data = ref<T | null | undefined>()
 
@@ -22,24 +22,24 @@ export function usePromise<T = unknown>(
   watch(
     () => unref(promise),
     (newPromise) => {
-      pending.value = true
+      isPending.value = true
       error.value = null
       if (!newPromise) {
         data.value = null
-        pending.value = true
+        isPending.value = true
         if (timerId) clearTimeout(timerId)
         timerId = null
         return
       }
 
       if (unref(pendingDelay) > 0) {
-        delayElapsed.value = false
+        isDelayElapsed.value = false
         if (timerId) clearTimeout(timerId)
         timerId = setTimeout(() => {
-          delayElapsed.value = true
+          isDelayElapsed.value = true
         }, Number(unref(pendingDelay)))
       } else {
-        delayElapsed.value = true
+        isDelayElapsed.value = true
       }
 
       newPromise
@@ -47,19 +47,19 @@ export function usePromise<T = unknown>(
           // ensure we are dealing with the same promise
           if (newPromise === unref(promise)) {
             data.value = newData
-            pending.value = false
+            isPending.value = false
           }
         })
         .catch((err) => {
           // ensure we are dealing with the same promise
           if (newPromise === unref(promise)) {
             error.value = err
-            pending.value = false
+            isPending.value = false
           }
         })
     },
     { immediate: true }
   )
 
-  return { pending, delayElapsed, error, data }
+  return { isPending, isDelayElapsed, error, data }
 }
