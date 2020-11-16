@@ -1,4 +1,4 @@
-import { ref, unref, watch } from 'vue'
+import { ref, unref, watch } from 'vue-demi'
 import { Refable } from './utils'
 
 export function usePromise<T = unknown>(

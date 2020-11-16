@@ -1,4 +1,4 @@
-import { defineComponent, PropType, reactive, toRefs, warn } from 'vue'
+import { defineComponent, PropType, reactive, toRefs, warn } from 'vue-demi'
 import { usePromise } from './usePromise'
 
 export const Promised = defineComponent({
