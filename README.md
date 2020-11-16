@@ -111,7 +111,7 @@ export default {
     return {
       ...promised,
       // spreads the following properties:
-      // data, pending, delayElapsed, error
+      // data, isPending, isDelayElapsed, error
     }
   },
 }
@@ -181,10 +181,10 @@ You can also provide a single `combined` slot that will receive a context with a
 
 ```vue
 <Promised :promise="promise">
-  <template v-slot:combined="{ pending, delayElapsed, data, error }">
+  <template v-slot:combined="{ isPending, isDelayElapsed, data, error }">
     <pre>
-      pending: {{ pending }}
-      is delay over: {{ delayElapsed }}
+      pending: {{ isPending }}
+      is delay over: {{ isDelayElapsed }}
       data: {{ data }}
       error: {{ error && error.message }}
     </pre>
@@ -196,10 +196,10 @@ This allows to create more advanced async templates like this one featuring a Se
 
 ```vue
 <Promised :promise="searchResults" :pending-delay="200">
-  <template v-slot:combined="{ pending, delayElapsed, data, error }">
+  <template v-slot:combined="{ isPending, isDelayElapsed, data, error }">
     <div>
       <!-- data contains previous data or null when starting -->
-      <Search :disabled-pagination="pending || error" :items="data || []">
+      <Search :disabled-pagination="isPending || error" :items="data || []">
         <!-- The Search handles filtering logic with pagination -->
         <template v-slot="{ results, query }">
           <ProfileCard v-for="user in results" :user="user" />
@@ -208,7 +208,7 @@ This allows to create more advanced async templates like this one featuring a Se
           Display a loading spinner only if an initial delay of 200ms is elapsed
         -->
         <template v-slot:loading>
-          <MySpinner v-if="pending && delayElapsed" />
+          <MySpinner v-if="isPending && isDelayElapsed" />
         </template>
         <!-- `query` is the same as in the default slot -->
         <template v-slot:noResults="{ query }">
@@ -223,8 +223,8 @@ This allows to create more advanced async templates like this one featuring a Se
 
 ##### `context` object
 
-- `pending`: is `true` while the promise is in a _pending_ status. Becomes `false` once the promise is resolved **or** rejected. It is reset to `true` when the `promise` prop changes.
-- `delayElapsed`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is reset when the `promise` prop changes.
+- `isPending`: is `true` while the promise is in a _pending_ status. Becomes `false` once the promise is resolved **or** rejected. It is reset to `true` when the `promise` prop changes.
+- `isDelayElapsed`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is reset when the `promise` prop changes.
 - `data`: contains the last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
 - `error`: contains last rejection or `null` if the promise was fullfiled.
 
@@ -274,7 +274,7 @@ export default {
 `usePromise` returns an object of `Ref` representing the state of the promise.
 
 ```ts
-const { data, error, pending, delayElapsed } = usePromise(fetchUsers())
+const { data, error, isPending, isDelayElapsed } = usePromise(fetchUsers())
 ```
 
 Signature:
@@ -284,8 +284,8 @@ function usePromise<T = unknown>(
   promise: Ref<Promise<T> | null | undefined> | Promise<T> | null | undefined,
   pendingDelay?: Ref<number | string> | number | string
 ): {
-  pending: Ref<boolean>
-  delayElapsed: Ref<boolean>
+  isPending: Ref<boolean>
+  isDelayElapsed: Ref<boolean>
   error: Ref<Error | null | undefined>
   data: Ref<T | null | undefined>
 }
