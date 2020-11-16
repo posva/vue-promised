@@ -1,4 +1,4 @@
-# vue-promised [![Build Status](https://badgen.net/circleci/github/posva/vue-promised)](https://circleci.com/gh/posva/vue-promised) [![npm package](https://img.shields.io/npm/v/vue-promised.svg)](https://www.npmjs.com/package/vue-promised) [![coverage](https://img.shields.io/codecov/c/github/posva/vue-promised.svg)](https://codecov.io/github/posva/vue-promised) [![thanks](https://img.shields.io/badge/thanks-%E2%99%A5-ff69b4.svg)](https://github.com/posva/thanks)
+# vue-promised [![Build Status](https://badgen.net/circleci/github/posva/vue-promised/v2)](https://circleci.com/gh/posva/vue-promised) [![npm package](https://badgen.net/npm/v/vue-promised/v2)](https://www.npmjs.com/package/vue-promised) [![coverage](https://badgen.net/codecov/c/github/posva/vue-promised/v2)](https://codecov.io/github/posva/vue-promised) [![thanks](https://badgen.net/badge/thanks/%E2%99%A5/ff69b4)](https://github.com/posva/thanks)
 
 > Transform your Promises into components !
 
@@ -64,10 +64,10 @@ export default {
       this.isLoading = true
       this.isDelayElapsed = false
       getUsers()
-        .then(users => {
+        .then((users) => {
           this.data = users
         })
-        .catch(error => {
+        .catch((error) => {
           this.error = error
         })
         .finally(() => {
