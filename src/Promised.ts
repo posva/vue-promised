@@ -2,6 +2,7 @@ import { defineComponent, PropType, reactive, toRefs, warn } from 'vue-demi'
 import { usePromise } from './usePromise'
 
 export const Promised = defineComponent({
+  name: 'Promised',
   props: {
     promise: {} as PropType<Promise<unknown> | null | undefined>,
     // validator: p =>
@@ -23,13 +24,14 @@ export const Promised = defineComponent({
       if ('combined' in slots) {
         return slots.combined!(promiseState)
       }
-      const slotName = promiseState.error
-        ? 'rejected'
+
+      const [slotName, slotData] = promiseState.error
+        ? ['rejected', promiseState.error]
         : !promiseState.pending
-        ? 'default'
+        ? ['default', promiseState.data]
         : promiseState.delayElapsed
-        ? 'pending'
-        : null
+        ? ['pending', promiseState.data]
+        : [null]
 
       if (__DEV__ && slotName && !slots[slotName]) {
         warn(
@@ -38,7 +40,7 @@ export const Promised = defineComponent({
         return null
       }
 
-      return slotName && slots[slotName]!(promiseState)
+      return slotName && slots[slotName]!(slotData)
     }
   },
 })

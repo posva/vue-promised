@@ -16,9 +16,9 @@ describe('Promised', () => {
     const wrapper = mount(Promised as any, {
       propsData: { promise, pendingDelay: 0, ...propsData },
       slots: {
-        pending: ({ data }) => h('span', 'pending: ' + data),
-        default: ({ data }) => h('span', {}, data),
-        rejected: ({ error }) => h('span', { class: 'error' }, error.message),
+        pending: (oldData) => h('span', 'pending: ' + oldData),
+        default: (data) => h('span', {}, data),
+        rejected: (error) => h('span', { class: 'error' }, error.message),
         ...slots,
       },
     })
