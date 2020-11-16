@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Promised combined slot displays the data 1`] = `"<span>{\\"pending\\":true,\\"delayElapsed\\":true,\\"error\\":null}</span>"`;
+
+exports[`Promised combined slot displays the data 2`] = `"<span>{\\"pending\\":false,\\"delayElapsed\\":true,\\"error\\":null,\\"data\\":\\"foo\\"}</span>"`;
+
+exports[`Promised combined slot displays the error 1`] = `"<span>{\\"pending\\":true,\\"delayElapsed\\":true,\\"error\\":null}</span>"`;
+
+exports[`Promised combined slot displays the error 2`] = `"<span>{\\"pending\\":false,\\"delayElapsed\\":true,\\"error\\":{}}</span>"`;
