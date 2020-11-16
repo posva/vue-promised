@@ -1,6 +1,6 @@
 # vue-promised [![Build Status](https://badgen.net/circleci/github/posva/vue-promised/v2)](https://circleci.com/gh/posva/vue-promised) [![npm package](https://badgen.net/npm/v/vue-promised/v2)](https://www.npmjs.com/package/vue-promised) [![coverage](https://badgen.net/codecov/c/github/posva/vue-promised/v2)](https://codecov.io/github/posva/vue-promised) [![thanks](https://badgen.net/badge/thanks/%E2%99%A5/ff69b4)](https://github.com/posva/thanks)
 
-> Transform your Promises into components !
+> Handle your promises with style 🎀
 
 **Help me keep working on Open Source in a sustainable way 🚀**. Help me with as little as \$1 a month, [sponsor me on Github](https://github.com/sponsors/posva).
 
@@ -34,7 +34,7 @@ npm install vue-promised
 yarn add vue-promised
 ```
 
-## Why?
+## Motivation
 
 When dealing with asynchronous requests like fetching content through API calls, you may want to display the loading state with a spinner, handle the error and even hide everything until at least 200ms have been elapsed so the user doesn't see a loading spinner flashing when the request takes very little time. This is quite some boilerplate, and you need to repeat this for every request you want:
 
@@ -90,24 +90,39 @@ export default {
 
 That is quite a lot of boilerplate and it's not handling cancelling on going requests when `fetchUsers` is called again. Vue Promised encapsulates all of that to reduce the boilerplate.
 
-## Migrating from `v0.2.x`
+## Migrating from `v1`
 
-Migrating to v1 should be doable in a small amount of time as the only breaking changes are some slots name and the way `Promised` component is imported.
-[Check releases notes to see the list of breaking changes](https://github.com/posva/vue-promised/releases/tag/v1.0.0)
+Migrating to v2 from v1 should be doable in a small amount of time as the only breaking changes are some slots name and the way `Promised` component is imported.
+[Check releases notes to see the list of breaking changes](https://github.com/posva/vue-promised/releases/tag/v2.0.0)
 
 ## Usage
 
-Import the component to use it
+### Composition API
 
 ```js
-import { Promised } from 'vue-promised'
+import { usePromise } from 'vue-promised'
 
 Vue.component('Promised', Promised)
+export default {
+  setup() {
+    const userPromise = ref(fetchUsers())
+    const promised = usePromise(usersPromise)
+
+    return {
+      ...promised,
+      // spreads the following properties:
+      // data, pending, delayElapsed, error
+    }
+  },
+}
 ```
 
+### Component
+
+Vue Promised also exposes the same API via a component named `Promised`.
 In the following examples, `promise` is a Promise but can initially be `null`. `data` contains the result of the promise. You can of course name it the way you want:
 
-### Using `pending`, `default` and `rejected` slots
+#### Using `pending`, `default` and `rejected` slots
 
 ```vue
 <template>
@@ -140,11 +155,11 @@ export default {
 </script>
 ```
 
-The `pending` slot can also be _scoped_. In that case it receives the data that was previously available:
+The `pending` slot can also receive the data that was previously available:
 
 ```vue
 <Promised :promise="usersPromise">
-  <template v-slot:pending="previousData">
+  <template v-slot:pending="data">
     <p>Refreshing</p>
     <ul>
       <li v-for="user in previousData">{{ user.name }}</li>
@@ -160,16 +175,16 @@ The `pending` slot can also be _scoped_. In that case it receives the data that 
 
 Although, depending on the use case, this could create duplication and using a `combined` slot would be a better approach.
 
-### Using one single `combined` slot
+#### Using one single `combined` slot
 
-You can also provide a single `combined` slot that will receive a context with all relevant information. That way you can customise the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
+You can also provide a single `combined` slot that will receive a context with all relevant information. That way you can customize the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
 
 ```vue
 <Promised :promise="promise">
-  <template v-slot:combined="{ isPending, isDelayOver, data, error }">
+  <template v-slot:combined="{ pending, delayElapsed, data, error }">
     <pre>
-      pending: {{ isPending }}
-      is delay over: {{ isDelayOver }}
+      pending: {{ pending }}
+      is delay over: {{ delayElapsed }}
       data: {{ data }}
       error: {{ error && error.message }}
     </pre>
@@ -181,10 +196,10 @@ This allows to create more advanced async templates like this one featuring a Se
 
 ```vue
 <Promised :promise="searchResults" :pending-delay="200">
-  <template v-slot:combined="{ isPending, isDelayOver, data, error }">
+  <template v-slot:combined="{ pending, delayElapsed, data, error }">
     <div>
       <!-- data contains previous data or null when starting -->
-      <Search :disabled-pagination="isPending || error" :items="data || []">
+      <Search :disabled-pagination="pending || error" :items="data || []">
         <!-- The Search handles filtering logic with pagination -->
         <template v-slot="{ results, query }">
           <ProfileCard v-for="user in results" :user="user" />
@@ -193,7 +208,7 @@ This allows to create more advanced async templates like this one featuring a Se
           Display a loading spinner only if an initial delay of 200ms is elapsed
         -->
         <template v-slot:loading>
-          <MySpinner v-if="isPending && isDelayOver" />
+          <MySpinner v-if="pending && delayElapsed" />
         </template>
         <!-- `query` is the same as in the default slot -->
         <template v-slot:noResults="{ query }">
@@ -206,10 +221,10 @@ This allows to create more advanced async templates like this one featuring a Se
 </Promised>
 ```
 
-#### `context` object
+##### `context` object
 
-- `isPending`: is `true` while the promise is in a _pending_ status. Becomes `false` once the promise is resolved **or** rejected. It is reset to `true` when the `promise` prop changes.
-- `isDelayOver`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is reset when the `promise` prop changes.
+- `pending`: is `true` while the promise is in a _pending_ status. Becomes `false` once the promise is resolved **or** rejected. It is reset to `true` when the `promise` prop changes.
+- `delayElapsed`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is reset when the `promise` prop changes.
 - `data`: contains the last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
 - `error`: contains last rejection or `null` if the promise was fullfiled.
 
@@ -254,17 +269,38 @@ export default {
 
 ## API Reference
 
+### `usePromise`
+
+`usePromise` returns an object of `Ref` representing the state of the promise.
+
+```ts
+const { data, error, pending, delayElapsed } = usePromise(fetchUsers())
+```
+
+Signature:
+
+```ts
+function usePromise<T = unknown>(
+  promise: Ref<Promise<T> | null | undefined> | Promise<T> | null | undefined,
+  pendingDelay?: Ref<number | string> | number | string
+): {
+  pending: Ref<boolean>
+  delayElapsed: Ref<boolean>
+  error: Ref<Error | null | undefined>
+  data: Ref<T | null | undefined>
+}
+```
+
 ### `Promised` component
 
 `Promised` will watch its prop `promise` and change its state accordingly.
 
 #### props
 
-| Name           | Description                                                                    | Type      |
-| -------------- | ------------------------------------------------------------------------------ | --------- |
-| `promise`      | Promise to be resolved                                                         | `Promise` |
-| `tag`          | Wrapper tag used if multiple elements are passed to a slot. Defaults to `span` | `String`  |
-| `pendingDelay` | Delay in ms to wait before displaying the pending slot. Defaults to `200`      | `Number`  |
+| Name           | Description                                                               | Type      |
+| -------------- | ------------------------------------------------------------------------- | --------- |
+| `promise`      | Promise to be resolved                                                    | `Promise` |
+| `pendingDelay` | Delay in ms to wait before displaying the pending slot. Defaults to `200` | `Number   | String` |
 
 #### slots
 
