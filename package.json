@@ -30,7 +30,14 @@
     "LICENSE",
     "README.md"
   ],
-  "keywords": [],
+  "keywords": [
+    "vue",
+    "promise",
+    "composition",
+    "api",
+    "usePromise",
+    "async"
+  ],
   "license": "MIT",
   "devDependencies": {
     "@microsoft/api-extractor": "7.8.1",
