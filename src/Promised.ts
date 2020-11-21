@@ -1,4 +1,11 @@
-import { defineComponent, PropType, reactive, toRefs, warn } from 'vue-demi'
+import {
+  defineComponent,
+  isVue3,
+  PropType,
+  reactive,
+  toRefs,
+  warn,
+} from 'vue-demi'
 import { usePromise } from './usePromise'
 
 export const Promised = defineComponent({
@@ -34,8 +41,8 @@ export const Promised = defineComponent({
         : [null]
 
       if (__DEV__ && slotName && !slots[slotName]) {
-        warn(
-          `[vue-promised]: Missing slot "${slotName}". This will fail in production.`
+        ;(isVue3 ? warn : console.warn)(
+          `(vue-promised) Missing slot "${slotName}" in Promised component. This will fail in production.`
         )
         return null
       }
