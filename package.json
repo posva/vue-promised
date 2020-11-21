@@ -1,6 +1,6 @@
 {
   "name": "vue-promised",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Some awesome description",
   "main": "dist/vue-promised.cjs.js",
   "unpkg": "dist/vue-promised.global-vue-2.js",

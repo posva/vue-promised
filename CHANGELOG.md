@@ -1,3 +1,14 @@
+## [2.0.2](https://github.com/posva/vue-promised/compare/v2.0.1...v2.0.2) (2020-11-21)
+
+### Bug Fixes
+
+- **build:** global builds for vue 2 ([45e42e8](https://github.com/posva/vue-promised/commit/45e42e899abd62e9b7dfe6222c921d666297cfb5))
+- **build:** use vue demi as global ([014253e](https://github.com/posva/vue-promised/commit/014253e415af3a923541a4fdba5b80d85d2ea723))
+
+### Features
+
+- use warn if possible ([1d06e7c](https://github.com/posva/vue-promised/commit/1d06e7c2ccb54e51c5cc2018fe8c7a9cf66e819e))
+
 ## [2.0.1](https://github.com/posva/vue-promised/compare/v2.0.0...v2.0.1) (2020-11-21)
 
 Fix build for Vue 2
