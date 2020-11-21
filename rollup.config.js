@@ -42,7 +42,7 @@ const outputConfigs = {
     format: `cjs`,
   },
   'global-vue-3': {
-    file: pkg.unpkg,
+    file: pkg.unpkg.replace('2', '3'),
     format: `iife`,
   },
   'global-vue-2': {
@@ -78,7 +78,7 @@ function createConfig(format, output, plugins = []) {
   output.banner = banner
   output.externalLiveBindings = false
   output.globals = format.endsWith('vue-2')
-    ? { 'vue-demi': 'VueCompositionApi' }
+    ? { 'vue-demi': 'VueCompositionAPI' }
     : { 'vue-demi': 'Vue' }
 
   const isProductionBuild = /\.prod\.js$/.test(output.file)
