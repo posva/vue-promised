@@ -92,7 +92,7 @@ That is quite a lot of boilerplate and it's not handling cancelling on going req
 
 ## Migrating from `v1`
 
-v2 should expose the same API as v1.
+Check the [Changelog](https://github.com/posva/vue-promised/blob/v2/CHANGELOG.md#200-2020-11-16) for breaking changes. v2 exposes the same `Promised` and a new `usePromise` function on top of that.
 
 ## Usage
 
