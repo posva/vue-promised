@@ -3,8 +3,8 @@
   "version": "2.0.0",
   "description": "Some awesome description",
   "main": "dist/vue-promised.cjs.js",
-  "unpkg": "dist/vue-promised.global.js",
-  "jsdelivr": "dist/vue-promised.global.js",
+  "unpkg": "dist/vue-promised.global-vue-2.js",
+  "jsdelivr": "dist/vue-promised.global-vue-2.js",
   "module": "dist/vue-promised.esm-bundler.js",
   "types": "dist/vue-promised.d.ts",
   "sideEffects": false,
@@ -87,7 +87,8 @@
     }
   ],
   "peerDependencies": {
-    "vue": "^3.0.0-beta.20"
+    "@vue/composition-api": "^1.0.0-beta.1",
+    "vue": "^2.0.0 || ^3.0.0"
   },
   "repository": {
     "type": "git",
