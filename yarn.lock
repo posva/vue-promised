@@ -8095,9 +8095,9 @@ vm-browserify@^1.0.1:
   integrity sha512-2ham8XPWTONajOR0ohOKOHXkm3+gaBmGut3SRuu75xLd/RRaY6vqgh8NBYYk7+RW3u5AtzPQZG8F10LHkl0lAQ==
 
 vue-demi@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.4.3.tgz#6aaa9b52f02c32b4f9d4d11f02a1ae71031453c3"
-  integrity sha512-1DzLcZgHC9ZyFEYR4qZ83TdS1u9DglG8XVesBXqtbbmqFuO7sb8KG36kMfZCszieAweRDwAAVSAzjmEMG0+WwA==
+  version "0.4.5"
+  resolved "https://registry.yarnpkg.com/vue-demi/-/vue-demi-0.4.5.tgz#ea422a4468cb6321a746826a368a770607f87791"
+  integrity sha512-51xf1B6hV2PfjnzYHO/yUForFCRQ49KS8ngQb5T6l1HDEmfghTFtsxtRa5tbx4eqQsH76ll/0gIxuf1gei0ubw==
 
 vue@^3.0.2:
   version "3.0.2"
