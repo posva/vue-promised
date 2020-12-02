@@ -13,6 +13,8 @@ export function usePromise<T = unknown>(
   pendingDelay: Refable<number | string> = 200
 ) {
   const isPending = ref(false)
+  const isRejected = ref(false)
+  const isResolved = ref(false)
   const isDelayElapsed = ref(false)
   const error = ref<Error | undefined | null>()
   const data = ref<T | null | undefined>()
@@ -23,6 +25,8 @@ export function usePromise<T = unknown>(
     () => unref(promise),
     (newPromise) => {
       isPending.value = true
+      isRejected.value = false
+      isResolved.value = false
       error.value = null
       if (!newPromise) {
         data.value = null
@@ -47,13 +51,19 @@ export function usePromise<T = unknown>(
           // ensure we are dealing with the same promise
           if (newPromise === unref(promise)) {
             data.value = newData
-            isPending.value = false
+            isResolved.value = true
           }
         })
         .catch((err) => {
           // ensure we are dealing with the same promise
           if (newPromise === unref(promise)) {
             error.value = err
+            isRejected.value = true
+          }
+        })
+        .finally(() => {
+          // ensure we are dealing with the same promise
+          if (newPromise === unref(promise)) {
             isPending.value = false
           }
         })
@@ -61,5 +71,5 @@ export function usePromise<T = unknown>(
     { immediate: true }
   )
 
-  return { isPending, isDelayElapsed, error, data }
+  return { isPending, isRejected, isResolved, isDelayElapsed, error, data }
 }
