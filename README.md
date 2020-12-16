@@ -158,7 +158,7 @@ The `pending` slot can also receive the data that was previously available:
 
 ```vue
 <Promised :promise="usersPromise">
-  <template v-slot:pending="data">
+  <template v-slot:pending="previousData">
     <p>Refreshing</p>
     <ul>
       <li v-for="user in previousData">{{ user.name }}</li>
