@@ -99,6 +99,6 @@
   },
   "homepage": "https://github.com/posva/vue-promised#readme",
   "dependencies": {
-    "vue-demi": "^0.4.3"
+    "vue-demi": "^0.5.3"
   }
 }
