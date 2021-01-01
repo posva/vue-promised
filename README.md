@@ -99,12 +99,12 @@ Check the [Changelog](https://github.com/posva/vue-promised/blob/v2/CHANGELOG.md
 ### Composition API
 
 ```js
-import { usePromise } from 'vue-promised'
+import { Promised, usePromise } from 'vue-promised'
 
 Vue.component('Promised', Promised)
 export default {
   setup() {
-    const userPromise = ref(fetchUsers())
+    const usersPromise = ref(fetchUsers())
     const promised = usePromise(usersPromise)
 
     return {
