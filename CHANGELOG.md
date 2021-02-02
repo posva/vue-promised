@@ -1,3 +1,9 @@
+## [2.0.3](https://github.com/posva/vue-promised/compare/v2.0.2...v2.0.3) (2021-02-02)
+
+### Bug Fixes
+
+- fix npm install ([40931b6](https://github.com/posva/vue-promised/commit/40931b636aed17132b0b2fc39bfff3a8199aab73))
+
 ## [2.0.2](https://github.com/posva/vue-promised/compare/v2.0.1...v2.0.2) (2020-11-21)
 
 ### Bug Fixes
