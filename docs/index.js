@@ -1,15 +1,14 @@
 /* global Vue, VuePromised, axios, PrismComponent */
 // eslint-disable-next-line
-const delay = (t, value) => new Promise(r => setTimeout(r.bind(null, value), t))
+const delay = (t, value) =>
+  new Promise((r) => setTimeout(r.bind(null, value), t))
 
-const xkcd = axios.create({
-  baseURL: 'https://cors-now-lbiomgdmwp.now.sh/https://xkcd.com',
+const jokes = axios.create({
+  baseURL: 'https://official-joke-api.appspot.com',
 })
 
-function getRandomImage (max) {
-  return xkcd
-    .get(`/${Math.round(Math.random() * max) + 1}/info.0.json`)
-    .then(res => res.data)
+function getRandomJoke() {
+  return jokes.get(`/jokes/random`).then((res) => res.data)
 }
 
 Vue.component('DemoCode', {
@@ -21,19 +20,25 @@ Vue.component('DemoCode', {
     },
   },
 
-  data () {
+  data() {
     return {
       showCode: false,
     }
   },
 
   computed: {
-    seeLabel () {
+    seeLabel() {
       return this.showCode ? 'See demo' : 'See code'
     },
   },
   template: '#demo-code',
 })
+
+const texts = {
+  loading: 'Fetching the joke...',
+  waiting: 'Wait for it...',
+  ready: 'Another one?',
+}
 
 // eslint-disable-next-line
 new Vue({
@@ -43,6 +48,7 @@ new Vue({
 
   data: () => ({
     promise: null,
+    state: 'waiting',
 
     samples: {
       single: `\
@@ -50,12 +56,16 @@ new Vue({
   <template v-slot:pending>
     <div class="loading-spinner"></div>
   </template>
-  <template v-slot="data">
-    <figure slot-scope="data">
-      <img :alt="data.transcript" :src="data.img"/>
-      <figcaption>#{{ data.num }} - {{ data.title }}</figcaption>
-    </figure>
+
+  <template v-slot="joke">
+    <blockquote :key="joke.id">
+      <i>{{ joke.setup }}</i>
+      <br />
+      <br />
+      <p class="appear" @animationend="state = 'ready'">{{ joke.punchline }}</p>
+    </blockquote>
   </template>
+
   <template v-slot:rejected="error">
     <div slot="rejected" slot-scope="error" class="message--error">
       Error: {{ error.message }}
@@ -76,19 +86,30 @@ new Vue({
     },
   }),
 
-  created () {
+  created() {
     // when the api takes too much time
     this.max = 2000
-    this.promise = xkcd.get('/info.0.json').then(res => {
-      this.max = res.data.num || this.max // Error fallback
-    })
+    this.trySuccess()
+  },
+
+  computed: {
+    buttonText() {
+      return texts[this.state]
+    },
   },
 
   methods: {
-    trySuccess () {
-      this.promise = getRandomImage(this.max)
+    getRandomJoke() {
+      this.state = 'loading'
+      this.promise = getRandomJoke()
+      this.promise.finally(() => {
+        this.state = 'waiting'
+      })
     },
-    tryError () {
+    trySuccess() {
+      this.getRandomJoke()
+    },
+    tryError() {
       this.promise = delay(500).then(() => {
         return Promise.reject(new Error('🔥'))
       })
