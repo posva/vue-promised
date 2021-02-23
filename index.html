@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Promised</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1/new.min.css"
+    />
+    <link rel="stylesheet" href="https://fonts.xz.style/serve/inter.css" />
+
+    <style>
+      @keyframes spinner {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .spinner:before {
+        content: '';
+        box-sizing: border-box;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 30px;
+        height: 30px;
+        margin-top: -15px;
+        margin-left: -15px;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        border-top-color: #07d;
+        animation: spinner 0.6s linear infinite;
+      }
+
+      .relative {
+        position: relative;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .space {
+        margin: 14px 0;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+
+      .code {
+        text-align: initial;
+        overflow: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/docs/main.js"></script>
+  </body>
+</html>
