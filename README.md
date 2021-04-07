@@ -34,6 +34,12 @@ npm install vue-promised
 yarn add vue-promised
 ```
 
+If you are using Vue 2, you also need to install `@vue/composition-api`:
+
+```bash
+yarn add @vue/composition-api
+```
+
 ## Motivation
 
 When dealing with asynchronous requests like fetching content through API calls, you may want to display the loading state with a spinner, handle the error and even hide everything until at least 200ms have been elapsed so the user doesn't see a loading spinner flashing when the request takes very little time. This is quite some boilerplate, and you need to repeat this for every request you want:
@@ -154,6 +160,8 @@ export default {
 </script>
 ```
 
+Note the `pending` slot will by default, display after a 200ms delay. This is a reasonable default to avoid layout shifts when API calls are fast enough. The perceived speed is also higher. You can customize it with the `pendingDelay` prop.
+
 The `pending` slot can also receive the data that was previously available:
 
 ```vue
@@ -176,7 +184,7 @@ Although, depending on the use case, this could create duplication and using a `
 
 #### Using one single `combined` slot
 
-You can also provide a single `combined` slot that will receive a context with all relevant information. That way you can customize the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
+Sometimes, you need to customize **how** things are displayed rather than **what** is displayed. Disabling a search input, displaying an overlaying spinner, etc. Instead of using multiple slots, you can provide one single `combined` slot that will receive a context with all relevant information. That way you can customize the props of a component, toggle content with your own `v-if` but still benefit from a declarative approach:
 
 ```vue
 <Promised :promise="promise">
@@ -297,7 +305,7 @@ function usePromise<T = unknown>(
 #### props
 
 | Name           | Description                                                               | Type      |
-| -------------- | ------------------------------------------------------------------------- | --------- |
+| -------------- | ------------------------------------------------------------------------- | --------- | ------- |
 | `promise`      | Promise to be resolved                                                    | `Promise` |
 | `pendingDelay` | Delay in ms to wait before displaying the pending slot. Defaults to `200` | `Number   | String` |
 
