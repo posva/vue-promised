@@ -305,9 +305,9 @@ function usePromise<T = unknown>(
 #### props
 
 | Name           | Description                                                               | Type      |
-| -------------- | ------------------------------------------------------------------------- | --------- | ------- |
+| -------------- | ------------------------------------------------------------------------- | --------- |
 | `promise`      | Promise to be resolved                                                    | `Promise` |
-| `pendingDelay` | Delay in ms to wait before displaying the pending slot. Defaults to `200` | `Number   | String` |
+| `pendingDelay` | Delay in ms to wait before displaying the pending slot. Defaults to `200` | `Number \| String` |
 
 #### slots
 
