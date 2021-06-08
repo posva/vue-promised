@@ -1,3 +1,7 @@
+# [2.1.0](https://github.com/posva/vue-promised/compare/v2.0.3...v2.1.0) (2021-06-08)
+
+- Update vue-demi
+
 ## [2.0.3](https://github.com/posva/vue-promised/compare/v2.0.2...v2.0.3) (2021-02-02)
 
 ### Bug Fixes
