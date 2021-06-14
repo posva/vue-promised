@@ -107,7 +107,7 @@
     "vue-demi": "latest"
   },
   "peerDependencies": {
-    "@vue/composition-api": "^1.0.0",
+    "@vue/composition-api": "^1.0.0-rc",
     "vue": "^2.0.0 || >=3.0.0-0"
   },
   "peerDependenciesMeta": {
