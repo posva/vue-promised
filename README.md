@@ -48,7 +48,7 @@ When dealing with asynchronous requests like fetching content through API calls,
 <template>
   <div>
     <p v-if="error">Error: {{ error.message }}</p>
-    <p v-else-if="isLoading && isDelayElapsed">Loading...</p>
+    <p v-else-if="isLoading && !isDelayElapsed">Loading...</p>
     <ul v-else-if="!isLoading">
       <li v-for="user in data">{{ user.name }}</li>
     </ul>
