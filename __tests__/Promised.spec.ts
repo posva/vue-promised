@@ -8,7 +8,6 @@ import { h } from 'vue'
 // keep a real setTimeout
 const timeout = setTimeout
 const tick = () => new Promise((resolve) => timeout(resolve, 0))
-jest.useFakeTimers()
 
 describe('Promised', () => {
   function factory(propsData: any = undefined, slots: any = undefined) {
@@ -83,56 +82,65 @@ describe('Promised', () => {
       await tick()
       expect(wrapper.text()).toMatch('pending')
     })
+  })
 
-    describe('pendingDelay', () => {
-      afterEach(() => {
-        // @ts-ignore
-        clearTimeout.mockClear()
-        // @ts-ignore
-        setTimeout.mockClear()
-      })
+  describe('three slots pendingDelay', () => {
+    beforeEach(() => {
+      jest.useFakeTimers('modern')
+      jest.spyOn(global, 'setTimeout')
+      jest.spyOn(global, 'clearTimeout')
+    })
+    afterEach(() => {
+      // @ts-expect-error: mocked
+      setTimeout.mockClear()
+      // @ts-expect-error: mocked
+      clearTimeout.mockClear()
+    })
 
-      it('displays nothing before the delay', async () => {
-        let { wrapper } = factory({ pendingDelay: 300 })
-        expect(wrapper.text()).toBe('')
-        jest.runAllTimers()
-        await tick()
-        expect(wrapper.text()).toMatch('pending')
-      })
+    afterAll(() => {
+      jest.useRealTimers()
+    })
 
-      it('custom pendingDelay', async () => {
-        expect(setTimeout).toHaveBeenCalledTimes(0)
-        let { wrapper, promise } = factory({ pendingDelay: 300 })
-        expect(setTimeout).toHaveBeenCalledTimes(1)
-        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 300)
-        ;[promise] = fakePromise()
-        wrapper.setProps({ pendingDelay: 100, promise })
-        await tick()
-        expect(setTimeout).toHaveBeenCalledTimes(2)
-        expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100)
-      })
+    it('displays nothing before the delay', async () => {
+      let { wrapper } = factory({ pendingDelay: 300 })
+      expect(wrapper.text()).toBe('')
+      jest.runAllTimers()
+      await wrapper.vm.$nextTick()
+      expect(wrapper.text()).toMatch('pending')
+    })
 
-      it('cancels previous timeouts', async () => {
-        let { wrapper, promise } = factory({ pendingDelay: 300 })
-        expect(clearTimeout).not.toHaveBeenCalled()
-        ;[promise] = fakePromise()
-        wrapper.setProps({
-          promise,
-          pendingDelay: 100,
-        })
-        await tick()
-        expect(clearTimeout).toHaveBeenCalled()
-      })
+    it('custom pendingDelay', async () => {
+      expect(setTimeout).toHaveBeenCalledTimes(0)
+      let { wrapper, promise } = factory({ pendingDelay: 300 })
+      expect(setTimeout).toHaveBeenCalledTimes(1)
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 300)
+      ;[promise] = fakePromise()
+      wrapper.setProps({ pendingDelay: 100, promise })
+      await wrapper.vm.$nextTick()
+      expect(setTimeout).toHaveBeenCalledTimes(2)
+      expect(setTimeout).toHaveBeenLastCalledWith(expect.any(Function), 100)
+    })
 
-      it('cancels timeout when promise is set to null', async () => {
-        let { wrapper } = factory({ pendingDelay: 300 })
-        expect(setTimeout).toHaveBeenCalledTimes(1)
-        wrapper.setProps({
-          promise: null,
-        })
-        await tick()
-        expect(clearTimeout).toHaveBeenCalledTimes(1)
+    it('cancels previous timeouts', async () => {
+      let { wrapper, promise } = factory({ pendingDelay: 300 })
+      expect(clearTimeout).not.toHaveBeenCalled()
+      ;[promise] = fakePromise()
+      wrapper.setProps({
+        promise,
+        pendingDelay: 100,
       })
+      await wrapper.vm.$nextTick()
+      expect(clearTimeout).toHaveBeenCalled()
+    })
+
+    it('cancels timeout when promise is set to null', async () => {
+      let { wrapper } = factory({ pendingDelay: 300 })
+      expect(setTimeout).toHaveBeenCalledTimes(1)
+      wrapper.setProps({
+        promise: null,
+      })
+      await wrapper.vm.$nextTick()
+      expect(clearTimeout).toHaveBeenCalledTimes(1)
     })
   })
 

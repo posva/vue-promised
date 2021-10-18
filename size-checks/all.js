@@ -1,1 +1,4 @@
-export * from '../dist/vue-promised.esm-bundler'
+export { Promised, usePromise } from '../dist/vue-promised.esm-bundler'
+
+usePromise()
+Promised
