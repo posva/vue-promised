@@ -5,10 +5,14 @@ import {
   reactive,
   toRefs,
   warn,
+  AllowedComponentProps,
+  ComponentCustomProps,
+  VNodeProps,
+  VNode,
 } from 'vue-demi'
-import { usePromise } from './usePromise'
+import { usePromise, UsePromiseResult } from './usePromise'
 
-export const Promised = defineComponent({
+export const PromisedImpl = /*#__PURE__*/ defineComponent({
   name: 'Promised',
   props: {
     promise: {} as PropType<Promise<unknown> | null | undefined>,
@@ -51,3 +55,19 @@ export const Promised = defineComponent({
     }
   },
 })
+
+export const Promised = PromisedImpl as unknown as {
+  new (): {
+    $props: AllowedComponentProps &
+      ComponentCustomProps &
+      VNodeProps & { promise: Promise<unknown> }
+  }
+
+  $slots: {
+    default: (data: unknown) => VNode[]
+    rejected: (error: Error) => VNode[]
+    pending: (error: unknown) => VNode[]
+
+    combined: (arg: UsePromiseResult) => VNode[]
+  }
+}
