@@ -1,4 +1,4 @@
-import { ref, unref, watch } from 'vue-demi'
+import { ref, unref, watch, Ref } from 'vue-demi'
 import { Refable } from './utils'
 
 /**
@@ -11,7 +11,7 @@ import { Refable } from './utils'
 export function usePromise<T = unknown>(
   promise: Refable<Promise<T> | null | undefined>,
   pendingDelay: Refable<number | string> = 200
-) {
+): UsePromiseResult<T> {
   const isPending = ref(false)
   const isDelayElapsed = ref(false)
   const error = ref<Error | undefined | null>()
@@ -62,4 +62,14 @@ export function usePromise<T = unknown>(
   )
 
   return { isPending, isDelayElapsed, error, data }
+}
+
+/**
+ * Return type of `usePromise()`
+ */
+export interface UsePromiseResult<T = unknown> {
+  isPending: Ref<boolean>
+  isDelayElapsed: Ref<boolean>
+  error: Ref<Error | undefined | null>
+  data: Ref<T | undefined | null>
 }
