@@ -3,6 +3,11 @@ module.exports = {
   testEnvironment: 'jsdom',
   collectCoverage: true,
   collectCoverageFrom: ['<rootDir>/src/**/*.ts'],
+  coveragePathIgnorePatterns: [
+    '<rootDir>/src/index.ts',
+    // d.ts
+    '<rootDir>/src/global.d.ts',
+  ],
   testMatch: ['<rootDir>/__tests__/**/*.spec.ts'],
   globals: {
     __DEV__: true,
