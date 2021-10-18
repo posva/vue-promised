@@ -1,4 +1,4 @@
-import { ref, unref, watch, Ref } from 'vue-demi'
+import { ref, unref, watch, Ref, computed, ComputedRef } from 'vue-demi'
 import { Refable } from './utils'
 
 /**
@@ -12,9 +12,9 @@ export function usePromise<T = unknown>(
   promise: Refable<Promise<T> | null | undefined>,
   pendingDelay: Refable<number | string> = 200
 ): UsePromiseResult<T> {
-  const isPending = ref(false)
   const isRejected = ref(false)
   const isResolved = ref(false)
+  const isPending = computed(() => !isRejected.value && !isResolved.value)
   const isDelayElapsed = ref(false)
   const error = ref<Error | undefined | null>()
   const data = ref<T | null | undefined>()
@@ -24,13 +24,11 @@ export function usePromise<T = unknown>(
   watch(
     () => unref(promise),
     (newPromise) => {
-      isPending.value = true
       isRejected.value = false
       isResolved.value = false
       error.value = null
       if (!newPromise) {
         data.value = null
-        isPending.value = true
         if (timerId) clearTimeout(timerId)
         timerId = null
         return
@@ -61,12 +59,6 @@ export function usePromise<T = unknown>(
             isRejected.value = true
           }
         })
-        .finally(() => {
-          // ensure we are dealing with the same promise
-          if (newPromise === unref(promise)) {
-            isPending.value = false
-          }
-        })
     },
     { immediate: true }
   )
@@ -78,7 +70,9 @@ export function usePromise<T = unknown>(
  * Return type of `usePromise()`
  */
 export interface UsePromiseResult<T = unknown> {
-  isPending: Ref<boolean>
+  isPending: ComputedRef<boolean>
+  isResolved: Ref<boolean>
+  isRejected: Ref<boolean>
   isDelayElapsed: Ref<boolean>
   error: Ref<Error | undefined | null>
   data: Ref<T | undefined | null>
