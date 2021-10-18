@@ -1,3 +1,15 @@
+# [2.2.0](https://github.com/posva/vue-promised/compare/v2.1.0...v2.2.0) (2021-10-18)
+
+### Bug Fixes
+
+- display rejected slot even if error is undefined ([#241](https://github.com/posva/vue-promised/issues/241)) ([c166d65](https://github.com/posva/vue-promised/commit/c166d650d1d21c568c74899ec99a735f301c9c34))
+
+### Features
+
+- **types:** add slots ([2a22547](https://github.com/posva/vue-promised/commit/2a2254756c4b603dc0a828986bf987c5dbdafe3b)), closes [#348](https://github.com/posva/vue-promised/issues/348)
+- **types:** add UsePromiseResult type ([0a610ec](https://github.com/posva/vue-promised/commit/0a610ec4bc7a3165996c0fe8481625207694d2b3)), closes [#348](https://github.com/posva/vue-promised/issues/348)
+- **warn:** improve message for missing slots ([db576c4](https://github.com/posva/vue-promised/commit/db576c425ceace6ce21b79b9b93ccd92f0ef06e8)), closes [#47](https://github.com/posva/vue-promised/issues/47)
+
 # [2.1.0](https://github.com/posva/vue-promised/compare/v2.0.3...v2.1.0) (2021-06-08)
 
 - Update vue-demi
