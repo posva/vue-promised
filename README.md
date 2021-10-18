@@ -231,6 +231,8 @@ This allows to create more advanced async templates like this one featuring a Se
 ##### `context` object
 
 - `isPending`: is `true` while the promise is in a _pending_ status. Becomes `false` once the promise is resolved **or** rejected. It is reset to `true` when the `promise` prop changes.
+- `isRejected` is `false`. Becomes `true` once the promise is _rejected_. It is reset to `false` when the `promise` prop changes.
+- `isResolved` is `false`. Becomes `true` once the promise is _resolved_. It is reset to `false` when the `promise` prop changes.
 - `isDelayElapsed`: is `true` once the `pendingDelay` is over or if `pendingDelay` is 0. Becomes `false` after the specified delay (200 by default). It is reset when the `promise` prop changes.
 - `data`: contains the last resolved value from `promise`. This means it will contain the previous succesfully (non cancelled) result.
 - `error`: contains last rejection or `null` if the promise was fullfiled.

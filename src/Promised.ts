@@ -36,7 +36,7 @@ export const PromisedImpl = /*#__PURE__*/ defineComponent({
         return slots.combined!(promiseState)
       }
 
-      const [slotName, slotData] = promiseState.error
+      const [slotName, slotData] = promiseState.isRejected
         ? ['rejected', promiseState.error]
         : !promiseState.isPending
         ? ['default', promiseState.data]

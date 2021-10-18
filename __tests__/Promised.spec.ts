@@ -17,7 +17,8 @@ describe('Promised', () => {
       slots: {
         pending: (oldData) => h('span', 'pending: ' + oldData),
         default: (data) => h('span', {}, data),
-        rejected: (error) => h('span', { class: 'error' }, error.message),
+        rejected: (error) =>
+          h('span', { class: 'error' }, error && error.message),
         ...slots,
       },
     })
@@ -63,6 +64,14 @@ describe('Promised', () => {
       reject(new Error('hello'))
       await tick()
       expect(wrapper.text()).toBe('hello')
+    })
+
+    it('should display rejected slot even if error is undefined', async () => {
+      let { wrapper, reject } = factory()
+
+      reject(undefined)
+      await tick()
+      expect(wrapper.find('.error').exists()).toBeTruthy()
     })
 
     it('cancels previous promise', async () => {
