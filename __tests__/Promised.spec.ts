@@ -176,7 +176,15 @@ describe('Promised', () => {
   mockWarn()
 
   it('warns on missing slot', async () => {
-    const { reject } = factory({}, { rejected: undefined })
+    const [promise, _resolve, reject] = fakePromise<any>()
+    mount(Promised as any, {
+      propsData: { promise, pendingDelay: 0 },
+      slots: {
+        pending: (oldData) => h('span', 'pending: ' + oldData),
+        default: (data) => h('span', {}, data),
+        // rejected: (error) => h('span', { class: 'error' }, error.message),
+      },
+    })
 
     reject(new Error())
     await tick()
