@@ -46,7 +46,7 @@ export const PromisedImpl = /*#__PURE__*/ defineComponent({
 
       if (__DEV__ && slotName && !slots[slotName]) {
         ;(isVue3 ? warn : console.warn)(
-          `(vue-promised) Missing slot "${slotName}" in Promised component. This will fail in production.`
+          `(vue-promised) Missing slot "${slotName}" in Promised component. Pass an empty "${slotName}" slot or use the "combined" slot to remove this warning. This will fail in production.`
         )
         return null
       }
