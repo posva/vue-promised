@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
 import { mockWarn } from 'jest-mock-warn'
-import { Promised } from '../src'
+import { PromisedImpl as Promised } from '../src/Promised'
 import fakePromise from 'faked-promise'
 import { h } from 'vue'
 
@@ -12,7 +12,7 @@ const tick = () => new Promise((resolve) => timeout(resolve, 0))
 describe('Promised', () => {
   function factory(propsData: any = undefined, slots: any = undefined) {
     const [promise, resolve, reject] = fakePromise<any>()
-    const wrapper = mount(Promised as any, {
+    const wrapper = mount(Promised, {
       propsData: { promise, pendingDelay: 0, ...propsData },
       slots: {
         pending: (oldData) => h('span', 'pending: ' + oldData),
@@ -147,7 +147,7 @@ describe('Promised', () => {
   describe('combined slot', () => {
     function factory(propsData: any = undefined, slots: any = undefined) {
       const [promise, resolve, reject] = fakePromise<any>()
-      const wrapper = mount(Promised as any, {
+      const wrapper = mount(Promised, {
         propsData: { promise, pendingDelay: 0, ...propsData },
         slots: {
           combined: (state) => h('span', JSON.stringify(state)),
@@ -185,7 +185,7 @@ describe('Promised', () => {
 
   it('warns on missing slot', async () => {
     const [promise, _resolve, reject] = fakePromise<any>()
-    mount(Promised as any, {
+    mount(Promised, {
       propsData: { promise, pendingDelay: 0 },
       slots: {
         pending: (oldData) => h('span', 'pending: ' + oldData),
