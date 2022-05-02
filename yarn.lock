@@ -3659,10 +3659,10 @@ makeerror@1.0.x:
   dependencies:
     tmpl "1.0.x"
 
-mande@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/mande/-/mande-1.0.1.tgz#77944628a30a53a5784da5823a59bcaad2266682"
-  integrity sha512-buXgd9zgTCDyf4o/HsTYm233tkWpRKtYYCZPuRBOmbR5FkCb2kphB+w6yTS8LkTvcAf7bUAiOhdMNMYW2fEWNQ==
+mande@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/mande/-/mande-2.0.1.tgz#9fa1f2cea5e2f5add84a1fc5fe79c448c13278fa"
+  integrity sha512-IkId2U/+SEDJcsdGDvE94WZXGkCT7YTQ/DMmqkF4q3lA7Od+wWbPrMRQG04ytGVOuY3AshBH3dMHRlktUXgHTg==
 
 map-obj@^1.0.0:
   version "1.0.1"
