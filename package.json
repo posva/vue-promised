@@ -59,7 +59,7 @@
     "faked-promise": "^2.2.2",
     "jest": "^27.5.1",
     "jest-mock-warn": "^1.1.0",
-    "lint-staged": "^12.4.1",
+    "lint-staged": "^13.0.0",
     "mande": "^2.0.1",
     "pascalcase": "^1.0.0",
     "prettier": "^2.6.2",
