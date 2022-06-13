@@ -1,3 +1,4 @@
+import { watch } from 'vue'
 import {
   defineComponent,
   isVue3,
@@ -24,11 +25,21 @@ export const PromisedImpl = /*#__PURE__*/ defineComponent({
       default: 200,
     },
   },
-
-  setup(props, { slots }) {
+  emits: ['resolved', 'rejected', 'pending'],
+  setup(props, { slots, emit, attrs }) {
     const propsAsRefs = toRefs(props)
     const promiseState = reactive(
       usePromise(propsAsRefs.promise, propsAsRefs.pendingDelay)
+    )
+
+    watch(promiseState, (promiseState) =>
+      promiseState.isRejected
+        ? emit('rejected', promiseState.error)
+        : !promiseState.isPending
+        ? emit('resolved', promiseState.data)
+        : promiseState.isDelayElapsed
+        ? emit('pending', promiseState.data)
+        : null
     )
 
     return () => {
