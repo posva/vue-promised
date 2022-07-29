@@ -1,10 +1,8 @@
 import {
   defineComponent,
-  isVue3,
   PropType,
   reactive,
   toRefs,
-  warn,
   AllowedComponentProps,
   ComponentCustomProps,
   VNodeProps,
@@ -45,7 +43,7 @@ export const PromisedImpl = /*#__PURE__*/ defineComponent({
         : [null]
 
       if (__DEV__ && slotName && !slots[slotName]) {
-        ;(isVue3 ? warn : console.warn)(
+        console.warn(
           `(vue-promised) Missing slot "${slotName}" in Promised component. Pass an empty "${slotName}" slot or use the "combined" slot to remove this warning. This will fail in production.`
         )
         return null
