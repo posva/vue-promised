@@ -46,7 +46,7 @@
     "@rollup/plugin-alias": "^3.1.9",
     "@rollup/plugin-commonjs": "^22.0.2",
     "@rollup/plugin-node-resolve": "^14.0.1",
-    "@rollup/plugin-replace": "^3.1.0",
+    "@rollup/plugin-replace": "^4.0.0",
     "@size-limit/preset-small-lib": "^7.0.8",
     "@types/jest": "^27.5.2",
     "@types/jsdom": "^16.2.15",
