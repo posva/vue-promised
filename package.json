@@ -50,7 +50,7 @@
     "@size-limit/preset-small-lib": "^8.1.0",
     "@types/jest": "^27.5.2",
     "@types/jsdom": "^20.0.1",
-    "@vitejs/plugin-vue": "^3.2.0",
+    "@vitejs/plugin-vue": "^4.0.0",
     "@vue/compiler-sfc": "^3.2.45",
     "@vue/server-renderer": "^3.2.45",
     "@vue/test-utils": "^2.2.2",
