@@ -10,10 +10,15 @@ const timeout = setTimeout
 const tick = () => new Promise((resolve) => timeout(resolve, 0))
 
 describe('Promised', () => {
-  function factory(propsData: any = undefined, slots: any = undefined) {
+  function factory(
+    propsData: any = undefined,
+    slots: any = undefined,
+    listeners: any = undefined
+  ) {
     const [promise, resolve, reject] = fakePromise<any>()
     const wrapper = mount(Promised, {
       propsData: { promise, pendingDelay: 0, ...propsData },
+      attrs: listeners,
       slots: {
         pending: (oldData) => h('span', 'pending: ' + oldData),
         default: (data) => h('span', {}, data),
@@ -187,6 +192,80 @@ describe('Promised', () => {
       await tick()
 
       expect(wrapper.html()).toMatchSnapshot()
+    })
+  })
+
+  describe("component's events", () => {
+    beforeEach(() => {
+      jest.useFakeTimers('modern')
+      jest.spyOn(global, 'setTimeout')
+      jest.spyOn(global, 'clearTimeout')
+    })
+
+    afterEach(() => {
+      // @ts-expect-error: mocked
+      setTimeout.mockClear()
+      // @ts-expect-error: mocked
+      clearTimeout.mockClear()
+    })
+
+    afterAll(() => {
+      jest.useRealTimers()
+    })
+
+    it("fires 'resolved' event", async () => {
+      const onResolved = jest.fn()
+
+      const { resolve } = factory(undefined, undefined, { onResolved })
+
+      resolve('fire')
+
+      await tick()
+
+      expect(onResolved).toHaveBeenCalledWith('fire')
+    })
+
+    it("fires 'rejected' event", async () => {
+      const onResolved = jest.fn()
+      const onRejected = jest.fn()
+
+      const { reject } = factory(undefined, undefined, {
+        onResolved,
+        onRejected,
+      })
+
+      reject(new Error('fire'))
+
+      await tick()
+
+      expect(onRejected).toHaveBeenCalledWith(new Error('fire'))
+
+      expect(onResolved).not.toHaveBeenCalled()
+    })
+
+    it("fires 'pending' event on pending delay time elapsed", async () => {
+      const onResolved = jest.fn()
+      const onRejected = jest.fn()
+      const onPending = jest.fn()
+
+      factory({ pendingDelay: 100 }, undefined, {
+        onPending,
+        onResolved,
+        onRejected,
+      })
+
+      expect(onResolved).not.toHaveBeenCalled()
+      expect(onRejected).not.toHaveBeenCalled()
+      expect(onPending).not.toHaveBeenCalled()
+
+      jest.runAllTimers()
+
+      await tick()
+
+      expect(onPending).toHaveBeenCalledWith(undefined)
+
+      expect(onResolved).not.toHaveBeenCalled()
+      expect(onRejected).not.toHaveBeenCalled()
     })
   })
 
