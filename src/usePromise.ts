@@ -5,8 +5,8 @@ import { Refable } from './utils'
  * Returns the state of a Promise and observes the Promise if it's a Ref to
  * automatically update the state
  *
- * @param promise Ref of a Promise or raw Promise
- * @param pendingDelay optional delay to wait before displaying pending
+ * @param promise - Ref of a Promise or raw Promise
+ * @param pendingDelay - optional delay to wait before displaying pending
  */
 export function usePromise<T = unknown>(
   promise: Refable<Promise<T> | null | undefined>,
