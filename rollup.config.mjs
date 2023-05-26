@@ -8,6 +8,7 @@ import pascalcase from 'pascalcase'
 import terser from '@rollup/plugin-terser'
 import pkg from './package.json' assert { type: 'json' }
 import { fileURLToPath } from 'node:url'
+import chalk from 'chalk'
 
 // const pkg = require('./package.json')
 const name = pkg.name
@@ -77,7 +78,7 @@ export default packageConfigs
 
 function createConfig(format, output, plugins = []) {
   if (!output) {
-    console.log(require('chalk').yellow(`invalid format: "${format}"`))
+    console.log(chalk.yellow(`invalid format: "${format}"`))
     process.exit(1)
   }
 
