@@ -77,7 +77,7 @@
   },
   "gitHooks": {
     "pre-commit": "lint-staged",
-    "commit-msg": "node scripts/verifyCommit.js"
+    "commit-msg": "node scripts/verifyCommit.mjs"
   },
   "lint-staged": {
     "*.js": [
