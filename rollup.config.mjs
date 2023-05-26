@@ -1,12 +1,20 @@
-import path from 'path'
+// @ts-check
+import path from 'node:path'
 import ts from 'rollup-plugin-typescript2'
 import replace from '@rollup/plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import pascalcase from 'pascalcase'
+import terser from '@rollup/plugin-terser'
+import pkg from './package.json' assert { type: 'json' }
+import { fileURLToPath } from 'node:url'
+import chalk from 'chalk'
 
-const pkg = require('./package.json')
+// const pkg = require('./package.json')
 const name = pkg.name
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 function getAuthors(pkg) {
   const { contributors, author } = pkg
@@ -70,7 +78,7 @@ export default packageConfigs
 
 function createConfig(format, output, plugins = []) {
   if (!output) {
-    console.log(require('chalk').yellow(`invalid format: "${format}"`))
+    console.log(chalk.yellow(`invalid format: "${format}"`))
     process.exit(1)
   }
 
@@ -184,7 +192,6 @@ function createProductionConfig(format) {
 }
 
 function createMinifiedConfig(format) {
-  const { terser } = require('rollup-plugin-terser')
   return createConfig(
     format,
     {

@@ -1,0 +1,70 @@
+name: test
+
+on:
+  push:
+    paths-ignore:
+      - 'docs/**'
+      - 'playground/**'
+      - 'examples/**'
+
+  pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - 'playground/**'
+      - 'examples/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+          run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - uses: actions/cache@v3
+        name: Setup pnpm cache
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+      - name: Types
+        run: pnpm run test:types
+
+      - name: Test
+        run: pnpm run test:unit
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Build dts
+        run: pnpm run build:dts
+
+      - name: Size
+        run: pnpm run size
+
+      - uses: codecov/codecov-action@v2

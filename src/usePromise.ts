@@ -1,16 +1,32 @@
-import { ref, unref, watch, Ref, computed, ComputedRef } from 'vue-demi'
-import { Refable } from './utils'
+import {
+  ref,
+  watch,
+  Ref,
+  computed,
+  ComputedRef,
+  unref,
+  // TODO:
+  // toValue
+  // MaybeRefOrGetter
+} from 'vue-demi'
+
+export type MaybeRef<T = unknown> = T | Ref<T>
+export type MaybeRefOrGetter<T = unknown> = MaybeRef<T> | (() => T)
+function toValue<T>(source: MaybeRefOrGetter<T>): T {
+  // @ts-expect-error: source not callable
+  return typeof source === 'function' ? source() : unref(source)
+}
 
 /**
  * Returns the state of a Promise and observes the Promise if it's a Ref to
  * automatically update the state
  *
- * @param promise Ref of a Promise or raw Promise
- * @param pendingDelay optional delay to wait before displaying pending
+ * @param promise - Ref of a Promise or raw Promise
+ * @param pendingDelay - optional delay to wait before displaying pending
  */
 export function usePromise<T = unknown>(
-  promise: Refable<Promise<T> | null | undefined>,
-  pendingDelay: Refable<number | string> = 200
+  promise: MaybeRef<Promise<T> | null | undefined>,
+  pendingDelay: MaybeRef<number | string> = 200
 ): UsePromiseResult<T> {
   const isRejected = ref(false)
   const isResolved = ref(false)
@@ -22,7 +38,7 @@ export function usePromise<T = unknown>(
   let timerId: ReturnType<typeof setTimeout> | undefined | null
 
   watch(
-    () => unref(promise),
+    () => toValue(promise),
     (newPromise) => {
       isRejected.value = false
       isResolved.value = false
@@ -34,12 +50,13 @@ export function usePromise<T = unknown>(
         return
       }
 
-      if (unref(pendingDelay) > 0) {
+      const pendingDelayNumber = Number(toValue(pendingDelay)) || 0
+      if (pendingDelayNumber > 0) {
         isDelayElapsed.value = false
         if (timerId) clearTimeout(timerId)
         timerId = setTimeout(() => {
           isDelayElapsed.value = true
-        }, Number(unref(pendingDelay)))
+        }, pendingDelayNumber)
       } else {
         isDelayElapsed.value = true
       }
@@ -47,14 +64,14 @@ export function usePromise<T = unknown>(
       newPromise
         .then((newData) => {
           // ensure we are dealing with the same promise
-          if (newPromise === unref(promise)) {
+          if (newPromise === toValue(promise)) {
             data.value = newData
             isResolved.value = true
           }
         })
         .catch((err) => {
           // ensure we are dealing with the same promise
-          if (newPromise === unref(promise)) {
+          if (newPromise === toValue(promise)) {
             error.value = err
             isRejected.value = true
           }
