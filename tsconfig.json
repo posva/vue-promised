@@ -32,7 +32,7 @@
       "dom"
     ],
     "types": [
-      "jest",
+      "vitest",
       "node"
     ]
   }

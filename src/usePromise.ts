@@ -1,10 +1,21 @@
-import { ref, watch, Ref, computed, ComputedRef } from 'vue-demi'
 import {
-  MaybeRef,
-  toValue,
+  ref,
+  watch,
+  Ref,
+  computed,
+  ComputedRef,
+  unref,
   // TODO:
+  // toValue
   // MaybeRefOrGetter
-} from 'vue'
+} from 'vue-demi'
+
+export type MaybeRef<T = unknown> = T | Ref<T>
+export type MaybeRefOrGetter<T = unknown> = MaybeRef<T> | (() => T)
+function toValue<T>(source: MaybeRefOrGetter<T>): T {
+  // @ts-expect-error: source not callable
+  return typeof source === 'function' ? source() : unref(source)
+}
 
 /**
  * Returns the state of a Promise and observes the Promise if it's a Ref to

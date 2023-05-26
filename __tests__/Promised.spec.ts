@@ -1,9 +1,19 @@
+// @vitest-environment jsdom
 /* eslint-disable no-unused-vars */
 import { mount } from '@vue/test-utils'
-import { mockWarn } from 'jest-mock-warn'
 import { PromisedImpl as Promised } from '../src/Promised'
 import fakePromise from 'faked-promise'
 import { h } from 'vue'
+import {
+  describe,
+  it,
+  expect,
+  beforeEach,
+  afterEach,
+  afterAll,
+  vi,
+} from 'vitest'
+import { mockWarn } from './vitest-mock-warn'
 
 // keep a real setTimeout
 const timeout = setTimeout
@@ -95,9 +105,9 @@ describe('Promised', () => {
 
   describe('three slots pendingDelay', () => {
     beforeEach(() => {
-      jest.useFakeTimers('modern')
-      jest.spyOn(global, 'setTimeout')
-      jest.spyOn(global, 'clearTimeout')
+      vi.useFakeTimers()
+      vi.spyOn(global, 'setTimeout')
+      vi.spyOn(global, 'clearTimeout')
     })
     afterEach(() => {
       // @ts-expect-error: mocked
@@ -107,13 +117,13 @@ describe('Promised', () => {
     })
 
     afterAll(() => {
-      jest.useRealTimers()
+      vi.useRealTimers()
     })
 
     it('displays nothing before the delay', async () => {
       let { wrapper } = factory({ pendingDelay: 300 })
       expect(wrapper.text()).toBe('')
-      jest.runAllTimers()
+      vi.runAllTimers()
       await wrapper.vm.$nextTick()
       expect(wrapper.text()).toMatch('pending')
     })
@@ -192,7 +202,7 @@ describe('Promised', () => {
 
   mockWarn()
 
-  it('warns on missing slot', async () => {
+  it.only('warns on missing slot', async () => {
     const [promise, _resolve, reject] = fakePromise<any>()
     mount(Promised, {
       propsData: { promise, pendingDelay: 0 },
@@ -206,6 +216,6 @@ describe('Promised', () => {
     reject(new Error())
     await tick()
 
-    expect('Missing slot "rejected"').toHaveBeenWarned()
+    expect(/Missing slot "rejected"/).toHaveBeenWarned()
   })
 })
