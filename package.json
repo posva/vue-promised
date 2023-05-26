@@ -68,7 +68,7 @@
     "rollup-plugin-typescript2": "^0.34.1",
     "size-limit": "^8.2.4",
     "typescript": "^5.0.4",
-    "vite": "^4.0.0",
+    "vite": "^4.3.9",
     "vitest": "^0.31.1",
     "vue": "^3.3.4",
     "vue-prism-component": "^2.0.0",
