@@ -25,7 +25,7 @@
     "lint:fix": "pnpm run lint --write",
     "test:types": "tsc --build tsconfig.json",
     "test:unit": "vitest --coverage",
-    "test": "pnpm run lint && pnpm run test:types && pnpm run test:unit && pnpm run build && pnpm run build:dts"
+    "test": "pnpm run lint && pnpm run test:types && pnpm run test:unit run && pnpm run build && pnpm run build:dts"
   },
   "files": [
     "dist/*.js",
