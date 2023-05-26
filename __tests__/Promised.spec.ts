@@ -202,7 +202,7 @@ describe('Promised', () => {
 
   mockWarn()
 
-  it.only('warns on missing slot', async () => {
+  it('warns on missing slot', async () => {
     const [promise, _resolve, reject] = fakePromise<any>()
     mount(Promised, {
       propsData: { promise, pendingDelay: 0 },
