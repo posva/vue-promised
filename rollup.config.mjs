@@ -1,14 +1,19 @@
 // @ts-check
-import path from 'path'
+import path from 'node:path'
 import ts from 'rollup-plugin-typescript2'
 import replace from '@rollup/plugin-replace'
 import resolve from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
 import pascalcase from 'pascalcase'
 import terser from '@rollup/plugin-terser'
+import pkg from './package.json' assert { type: 'json' }
+import { fileURLToPath } from 'node:url'
 
-const pkg = require('./package.json')
+// const pkg = require('./package.json')
 const name = pkg.name
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 function getAuthors(pkg) {
   const { contributors, author } = pkg

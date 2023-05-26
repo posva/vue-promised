@@ -1,17 +1,20 @@
 {
-  "include": ["src/global.d.ts", "src/**/*.ts", "__tests__/**/*.ts"],
+  "include": [
+    "src/global.d.ts",
+    "src/**/*.ts",
+    "__tests__/**/*.ts"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
     "outDir": "dist",
     "sourceMap": true,
     "noEmit": true,
-
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "allowJs": false,
-
+    "skipLibCheck": true,
     "noUnusedLocals": true,
     "strictNullChecks": true,
     "noImplicitAny": true,
@@ -19,13 +22,18 @@
     "noImplicitReturns": true,
     "strict": true,
     "isolatedModules": false,
-
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "removeComments": false,
     "jsx": "preserve",
-    "lib": ["esnext", "dom"],
-    "types": ["jest", "node"]
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "jest",
+      "node"
+    ]
   }
 }
