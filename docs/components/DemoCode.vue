@@ -1,7 +1,6 @@
 <template>
   <article>
-    <!-- FIXME: vue prism component not working -->
-    <h5 v-if="false">
+    <h5>
       <a href="#" role="button" @click.prevent="showCode = !showCode">{{
         seeLabel
       }}</a>
@@ -10,7 +9,7 @@
       <slot />
     </div>
     <div class="demo__code" v-else>
-      <Prism language="html" :code="code" />
+      <prism language="html">{{ code }}</prism>
     </div>
   </article>
 </template>
