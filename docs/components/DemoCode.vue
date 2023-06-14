@@ -1,3 +1,21 @@
+<script setup lang="ts">
+import { ref, computed } from 'vue'
+import Prism from 'vue-prism-component'
+
+const props = defineProps({
+  code: {
+    type: String,
+    required: true,
+  },
+})
+
+const showCode = ref(false)
+
+const seeLabel = computed(() => {
+  return showCode.value ? 'See demo' : 'See code'
+})
+</script>
+
 <template>
   <article>
     <h5>
@@ -9,34 +27,7 @@
       <slot />
     </div>
     <div class="demo__code" v-else>
-      <prism language="html">{{ code }}</prism>
+      <prism language="html">{{ props.code }}</prism>
     </div>
   </article>
 </template>
-
-<script>
-import Prism from 'vue-prism-component'
-
-export default {
-  components: { Prism },
-
-  props: {
-    code: {
-      type: String,
-      required: true,
-    },
-  },
-
-  data() {
-    return {
-      showCode: false,
-    }
-  },
-
-  computed: {
-    seeLabel() {
-      return this.showCode ? 'See demo' : 'See code'
-    },
-  },
-}
-</script>

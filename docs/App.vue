@@ -1,3 +1,86 @@
+<script lang="ts">
+
+</script>
+
+<script setup lang="ts">
+import { ref, computed, onBeforeMount } from 'vue';
+import { Promised } from '../src'
+
+import DemoCode from './components/DemoCode.vue'
+
+import { getRandomJoke, Joke } from './api/jokes'
+
+const delay = (t: number) => new Promise((r) => setTimeout(r, t))
+
+const texts = {
+  loading: 'Fetching the joke...',
+  waiting: 'Wait for it...',
+  ready: 'Another one?',
+}
+
+const promise = ref<Promise<Joke> | null>(null)
+
+const state = ref('waiting')
+
+const samples = {
+  single: `\
+<Promised :promise="promise">
+  <template v-slot:pending>
+    <div class="loading-spinner"></div>
+  </template>
+
+  <template v-slot="joke">
+    <blockquote :key="joke.id">
+      <i>{{ joke.setup }}</i>
+      <br />
+      <br />
+      <p class="appear" @animationend="state = 'ready'">{{ joke.punchline }}</p>
+    </blockquote>
+  </template>
+
+  <template v-slot:rejected="error">
+    <div slot="rejected" slot-scope="error" class="message--error">
+      Error: {{ error.message }}
+    </div>
+  </template>
+</Promised>
+`,
+  combined: `\
+<promised :promise="promise" :pending-delay="1000" v-slot:combined="props">
+  <pre class="code">
+    isPending: {{ props.isPending }}
+    isDelayElapsed:{{ props.isDelayElapsed }}
+    error:{{ props.error && props.error.message }}
+    data: {{ props.data }}
+  </pre>
+</promised>
+`,
+}
+
+const buttonText = computed(() => {
+  return texts[state.value]
+})
+
+const requestRandomJoke = () => {
+  state.value = 'loading'
+  promise.value = getRandomJoke()
+  promise.value.finally(() => {
+    state.value = 'waiting'
+  })
+}
+
+onBeforeMount(() => {
+  requestRandomJoke()
+})
+
+const tryError = () => {
+  state.value = 'ready'
+  promise.value = delay(500).then(() => {
+    return Promise.reject(new Error('🔥'))
+  })
+}
+</script>
+
 <template>
   <header>
     <h1>VuePromised</h1>
@@ -14,7 +97,7 @@
       <p class="buttons">
         <button
           :disabled="state !== 'ready'"
-          @click="trySuccess"
+          @click="requestRandomJoke"
           style="margin-bottom: 4px"
         >
           {{ buttonText }}
@@ -25,7 +108,7 @@
 
       <div style="min-height: 9rem">
         <demo-code :code="samples.single" class="relative">
-          <promised :promise="promise">
+          <promised v-if="promise" :promise="promise">
             <template #pending>
               <div class="spinner"></div>
             </template>
@@ -60,9 +143,8 @@
           >
           slot:
         </p>
-
         <demo-code :code="samples.combined">
-          <promised :promise="promise" :pending-delay="1000">
+          <promised v-if="promise" :promise="promise" :pending-delay="1000">
             <template #combined="props">
               <pre class="code">
 isPending: {{ props.isPending }}
@@ -82,95 +164,6 @@ data: {{ props.data }}</pre
     </footer>
   </main>
 </template>
-
-<script lang="ts">
-import { Promised } from '../src'
-import { getRandomJoke } from './api/jokes'
-import DemoCode from './components/DemoCode.vue'
-
-const delay = (t: number) => new Promise((r) => setTimeout(r, t))
-
-const texts = {
-  loading: 'Fetching the joke...',
-  waiting: 'Wait for it...',
-  ready: 'Another one?',
-}
-
-export default {
-  components: { Promised, DemoCode },
-
-  data: () => ({
-    promise: null,
-    state: 'waiting',
-
-    samples: {
-      single: `\
-<Promised :promise="promise">
-  <template v-slot:pending>
-    <div class="loading-spinner"></div>
-  </template>
-
-  <template v-slot="joke">
-    <blockquote :key="joke.id">
-      <i>{{ joke.setup }}</i>
-      <br />
-      <br />
-      <p class="appear" @animationend="state = 'ready'">{{ joke.punchline }}</p>
-    </blockquote>
-  </template>
-
-  <template v-slot:rejected="error">
-    <div slot="rejected" slot-scope="error" class="message--error">
-      Error: {{ error.message }}
-    </div>
-  </template>
-</Promised>
-`,
-      combined: `\
-<promised :promise="promise" :pending-delay="1000" v-slot:combined="props">
-  <pre class="code">
-    isPending: {{ props.isPending }}
-    isDelayElapsed:{{ props.isDelayElapsed }}
-    error:{{ props.error && props.error.message }}
-    data: {{ props.data }}
-  </pre>
-</promised>
-`,
-    },
-  }),
-
-  created() {
-    // when the api takes too much time
-    this.max = 2000
-    this.trySuccess()
-  },
-
-  computed: {
-    buttonText() {
-      return texts[this.state]
-    },
-  },
-
-  methods: {
-    getRandomJoke() {
-      this.state = 'loading'
-      this.promise = getRandomJoke()
-      this.promise.finally(() => {
-        this.state = 'waiting'
-      })
-    },
-    trySuccess() {
-      this.getRandomJoke()
-    },
-    tryError() {
-      this.state = 'ready'
-      this.promise = delay(500).then(() => {
-        return Promise.reject(new Error('🔥'))
-      })
-    },
-  },
-}
-</script>
 
 <style>
 @keyframes appear {
