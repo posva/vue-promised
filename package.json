@@ -64,7 +64,7 @@
     "pascalcase": "^2.0.0",
     "prettier": "^2.8.8",
     "prismjs": "^1.29.0",
-    "rollup": "^3.23.0",
+    "rollup": "^4.1.1",
     "rollup-plugin-typescript2": "^0.34.1",
     "size-limit": "^8.2.4",
     "typescript": "^5.0.4",
