@@ -56,7 +56,7 @@
     "@vue/compiler-sfc": "^3.3.4",
     "@vue/server-renderer": "^3.3.4",
     "@vue/test-utils": "^2.3.2",
-    "conventional-changelog-cli": "^2.2.2",
+    "conventional-changelog-cli": "^4.1.0",
     "faked-promise": "^2.2.2",
     "jsdom": "^22.0.0",
     "lint-staged": "^15.1.0",
