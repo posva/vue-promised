@@ -51,7 +51,7 @@
     "@rollup/plugin-terser": "^0.4.3",
     "@size-limit/preset-small-lib": "^8.2.4",
     "@types/jsdom": "^21.1.1",
-    "@vitejs/plugin-vue": "^4.2.3",
+    "@vitejs/plugin-vue": "^5.0.2",
     "@vitest/coverage-c8": "^0.31.1",
     "@vue/compiler-sfc": "^3.3.4",
     "@vue/server-renderer": "^3.3.4",
