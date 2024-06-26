@@ -1,4 +1,4 @@
-# vue-promised [![Build Status](https://badgen.net/circleci/github/posva/vue-promised/v2)](https://circleci.com/gh/posva/vue-promised) [![npm package](https://badgen.net/npm/v/vue-promised/v2)](https://www.npmjs.com/package/vue-promised) [![coverage](https://badgen.net/codecov/c/github/posva/vue-promised/v2)](https://codecov.io/github/posva/vue-promised) [![thanks](https://badgen.net/badge/thanks/%E2%99%A5/ff69b4)](https://github.com/posva/thanks)
+# vue-promised [![test](https://github.com/posva/vue-promised/actions/workflows/test.yml/badge.svg)](https://github.com/posva/vue-promised/actions/workflows/test.yml) [![npm package](https://badgen.net/npm/v/vue-promised)](https://www.npmjs.com/package/vue-promised) [![codecov](https://codecov.io/gh/posva/vue-promised/graph/badge.svg?token=moy6zDeJRi)](https://codecov.io/gh/posva/vue-promised) [![thanks](https://badgen.net/badge/thanks/%E2%99%A5/ff69b4)](https://github.com/posva/thanks)
 
 > Handle your promises with style 🎀
 
