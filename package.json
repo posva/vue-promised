@@ -58,7 +58,7 @@
     "@vue/test-utils": "^2.3.2",
     "conventional-changelog-cli": "^5.0.0",
     "faked-promise": "^2.2.2",
-    "jsdom": "^25.0.0",
+    "jsdom": "^26.0.0",
     "lint-staged": "^15.1.0",
     "mande": "^2.0.6",
     "pascalcase": "^2.0.0",
