@@ -41,7 +41,7 @@ importers:
         version: 21.1.1
       '@vitejs/plugin-vue':
         specifier: ^5.0.2
-        version: 5.0.2(vite@6.0.1(@types/node@20.2.4)(terser@5.17.6)(yaml@2.3.4))(vue@3.3.4)
+        version: 5.0.2(vite@6.0.1(@types/node@20.2.4)(terser@5.17.6))(vue@3.3.4)
       '@vitest/coverage-c8':
         specifier: ^0.31.1
         version: 0.31.1(vitest@0.31.1(jsdom@26.0.0)(terser@5.17.6))
@@ -56,7 +56,7 @@ importers:
         version: 2.3.2(vue@3.3.4)
       conventional-changelog-cli:
         specifier: ^5.0.0
-        version: 5.0.0(conventional-commits-filter@5.0.0)
+        version: 5.0.0
       faked-promise:
         specifier: ^2.2.2
         version: 2.2.2
@@ -73,8 +73,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0
       prettier:
-        specifier: ^2.8.8
-        version: 2.8.8
+        specifier: ^3.5.1
+        version: 3.5.1
       prismjs:
         specifier: ^1.29.0
         version: 1.29.0
@@ -92,7 +92,7 @@ importers:
         version: 5.0.4
       vite:
         specifier: ^6.0.1
-        version: 6.0.1(@types/node@20.2.4)(terser@5.17.6)(yaml@2.3.4)
+        version: 6.0.1(@types/node@20.2.4)(terser@5.17.6)
       vitest:
         specifier: ^0.31.1
         version: 0.31.1(jsdom@26.0.0)(terser@5.17.6)
@@ -1692,9 +1692,11 @@ packages:
 
   lodash.get@4.4.2:
     resolution: {integrity: sha512-z+Uw/vLuy6gQe8cfaFWD7p0wVv8fJl3mbzXh33RS+0oW2wvUqiRXiQ69gLWSLpgB5/6sU+r6BlQR0MBILadqTQ==}
+    deprecated: This package is deprecated. Use the optional chaining (?.) operator instead.
 
   lodash.isequal@4.5.0:
     resolution: {integrity: sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==}
+    deprecated: This package is deprecated. Use require('node:util').isDeepStrictEqual instead.
 
   lodash@4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
@@ -1950,9 +1952,9 @@ packages:
     resolution: {integrity: sha512-OCVPnIObs4N29kxTjzLfUryOkvZEq+pf8jTF0lg8E7uETuWHA+v7j3c/xJmiqpX450191LlmZfUKkXxkTry7nA==}
     engines: {node: ^10 || ^12 || >=14}
 
-  prettier@2.8.8:
-    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
-    engines: {node: '>=10.13.0'}
+  prettier@3.5.1:
+    resolution: {integrity: sha512-hPpFQvHwL3Qv5AdRvBFMhnKo4tYxp0ReXiPn2bxkiohEX6mBeBwEpBSQTkD458RaaDKQMYSp4hX4UtfUTA5wDw==}
+    engines: {node: '>=14'}
     hasBin: true
 
   pretty-format@27.5.1:
@@ -2605,12 +2607,11 @@ snapshots:
 
   '@bcoe/v8-coverage@0.2.3': {}
 
-  '@conventional-changelog/git-client@1.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)':
+  '@conventional-changelog/git-client@1.0.0(conventional-commits-parser@6.0.0)':
     dependencies:
       '@types/semver': 7.5.8
       semver: 7.5.4
     optionalDependencies:
-      conventional-commits-filter: 5.0.0
       conventional-commits-parser: 6.0.0
 
   '@csstools/color-helpers@5.0.1': {}
@@ -3128,9 +3129,9 @@ snapshots:
 
   '@types/tough-cookie@4.0.2': {}
 
-  '@vitejs/plugin-vue@5.0.2(vite@6.0.1(@types/node@20.2.4)(terser@5.17.6)(yaml@2.3.4))(vue@3.3.4)':
+  '@vitejs/plugin-vue@5.0.2(vite@6.0.1(@types/node@20.2.4)(terser@5.17.6))(vue@3.3.4)':
     dependencies:
-      vite: 6.0.1(@types/node@20.2.4)(terser@5.17.6)(yaml@2.3.4)
+      vite: 6.0.1(@types/node@20.2.4)(terser@5.17.6)
       vue: 3.3.4
 
   '@vitest/coverage-c8@0.31.1(vitest@0.31.1(jsdom@26.0.0)(terser@5.17.6))':
@@ -3454,10 +3455,10 @@ snapshots:
 
   conventional-changelog-atom@5.0.0: {}
 
-  conventional-changelog-cli@5.0.0(conventional-commits-filter@5.0.0):
+  conventional-changelog-cli@5.0.0:
     dependencies:
       add-stream: 1.0.0
-      conventional-changelog: 6.0.0(conventional-commits-filter@5.0.0)
+      conventional-changelog: 6.0.0
       meow: 13.2.0
       tempfile: 5.0.0
     transitivePeerDependencies:
@@ -3469,14 +3470,14 @@ snapshots:
     dependencies:
       compare-func: 2.0.0
 
-  conventional-changelog-core@8.0.0(conventional-commits-filter@5.0.0):
+  conventional-changelog-core@8.0.0:
     dependencies:
       '@hutson/parse-repository-url': 5.0.0
       add-stream: 1.0.0
       conventional-changelog-writer: 8.0.0
       conventional-commits-parser: 6.0.0
-      git-raw-commits: 5.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)
-      git-semver-tags: 8.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)
+      git-raw-commits: 5.0.0(conventional-commits-parser@6.0.0)
+      git-semver-tags: 8.0.0(conventional-commits-parser@6.0.0)
       hosted-git-info: 7.0.1
       normalize-package-data: 6.0.0
       read-package-up: 11.0.0
@@ -3506,13 +3507,13 @@ snapshots:
       meow: 13.2.0
       semver: 7.5.4
 
-  conventional-changelog@6.0.0(conventional-commits-filter@5.0.0):
+  conventional-changelog@6.0.0:
     dependencies:
       conventional-changelog-angular: 8.0.0
       conventional-changelog-atom: 5.0.0
       conventional-changelog-codemirror: 5.0.0
       conventional-changelog-conventionalcommits: 8.0.0
-      conventional-changelog-core: 8.0.0(conventional-commits-filter@5.0.0)
+      conventional-changelog-core: 8.0.0
       conventional-changelog-ember: 5.0.0
       conventional-changelog-eslint: 6.0.0
       conventional-changelog-express: 5.0.0
@@ -3788,17 +3789,17 @@ snapshots:
 
   get-stream@8.0.1: {}
 
-  git-raw-commits@5.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0):
+  git-raw-commits@5.0.0(conventional-commits-parser@6.0.0):
     dependencies:
-      '@conventional-changelog/git-client': 1.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)
+      '@conventional-changelog/git-client': 1.0.0(conventional-commits-parser@6.0.0)
       meow: 13.2.0
     transitivePeerDependencies:
       - conventional-commits-filter
       - conventional-commits-parser
 
-  git-semver-tags@8.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0):
+  git-semver-tags@8.0.0(conventional-commits-parser@6.0.0):
     dependencies:
-      '@conventional-changelog/git-client': 1.0.0(conventional-commits-filter@5.0.0)(conventional-commits-parser@6.0.0)
+      '@conventional-changelog/git-client': 1.0.0(conventional-commits-parser@6.0.0)
       meow: 13.2.0
     transitivePeerDependencies:
       - conventional-commits-filter
@@ -4276,7 +4277,7 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
-  prettier@2.8.8: {}
+  prettier@3.5.1: {}
 
   pretty-format@27.5.1:
     dependencies:
@@ -4662,7 +4663,7 @@ snapshots:
       fsevents: 2.3.3
       terser: 5.17.6
 
-  vite@6.0.1(@types/node@20.2.4)(terser@5.17.6)(yaml@2.3.4):
+  vite@6.0.1(@types/node@20.2.4)(terser@5.17.6):
     dependencies:
       esbuild: 0.24.0
       postcss: 8.4.49
@@ -4671,7 +4672,6 @@ snapshots:
       '@types/node': 20.2.4
       fsevents: 2.3.3
       terser: 5.17.6
-      yaml: 2.3.4
 
   vitest@0.31.1(jsdom@26.0.0)(terser@5.17.6):
     dependencies:
