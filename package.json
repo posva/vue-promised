@@ -50,7 +50,7 @@
     "@rollup/plugin-replace": "^6.0.1",
     "@rollup/plugin-terser": "^0.4.3",
     "@size-limit/preset-small-lib": "^8.2.4",
-    "@types/jsdom": "^21.1.1",
+    "@types/jsdom": "^27.0.0",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitest/coverage-c8": "^0.31.1",
     "@vue/compiler-sfc": "^3.3.4",
