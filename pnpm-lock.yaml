@@ -19,8 +19,8 @@ importers:
         specifier: 7.35.0
         version: 7.35.0(@types/node@20.2.4)
       '@rollup/plugin-alias':
-        specifier: ^5.0.0
-        version: 5.0.0(rollup@4.1.1)
+        specifier: ^6.0.0
+        version: 6.0.0(rollup@4.1.1)
       '@rollup/plugin-commonjs':
         specifier: ^28.0.0
         version: 28.0.0(rollup@4.1.1)
@@ -673,11 +673,11 @@ packages:
   '@rolldown/pluginutils@1.0.0-beta.19':
     resolution: {integrity: sha512-3FL3mnMbPu0muGOCaKAhhFEYmqv9eTfPSJRJmANrCwtgK8VuxpsZDGK+m0LYAGoyO8+0j5uRe4PeyPDK1yA/hA==}
 
-  '@rollup/plugin-alias@5.0.0':
-    resolution: {integrity: sha512-l9hY5chSCjuFRPsnRm16twWBiSApl2uYFLsepQYwtBuAxNMQ/1dJqADld40P0Jkqm65GRTLy/AC6hnpVebtLsA==}
-    engines: {node: '>=14.0.0'}
+  '@rollup/plugin-alias@6.0.0':
+    resolution: {integrity: sha512-tPCzJOtS7uuVZd+xPhoy5W4vThe6KWXNmsFCNktaAh5RTqcLiSfT4huPQIXkgJ6YCOjJHvecOAzQxLFhPxKr+g==}
+    engines: {node: '>=20.19.0'}
     peerDependencies:
-      rollup: ^1.20.0||^2.0.0||^3.0.0
+      rollup: '>=4.0.0'
     peerDependenciesMeta:
       rollup:
         optional: true
@@ -2154,10 +2154,6 @@ packages:
     resolution: {integrity: sha512-g9Q1haeby36OSStwb4ntCGGGaKsaVSjQ68fBxoQcutl5fS1vuY18H3wSt3jFyFtrkx+Kz0V1G85A4MyAdDMi2Q==}
     engines: {node: '>=8'}
 
-  slash@4.0.0:
-    resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
-    engines: {node: '>=12'}
-
   slice-ansi@5.0.0:
     resolution: {integrity: sha512-FC+lgizVPfie0kkhqUScwRu1O/lF6NOgJmlCgK+/LYxDCTk8sGelYaHDhFcDN+Sn3Cv+3VSa4Byeo+IMCzpMgQ==}
     engines: {node: '>=12'}
@@ -2961,9 +2957,7 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.0-beta.19': {}
 
-  '@rollup/plugin-alias@5.0.0(rollup@4.1.1)':
-    dependencies:
-      slash: 4.0.0
+  '@rollup/plugin-alias@6.0.0(rollup@4.1.1)':
     optionalDependencies:
       rollup: 4.1.1
 
@@ -4507,8 +4501,6 @@ snapshots:
       picocolors: 1.0.0
 
   slash@3.0.0: {}
-
-  slash@4.0.0: {}
 
   slice-ansi@5.0.0:
     dependencies:
