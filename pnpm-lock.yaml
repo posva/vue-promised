@@ -22,8 +22,8 @@ importers:
         specifier: ^6.0.0
         version: 6.0.0(rollup@4.1.1)
       '@rollup/plugin-commonjs':
-        specifier: ^28.0.0
-        version: 28.0.0(rollup@4.1.1)
+        specifier: ^29.0.0
+        version: 29.0.0(rollup@4.1.1)
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.0
         version: 16.0.0(rollup@4.1.1)
@@ -682,8 +682,8 @@ packages:
       rollup:
         optional: true
 
-  '@rollup/plugin-commonjs@28.0.0':
-    resolution: {integrity: sha512-BJcu+a+Mpq476DMXG+hevgPSl56bkUoi88dKT8t3RyUp8kGuOh+2bU8Gs7zXDlu+fyZggnJ+iOBGrb/O1SorYg==}
+  '@rollup/plugin-commonjs@29.0.0':
+    resolution: {integrity: sha512-U2YHaxR2cU/yAiwKJtJRhnyLk7cifnQw0zUpISsocBDoHDJn+HTV74ABqnwr5bEgWUwFZC9oFL6wLe21lHu5eQ==}
     engines: {node: '>=16.0.0 || 14 >= 14.17'}
     peerDependencies:
       rollup: ^2.68.0||^3.0.0||^4.0.0
@@ -930,9 +930,6 @@ packages:
 
   '@types/chai@4.3.5':
     resolution: {integrity: sha512-mEo1sAde+UCE6b2hxn332f1g1E8WfYRu6p5SvTKr2ZKC1f7gFJXk4h5PyGP9Dt6gCaG8y8XhwnXWC6Iy2cmBng==}
-
-  '@types/estree@1.0.1':
-    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
 
   '@types/estree@1.0.8':
     resolution: {integrity: sha512-dWHzHa2WqEXI/O1E9OjrocMTKJl2mSrEolh1Iomrv6U+JuNwaHXsXx9bLu5gG7BUWFIN0skIQJQ/L1rIex4X6w==}
@@ -1428,14 +1425,6 @@ packages:
 
   fastq@1.15.0:
     resolution: {integrity: sha512-wBrocU2LCXXa+lWBt8RoIRD89Fi8OdABODa/kEnyeyjS5aZO5/GNvI5sEINADqP/h8M29UHTHUb53sUu5Ihqdw==}
-
-  fdir@6.3.0:
-    resolution: {integrity: sha512-QOnuT+BOtivR77wYvCWHfGt9s4Pz1VIMbD463vegT5MLqNXy8rYFT/lPVEqf/bhYeT6qmqrNHhsX+rWwe3rOCQ==}
-    peerDependencies:
-      picomatch: ^3 || ^4
-    peerDependenciesMeta:
-      picomatch:
-        optional: true
 
   fdir@6.4.6:
     resolution: {integrity: sha512-hiFoqpyZcfNm1yc4u8oWCf9A2c4D3QjCrks3zmoVKVxpQRzmPNar1hUJcBG2RQHvEVGDN+Jm81ZheVLAQMK6+w==}
@@ -2961,15 +2950,15 @@ snapshots:
     optionalDependencies:
       rollup: 4.1.1
 
-  '@rollup/plugin-commonjs@28.0.0(rollup@4.1.1)':
+  '@rollup/plugin-commonjs@29.0.0(rollup@4.1.1)':
     dependencies:
       '@rollup/pluginutils': 5.0.2(rollup@4.1.1)
       commondir: 1.0.1
       estree-walker: 2.0.2
-      fdir: 6.3.0(picomatch@2.3.1)
+      fdir: 6.4.6(picomatch@4.0.2)
       is-reference: 1.2.1
       magic-string: 0.30.10
-      picomatch: 2.3.1
+      picomatch: 4.0.2
     optionalDependencies:
       rollup: 4.1.1
 
@@ -3005,7 +2994,7 @@ snapshots:
 
   '@rollup/pluginutils@5.0.2(rollup@4.1.1)':
     dependencies:
-      '@types/estree': 1.0.1
+      '@types/estree': 1.0.8
       estree-walker: 2.0.2
       picomatch: 2.3.1
     optionalDependencies:
@@ -3155,8 +3144,6 @@ snapshots:
       '@types/chai': 4.3.5
 
   '@types/chai@4.3.5': {}
-
-  '@types/estree@1.0.1': {}
 
   '@types/estree@1.0.8': {}
 
@@ -3770,10 +3757,6 @@ snapshots:
     dependencies:
       reusify: 1.0.4
 
-  fdir@6.3.0(picomatch@2.3.1):
-    optionalDependencies:
-      picomatch: 2.3.1
-
   fdir@6.4.6(picomatch@4.0.2):
     optionalDependencies:
       picomatch: 4.0.2
@@ -3980,7 +3963,7 @@ snapshots:
 
   is-reference@1.2.1:
     dependencies:
-      '@types/estree': 1.0.1
+      '@types/estree': 1.0.8
 
   is-stream@1.1.0: {}
 
