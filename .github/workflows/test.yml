@@ -27,7 +27,7 @@ jobs:
         with:
           node-version: 20
 
-      - uses: pnpm/action-setup@v2
+      - uses: pnpm/action-setup@v6
         with:
           version: 10.14.0
           run_install: false
